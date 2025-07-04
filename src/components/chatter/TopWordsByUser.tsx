@@ -75,9 +75,9 @@ export function TopWordsByUser({ messages, users }: TopWordsByUserProps) {
       <CardContent>
         <div className="space-y-6">
           {validUsers.map((user) => (
-            <div key={user}>
+            <div key={user} className="pb-4 border-b last:border-b-0">
               <h3 className="text-lg font-semibold">{user}</h3>
-              <ul className="list-disc list-inside space-y-1">
+              <ul className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
                 {topWordsByUser[user].map(({ word, count }) => (
                   <li key={word} className="text-sm text-muted-foreground">
                     {word} ({count})
