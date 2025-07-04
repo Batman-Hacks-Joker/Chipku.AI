@@ -24,6 +24,7 @@ import { DailyMessagesChart } from "@/components/chatter/DailyMessagesChart";
 import { WeeklyMessagesChart } from "@/components/chatter/WeeklyMessagesChart";
 import { HourlyMessagesChart } from "@/components/chatter/HourlyMessagesChart";
 import { MessageHeatmap } from "@/components/chatter/MessageHeatmap";
+import { RandomMessagePerUser } from "@/components/chatter/RandomMessagePerUser";
 import { TopWordsByUser } from "@/components/chatter/TopWordsByUser";
 import { TopLongestMessages } from "@/components/chatter/TopLongestMessages";
 
@@ -212,6 +213,7 @@ export default function Home() {
            <Card className="p-4"><MessageHeatmap messages={filteredMessages} users={parsedData.users} /></Card>
            <Card className="p-4"><TopLongestMessages messages={filteredMessages} users={parsedData.users} /></Card>
            <Card className="p-4"><TopWordsByUser messages={filteredMessages} users={parsedData.users} /></Card>
+           <Card className="p-4"><RandomMessagePerUser messages={filteredMessages} users={parsedData.users} /></Card>
         </main>
       </div>
     </div>
