@@ -84,8 +84,8 @@ export function DailyMessagesChart({ messages, dateRange, users }: DailyMessages
         <CardTitle className="font-headline">Daily Messages</CardTitle>
         <CardDescription>Total messages sent each day. Hover over bars for details.</CardDescription>
       </CardHeader>
-      <div className="h-[350px] w-full">
-        <ChartContainer config={chartConfig}>
+      <div className="w-full h-[350px]"> {/* Keep this div to manage the overall height and width for ChartContainer */}
+        <ChartContainer config={chartConfig} className="w-full h-full"> {/* Make ChartContainer fill the parent div */}
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data}>
               <CartesianGrid vertical={false} strokeDasharray="3 3" />
