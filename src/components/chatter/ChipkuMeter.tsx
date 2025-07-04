@@ -20,7 +20,8 @@ interface ChipkuMeterProps {
 export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   const [result, setResult] = React.useState<RelationshipSentimentOutput | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [error, setError] = React.useState<string | null>(null);
+  const [error, setError] = React.useState<string | null>(null)
+  const [analysisTriggered, setAnalysisTriggered] = React.useState(false);
 
   React.useEffect(() => {
     const analyzeSentiment = async () => {
@@ -49,11 +50,16 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
       }
     };
 
-    analyzeSentiment();
-  }, [messages, dateRange]);
+    if (analysisTriggered) {
+      analyzeSentiment();
+    }
+  }, [messages, dateRange, analysisTriggered]);
 
-    // Calculate delay for each balloon to ensure the last one appears at 5 seconds
- const staggeredDelay = result && result.balloons > 0 ? 5 / result.balloons : 0;
+  const handleAnalyzeClick = () => {
+    setAnalysisTriggered(true);
+  };
+
+  const staggeredDelay = result && result.balloons > 0 ? 5 / result.balloons : 0;
 
   return (
     <Card className="overflow-hidden">
@@ -66,44 +72,68 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
           Relationship strength analysis based on chat sentiment.
         </CardDescription>
       </CardHeader>
-      <CardContent className="relative">
-        {isLoading && (
-          <div className="absolute inset-0 bg-card/80 flex flex-col items-center justify-center z-10">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            <p className="mt-2 text-muted-foreground">Analyzing sentiments...</p>
-          </div>
+      <CardContent className="relative flex-grow flex items-center justify-center min-h-[200px]"> {/* Added min-h */}
+        {!analysisTriggered && (
+          <button
+            onClick={handleAnalyzeClick}
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          >
+            Analyze Relationship Strength
+          </button>
         )}
-        {error && !isLoading && (
-          <div className="text-center py-10 text-destructive">{error}</div>
-        )}
-        {!isLoading && !error && result && (
+
+        {analysisTriggered && (
+          <>
+            {isLoading && (
+              <div className="absolute inset-0 bg-card/80 flex flex-col items-center justify-center z-10">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                <p className="mt-2 text-muted-foreground">Analyzing sentiments...</p>
+              </div>
+            )}
+
+            {error && !isLoading && (
+              <div className="text-center py-10 text-destructive">{error}</div>
+            )}
+
+            {!isLoading && !error && result && (
             <div className="relative flex flex-col items-center justify-center rounded-lg bg-gradient-to-b from-pink-200 via-sky-200 to-sky-300 min-h-[300px] p-4">
                 <AnimatePresence>
-                    {[...Array(result.balloons)].map((_, i) => (
-                        <motion.div
-                            className="heart-balloon-large absolute bottom-0" // Apply the class for larger hearts and position at the bottom
-                            key={i}
-                            initial={{ opacity: 0, y: 50, scale: 0.5, left: `${10 + Math.random() * 80}%` }} // Apply random horizontal position initially
-                            animate={{ opacity: 1, y: 0, scale: 1.5, transition: { delay: i * staggeredDelay, duration: 0.5, ease: "easeOut" } }} // Animate to final position with staggered delay and increased scale
-                            exit={{ opacity: 0, scale: 0.5 }}
-                        >
-                            <HeartBalloon
-                                style={{
-                                animation: `float ${4 + Math.random() * 4}s ease-in-out infinite`,
-                                animationDelay: `${Math.random() * 3}s`,
-                                }}
-                            />
-                        </motion.div>
+                  {[...Array(result.balloons)].map((_, i) => (
+                    <motion.div
+                      className="heart-balloon-large absolute bottom-0"
+                      key={i}
+                      initial={{ opacity: 0, y: 50, scale: 0.5, left: `${10 + Math.random() * 80}%` }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                        scale: 1.5,
+                        transition: { delay: i * staggeredDelay, duration: 0.5, ease: "easeOut" },
+                      }}
+                      exit={{ opacity: 0, scale: 0.5 }}
+                    >
+                      <HeartBalloon
+                        style={{
+                          animation: `float ${4 + Math.random() * 4}s ease-in-out infinite`,
+                          animationDelay: `${Math.random() * 3}s`,
+                        }}
+                      />
+                    </motion.div>
                     ))}
                 </AnimatePresence>
+
                 <div className="relative z-10 text-center bg-black/20 backdrop-blur-sm p-4 rounded-lg">
-                    <p className="text-5xl font-bold text-white drop-shadow-lg">{result.rating}<span className="text-3xl opacity-80">/33</span></p>
-                    <p className="text-2xl font-semibold text-white mt-2 drop-shadow-md font-headline">{result.label}</p>
+                  <p className="text-5xl font-bold text-white drop-shadow-lg">
+                    {result.rating}<span className="text-3xl opacity-80">/33</span>
+                  </p>
+                  <p className="text-2xl font-semibold text-white mt-2 drop-shadow-md font-headline">{result.label}</p>
                 </div>
             </div>
-        )}
-         {!isLoading && !error && !result && (
+            )}
+
+            {!isLoading && !error && !result && (
             <div className="text-center py-10 text-muted-foreground">Not enough data to analyze. Try a different date range.</div>
+            )}
+          </>
         )}
       </CardContent>
     </Card>
