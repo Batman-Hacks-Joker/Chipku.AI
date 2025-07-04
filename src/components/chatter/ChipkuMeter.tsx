@@ -52,6 +52,9 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
     analyzeSentiment();
   }, [messages, dateRange]);
 
+    // Calculate delay for each balloon to ensure the last one appears at 5 seconds
+ const staggeredDelay = result && result.balloons > 0 ? 5 / result.balloons : 0;
+
   return (
     <Card className="overflow-hidden">
       <CardHeader>
@@ -78,14 +81,14 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
                 <AnimatePresence>
                     {[...Array(result.balloons)].map((_, i) => (
                         <motion.div
+                            className="heart-balloon-large absolute bottom-0" // Apply the class for larger hearts and position at the bottom
                             key={i}
-                            initial={{ opacity: 0, y: 50, scale: 0.5 }}
-                            animate={{ opacity: 1, y: 0, scale: 1, transition: { delay: i * 0.05, duration: 0.5, ease: "easeOut" } }}
+                            initial={{ opacity: 0, y: 50, scale: 0.5, left: `${10 + Math.random() * 80}%` }} // Apply random horizontal position initially
+                            animate={{ opacity: 1, y: 0, scale: 1.5, transition: { delay: i * staggeredDelay, duration: 0.5, ease: "easeOut" } }} // Animate to final position with staggered delay and increased scale
                             exit={{ opacity: 0, scale: 0.5 }}
                         >
                             <HeartBalloon
                                 style={{
-                                left: `${10 + Math.random() * 80}%`,
                                 animation: `float ${4 + Math.random() * 4}s ease-in-out infinite`,
                                 animationDelay: `${Math.random() * 3}s`,
                                 }}
