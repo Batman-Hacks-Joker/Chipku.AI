@@ -73,19 +73,22 @@ export function TopWordsByUser({ messages, users }: TopWordsByUserProps) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="space-y-6">
-          {validUsers.map((user) => (
-            <div key={user} className="pb-4 border-b last:border-b-0">
-              <h3 className="text-lg font-semibold">{user}</h3>
-              <ul className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
-                {topWordsByUser[user].map(({ word, count }) => (
-                  <li key={word} className="text-sm text-muted-foreground">
-                    {word} ({count})
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+        {/* Scrollable container for user list */}
+        <div className="overflow-y-auto max-h-[400px] pr-2"> {/* Adjust max-height as needed and add pr-2 for scrollbar space */}
+          <div className="space-y-6">
+            {validUsers.map((user) => (
+              <div key={user} className="pb-4 border-b last:border-b-0">
+                <h3 className="text-lg font-semibold">{user}</h3>
+                <ul className="flex flex-wrap gap-x-4 gap-y-1 mt-2">
+                  {topWordsByUser[user].map(({ word, count }) => (
+                    <li key={word} className="text-sm text-muted-foreground">
+                      {word} ({count})
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </CardContent>
     </Card>
