@@ -5,7 +5,7 @@ import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxi
 import { format } from 'date-fns';
 
 import type { ChatMessage } from "@/lib/types";
-import { ChartTooltipContent } from "@/components/ui/chart";
+import { ChartTooltipContent, ChartContainer } from "@/components/ui/chart";
 import { CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 
@@ -36,6 +36,23 @@ export function WeeklyMessagesChart({ messages, users }: WeeklyMessagesChartProp
     return weeklyData;
   }, [messages, users]);
 
+  const chartConfig = React.useMemo(() => {
+    const baseConfig = {
+      name: {
+        label: "Day of Week",
+      },
+    };
+
+    users.forEach((user, index) => {
+      baseConfig[user] = {
+        label: user,
+        color: `hsl(var(--chart-${(index % 5) + 1}))`,
+      };
+    });
+
+    return baseConfig;
+  }, [users]);
+
   if (!data || messages.length === 0) {
      return (
         <div>
@@ -57,26 +74,28 @@ export function WeeklyMessagesChart({ messages, users }: WeeklyMessagesChartProp
         <CardDescription>Aggregated messages by day of the week.</CardDescription>
       </CardHeader>
       <div className="h-[250px] w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data}>
-            <CartesianGrid vertical={false} strokeDasharray="3 3" />
-            <XAxis dataKey="name" tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" fontSize={12} />
-            <YAxis tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" fontSize={12} />
-            <Tooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dot" />}
-            />
-             {users.map((user, index) => (
-              <Bar
-                key={user}
-                dataKey={user}
-                stackId="a"
-                fill={`hsl(var(--chart-${(index % 5) + 1}))`}
-                radius={[4, 4, 0, 0]}
+        <ChartContainer config={chartConfig}>
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={data}>
+              <CartesianGrid vertical={false} strokeDasharray="3 3" />
+              <XAxis dataKey="name" tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" fontSize={12} />
+              <YAxis tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" fontSize={12} />
+              <Tooltip
+                cursor={false}
+                content={<ChartTooltipContent indicator="dot" />}
               />
-            ))}
-          </BarChart>
-        </ResponsiveContainer>
+               {users.map((user, index) => (
+                <Bar
+                  key={user}
+                  dataKey={user}
+                  stackId="a"
+                  fill={`hsl(var(--chart-${(index % 5) + 1}))`}
+                  radius={[4, 4, 0, 0]}
+                />
+              ))}
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartContainer>
       </div>
     </>
   );

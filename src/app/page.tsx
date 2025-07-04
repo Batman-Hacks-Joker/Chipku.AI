@@ -126,7 +126,14 @@ export default function Home() {
   return (
     <div className="min-h-screen w-full p-4 md:p-8">
       <header className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-headline font-bold text-primary">{fileName}</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl md:text-4xl font-headline font-bold text-primary">{fileName}</h1>
+          <Button
+            variant="outline"
+            onClick={() => setParsedData(null)}
+          >
+            Choose Another File</Button>
+        </div>
         <p className="text-muted-foreground">Displaying insights for the selected date range.</p>
       </header>
       
