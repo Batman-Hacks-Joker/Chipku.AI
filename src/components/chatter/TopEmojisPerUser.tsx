@@ -1,3 +1,4 @@
+"use client";
 
 import * as React from "react";
 import {
@@ -38,12 +39,18 @@ export function TopEmojisPerUser({ messages, users }: TopEmojisPerUserProps) {
   React.useEffect(() => {
     const emojiCounts: Record<string, Record<string, number>> = {};
 
-    // Broad emoji regex (includes surrogate pairs and symbols)
-    const emojiRegex = /\p{Emoji_Presentation}|\p{Extended_Pictographic}/gu;
+    let emojiRegex: RegExp;
+    try {
+      // Safely attempt to compile advanced emoji regex
+      emojiRegex = new RegExp("\\p{Emoji_Presentation}|\\p{Extended_Pictographic}", "gu");
+    } catch {
+      // Fallback simple emoji matcher
+      emojiRegex = /([\u231A-\uD83E\uDDFF])/gu;
+    }
 
     messages.forEach((message) => {
       const user = message.author;
-      const content = message.content ?? message.message ?? "";
+      const content = message.message || message.content || "";
 
       const emojisInMessage = content.match(emojiRegex) || [];
 
@@ -59,7 +66,8 @@ export function TopEmojisPerUser({ messages, users }: TopEmojisPerUserProps) {
       .map((user) => {
         const emojiData = Object.entries(emojiCounts[user] || {})
           .map(([name, value]) => ({ name, value }))
-          .sort((a, b) => b.value - a.value);
+          .sort((a, b) => b.value - a.value)
+          .slice(0, 10);
         return { user, emojiData };
       })
       .filter((userData) => userData.emojiData.length > 0);
@@ -94,8 +102,8 @@ export function TopEmojisPerUser({ messages, users }: TopEmojisPerUserProps) {
                       cx="50%"
                       cy="50%"
                       outerRadius={80}
-                      label={({ name, percent }) =>
- `${(percent * 100).toFixed(0)}%`}
+                      paddingAngle={3}
+                      label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
                     >
                       {emojiData.map((entry, index) => (
                         <Cell
@@ -104,14 +112,17 @@ export function TopEmojisPerUser({ messages, users }: TopEmojisPerUserProps) {
                         />
                       ))}
                     </Pie>
- <Tooltip formatter={(value: number, name: string) => [`Count: ${value}`, `Emoji: ${name}`]} />
                     <Tooltip
-                      cursor={{ strokeDasharray: '3 3' }}
-                      wrapperStyle={{ zIndex: 1000 }}
-                      contentStyle={{ backgroundColor: '#f9f9f9', border: '1px solid #ccc' }}
-                      formatter={(value: number, name: string) => [`${value}`, name]}
+                      formatter={(value: number, name: string) => [
+                        `Count: ${value}`,
+                        `Emoji: ${name}`,
+                      ]}
                     />
-                    <Legend />
+                    <Legend
+                      layout="vertical"
+                      align="right"
+                      verticalAlign="middle"
+                    />
                   </PieChart>
                 </ResponsiveContainer>
                 <div className="border-b border-border pt-4" />
