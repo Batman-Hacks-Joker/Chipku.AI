@@ -50,8 +50,8 @@ export function MessageHeatmap({ messages }: MessageHeatmapProps) {
 
       <CardContent className="p-0">
         <div className="overflow-x-auto">
-          <div
-            className="grid grid-cols-[auto_repeat(24,_2rem)] gap-[2px] min-w-[52rem] text-xs"
+          <div className="mx-auto"
+            className="grid grid-cols-[auto_repeat(24,_2rem)] gap-[2px] min-w-[52rem] text-xs justify-items-center"
           >
             {/* Top-left corner empty cell */}
             <div></div>

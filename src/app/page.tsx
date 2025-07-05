@@ -26,7 +26,7 @@ import { HourlyMessagesChart } from "@/components/chatter/HourlyMessagesChart";
 import { MessageHeatmap } from "@/components/chatter/MessageHeatmap";
 import { RandomMessagePerUser } from "@/components/chatter/RandomMessagePerUser";
 import { TopWordsByUser } from "@/components/chatter/TopWordsByUser";
-// import { TopEmojisPerUser } from "@/components/chatter/TopEmojisPerUser";
+import { TopEmojisPerUser } from "@/components/chatter/TopEmojisPerUser";
 import { TopLongestMessages } from "@/components/chatter/TopLongestMessages";
 
 export default function Home() {
@@ -212,7 +212,7 @@ export default function Home() {
            <Card className="p-4"> <DailyMessagesChart messages={filteredMessages} dateRange={date} users={parsedData.users} /></Card>
  <Card className="p-4"><HourlyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
            <Card className="p-4"><MessageHeatmap messages={filteredMessages} users={parsedData.users} /></Card>
-{/* <Card className="p-4"><TopEmojisPerUser messages={filteredMessages} users={parsedData.users} /></Card> */}
+<Card className="p-4"><TopEmojisPerUser messages={filteredMessages} users={parsedData.users} /></Card>
            <Card className="p-4"><TopLongestMessages messages={filteredMessages} users={parsedData.users} /></Card>
  <Card className="p-4"><TopWordsByUser messages={filteredMessages} users={parsedData.users} /></Card>
            <Card className="p-4"><RandomMessagePerUser messages={filteredMessages} users={parsedData.users} /></Card>
