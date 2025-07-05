@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React, { useMemo } from "react";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { format, eachDayOfInterval, startOfDay } from 'date-fns';
 import { DateRange } from "react-day-picker";
@@ -11,15 +11,17 @@ import { CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 interface DailyMessagesChartProps {
   messages: ChatMessage[];
-  dateRange?: DateRange;
   users: string[];
 }
 
-export function DailyMessagesChart({ messages, dateRange, users }: DailyMessagesChartProps) {
-  const data = React.useMemo(() => {
-    if (!dateRange?.from || !dateRange?.to) return [];
+export function DailyMessagesChart({ messages, users }: DailyMessagesChartProps) {
+  const data = useMemo(() => {
+    if (messages.length === 0) return [];
 
-    const days = eachDayOfInterval({ start: dateRange.from, end: dateRange.to });
+    // Find the date range from the filtered messages
+    const minDate = messages.reduce((min, msg) => (msg.timestamp < min ? msg.timestamp : min), messages[0].timestamp);
+    const maxDate = messages.reduce((max, msg) => (msg.timestamp > max ? msg.timestamp : max), messages[0].timestamp);
+    const days = eachDayOfInterval({ start: startOfDay(minDate), end: startOfDay(maxDate) });
     const userColors = ["hsl(var(--chart-1))", "hsl(var(--chart-2))", "hsl(var(--chart-3))", "hsl(var(--chart-4))", "hsl(var(--chart-5))"];
 
     const chartData = days.map(day => {
@@ -42,11 +44,11 @@ export function DailyMessagesChart({ messages, dateRange, users }: DailyMessages
         }
     });
 
-    return Array.from(dateMap.values());
+    return Array.from(dateMap.values()).sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-  }, [messages, dateRange, users]);
+  }, [messages, users]);
 
-  const chartConfig = React.useMemo(() => {
+  const chartConfig = useMemo(() => {
     const baseConfig: ChartConfig = {
       date: {
         label: "Date",
