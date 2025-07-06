@@ -6,7 +6,7 @@ import { DateRange } from "react-day-picker";
 import { Calendar as CalendarIcon, Loader2 } from "lucide-react";
 
 import type { ParsedChatData, ChatMessage } from "@/lib/types";
-
+import { Github } from "lucide-react";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { parseChatFile } from "@/lib/chat-parser";
@@ -174,153 +174,183 @@ export default function Home() {
       <main className="min-h-screen flex flex-col items-center justify-center p-4">
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
-            Chatter Insights
+            Chipku AI💕
           </h1>
           <p className="text-muted-foreground mt-2 max-w-xl mx-auto">
-            Upload your .txt chat log to uncover fascinating insights, analyze trends, and even ask our AI questions about your conversations.
+            Upload your .txt Whatsapp chat to uncover fascinating insights, analyze your chat Sentiments, and even ask our AI questions about your conversations💯
           </p>
         </div>
         <FileUpload onFileProcessed={handleFileProcessed} />
-        <p className="text-xs text-muted-foreground mt-4">Your data is processed on your device and never stored on our servers.</p>
+        <p className="text-xs text-muted-foreground mt-4">Your data is processed on your device and never stored on our servers✌🏻</p>
       </main>
     );
   }
 
   return (
-    <div className="min-h-screen w-full p-4 md:p-8">
-      <header className="mb-8">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl md:text-4xl font-headline font-bold text-primary">{fileName}</h1>
-          <div className="flex gap-4">
-            <AlertDialog open={isExportDialogOpen} onOpenChange={setIsExportDialogOpen}>
-              <AlertDialogTrigger asChild>
-                <Button variant="outline" className="hover:bg-red-100 hover:text-red-600 transition-colors">
-                  Export
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Select Components to Export</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Choose which sections of the analysis you want to include in the PDF export.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <div className="grid grid-cols-2 gap-4 max-h-60 overflow-y-auto">
-                  {Object.keys(componentsToExport).map((componentName) => (
-                    <div key={componentName} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
- id={`export-${componentName.replace(/\s+/g, '-').toLowerCase()}`}
-                        checked={selectedComponents.includes(componentName)}
- onChange={(e) => {
-                          setSelectedComponents((prev) =>
- e.target.checked
- ? [...prev, componentName]
- : prev.filter(
-                                  (name) => name !== componentName
-                                )
-                          );
-                        }}
-                        className="form-checkbox h-4 w-4 text-primary rounded border-gray-300 focus:ring-primary"
-                      />
-                      <label
-                        htmlFor={componentName.replace(/\s+/g, '-').toLowerCase()}
- className="text-sm font-medium leading-none cursor-pointer"
-                      >
-                        {componentName}
-                      </label>
+    <> {/* Use a Fragment as the root element */}
+      {isLoading ? (
+        <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
+          <Loader2 className="h-16 w-16 animate-spin text-primary mb-4" />
+          <h1 className="text-2xl font-headline font-semibold text-primary">Analyzing your chat...</h1>
+          <p className="text-muted-foreground">This might take a moment.</p>
+        </div>
+      ) : !parsedData ? (
+        <main className="min-h-screen flex flex-col items-center justify-center p-4">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
+              Chipku AI💕
+            </h1>
+            <p className="text-muted-foreground mt-2 max-w-xl mx-auto">
+              Upload your .txt Whatsapp chat to uncover fascinating insights, analyze your chat Sentiments, and even ask our AI questions about your conversations💯
+            </p>
+          </div>
+          <FileUpload onFileProcessed={handleFileProcessed} />
+          <p className="text-xs text-muted-foreground mt-4">Your data is processed on your device and never stored on our servers✌🏻</p>
+        </main>
+      ) : (
+        <div className="flex flex-col min-h-screen w-full p-4 md:p-8">
+          <header className="mb-8">
+            <div className="flex items-center justify-between">
+              <h1 className="text-3xl md:text-4xl font-headline font-bold text-primary">{fileName}</h1>
+              <div className="flex gap-4">
+                <AlertDialog open={isExportDialogOpen} onOpenChange={setIsExportDialogOpen}>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="outline" className="hover:bg-red-100 hover:text-red-600 transition-colors">
+                      Export 🏹
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Select Components to Export 📩</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Exporting takes 10-15 seconds as your file needs to be Compressed, Please be patient ❗❗❗
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <div className="grid grid-cols-2 gap-4 max-h-60 overflow-y-auto">
+                      {Object.keys(componentsToExport).map((componentName) => (
+                        <div key={componentName} className="flex items-center space-x-2">
+                          <input
+                            type="checkbox"
+                            id={`export-${componentName.replace(/\s+/g, '-').toLowerCase()}`}
+                            checked={selectedComponents.includes(componentName)}
+                            onChange={(e) => {
+                              setSelectedComponents((prev) =>
+                                e.target.checked
+                                  ? [...prev, componentName]
+                                  : prev.filter(
+                                      (name) => name !== componentName
+                                    )
+                              );
+                            }}
+                            className="form-checkbox h-4 w-4 text-primary rounded border-gray-300 focus:ring-primary"
+                          />
+                          <label
+                            htmlFor={componentName.replace(/\s+/g, '-').toLowerCase()}
+                            className="text-sm font-medium leading-none cursor-pointer"
+                          >
+                            {componentName}
+                          </label>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                    <AlertDialogFooter>
+                      <AlertDialogCancel onClick={() => setIsExportDialogOpen(false)}>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={handleExportPDF} >Export Selected</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+                <Button variant="outline" onClick={() => setParsedData(null)}>Choose File 📂</Button>
+              </div>
+            </div>
+            <p className="text-muted-foreground">Displaying insights for the selected date range.</p>
+          </header>
+
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+
+            <aside className="xl:col-span-3 space-y-6">
+              <Card className="p-4 space-y-4 sticky top-6">
+                <h2 className="font-headline text-lg font-semibold">Timeline</h2>
+                <div className="grid gap-2">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        id="date"
+                        variant={"outline"}
+                        className={cn(
+                          "w-full justify-start text-left font-normal",
+                          !date && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {date?.from ? (
+                          date.to ? (
+                            <>
+                              {format(date.from, "LLL dd, y")} -{" "}
+                              {format(date.to, "LLL dd, y")}
+                            </>
+                          ) : (
+                            format(date.from, "LLL dd, y")
+                          )
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        initialFocus
+                        mode="range"
+                        defaultMonth={date?.from}
+                        selected={date}
+                        onSelect={setDate}
+                        numberOfMonths={2}
+                        disabled={(day) => day < parsedData.startDate! || day > parsedData.endDate!}
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
-                <AlertDialogFooter>
-                  <AlertDialogCancel onClick={() => setIsExportDialogOpen(false)}>Cancel</AlertDialogCancel>
-                  <AlertDialogAction
-                    onClick={handleExportPDF} >Export Selected</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-            <Button variant="outline" onClick={() => setParsedData(null)}>Choose Another File</Button>
+                <Button onClick={handleApplyClick} className="w-full bg-accent hover:bg-accent/90">Apply Changes</Button>
+                <div className="text-xs text-muted-foreground space-y-1 pt-2">
+                    <p><strong>First Message:</strong> {format(parsedData.startDate!, "PPP")}</p>
+                    <p><strong>Last Message:</strong> {format(parsedData.endDate!, "PPP")}</p>
+                </div>
+              </Card>
+              <AskAI messages={filteredMessages} dateRange={date} />
+            </aside>
+
+            <main className="xl:col-span-9 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <StatCard title="Total Messages 💬 " value={stats.totalMessages.toLocaleString()} />
+                <StatCard title="Total Words ✍️ " value={stats.totalWords.toLocaleString()} />
+                <StatCard title="Active Users 🙋‍♂️ " value={parsedData.users.length} />
+                 <StatCard title="Days Analyzed 🧐 " value={date?.from && date?.to ? (Math.round((date.to.getTime() - date.from.getTime()) / (1000 * 3600 * 24)) + 1) : 0} />
+              </div>
+
+              <ChipkuMeter messages={filteredMessages} dateRange={date} />
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card className="p-4" id="messages-per-user-chart"><MessagesPerUserChart messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
+                <Card className="p-4" id="weekly-messages-chart"><WeeklyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
+              </div>
+               <Card className="p-4" id="daily-messages-chart"> <DailyMessagesChart messages={filteredMessages} dateRange={date} users={parsedData.users} /></Card> {/* Added ID */}
+     <Card className="p-4" id="hourly-messages-chart"><HourlyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
+               <Card className="p-4" id="message-heatmap"><MessageHeatmap messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
+    <Card className="p-4" id="top-emojis-per-user"><TopEmojisPerUser messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
+               <Card className="p-4" id="top-longest-messages"><TopLongestMessages messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
+     <Card className="p-4" id="top-words-by-user"><TopWordsByUser messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
+               <Card className="p-4" id="random-message-per-user"><RandomMessagePerUser messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
+            </main>
+
           </div>
         </div>
-        <p className="text-muted-foreground">Displaying insights for the selected date range.</p>
-      </header>
-      
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-
-        <aside className="xl:col-span-3 space-y-6">
-          <Card className="p-4 space-y-4 sticky top-6">
-            <h2 className="font-headline text-lg font-semibold">Controls</h2>
-            <div className="grid gap-2">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    id="date"
-                    variant={"outline"}
-                    className={cn(
-                      "w-full justify-start text-left font-normal",
-                      !date && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date?.from ? (
-                      date.to ? (
-                        <>
-                          {format(date.from, "LLL dd, y")} -{" "}
-                          {format(date.to, "LLL dd, y")}
-                        </>
-                      ) : (
-                        format(date.from, "LLL dd, y")
-                      )
-                    ) : (
-                      <span>Pick a date</span>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    initialFocus
-                    mode="range"
-                    defaultMonth={date?.from}
-                    selected={date}
-                    onSelect={setDate}
-                    numberOfMonths={2}
-                    disabled={(day) => day < parsedData.startDate! || day > parsedData.endDate!}
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-            <Button onClick={handleApplyClick} className="w-full bg-accent hover:bg-accent/90">Apply Changes</Button>
-            <div className="text-xs text-muted-foreground space-y-1 pt-2">
-                <p><strong>First Message:</strong> {format(parsedData.startDate!, "PPP")}</p>
-                <p><strong>Last Message:</strong> {format(parsedData.endDate!, "PPP")}</p>
-            </div>
-          </Card>
-          <AskAI messages={filteredMessages} dateRange={date} />
-        </aside>
-
-        <main className="xl:col-span-9 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <StatCard title="Total Messages" value={stats.totalMessages.toLocaleString()} />
-            <StatCard title="Total Words" value={stats.totalWords.toLocaleString()} />
-            <StatCard title="Active Users" value={parsedData.users.length} />
-             <StatCard title="Days Analyzed" value={date?.from && date?.to ? (Math.round((date.to.getTime() - date.from.getTime()) / (1000 * 3600 * 24)) + 1) : 0} />
-          </div>
-          
-          <ChipkuMeter messages={filteredMessages} dateRange={date} />
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="p-4" id="messages-per-user-chart"><MessagesPerUserChart messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
-            <Card className="p-4" id="weekly-messages-chart"><WeeklyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
-          </div>
-           <Card className="p-4" id="daily-messages-chart"> <DailyMessagesChart messages={filteredMessages} dateRange={date} users={parsedData.users} /></Card> {/* Added ID */}
- <Card className="p-4" id="hourly-messages-chart"><HourlyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
-           <Card className="p-4" id="message-heatmap"><MessageHeatmap messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
-<Card className="p-4" id="top-emojis-per-user"><TopEmojisPerUser messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
-           <Card className="p-4" id="top-longest-messages"><TopLongestMessages messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
- <Card className="p-4" id="top-words-by-user"><TopWordsByUser messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
-           <Card className="p-4" id="random-message-per-user"><RandomMessagePerUser messages={filteredMessages} users={parsedData.users} /></Card> {/* Added ID */}
-        </main>
-      </div>
-    </div>
+      )}
+      <footer className="w-full text-center p-4 text-muted-foreground flex flex-col items-center gap-2">
+        <span>Made with 💖 for 💖</span>
+        <a href="https://github.com/Batman-Hacks-Joker" target="_blank" rel="noopener noreferrer">
+        <Github className="w-6 h-6" />
+        </a>
+      </footer>
+    </> // Closing Fragment
   );
 }

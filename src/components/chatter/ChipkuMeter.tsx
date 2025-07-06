@@ -100,7 +100,7 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
           <CardTitle className="font-headline">Chipku Meter</CardTitle>
         </div>
         <CardDescription>
-          Relationship strength analysis based on chat sentiment.
+          Check your relationship strength using Chipku AI
         </CardDescription>
       </CardHeader>
       <CardContent className="relative flex-grow flex flex-col items-center justify-center min-h-[200px] w-full p-4">

@@ -63,7 +63,7 @@ export function HourlyMessagesChart({ messages, users }: HourlyMessagesChartProp
       <>
         <CardHeader>
           <CardTitle className="font-headline">Hourly Distribution</CardTitle>
-          <CardDescription>How chat activity is spread throughout the day.</CardDescription>
+          <CardDescription>Which person sent the most messages at what time?</CardDescription>
         </CardHeader>
         <div className="h-[350px] w-full flex items-center justify-center text-muted-foreground">
           No messages to analyze.
@@ -76,7 +76,7 @@ export function HourlyMessagesChart({ messages, users }: HourlyMessagesChartProp
     <>
       <CardHeader>
         <CardTitle className="font-headline">Hourly Distribution</CardTitle>
-        <CardDescription>How chat activity is spread throughout the day.</CardDescription>
+        <CardDescription>Which person sent the most messages at what time 🕓⁉️ </CardDescription>
       </CardHeader>
 
       {/* Applied height class */}
