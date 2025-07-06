@@ -137,7 +137,7 @@ export default function Home() {
       const element = document.getElementById(componentName.replace(/\s+/g, '-').toLowerCase());
 
       if (element) {
-        const canvas = await html2canvas(element);
+        const canvas = await html2canvas(element, { scale: 0.8 }); // Reduced scale for potentially smaller file size
         const imgData = canvas.toDataURL('image/png');
         const imgProps = pdf.getImageProperties(imgData);
         const pdfWidth = pdf.internal.pageSize.getWidth() - 2 * margin;
@@ -152,7 +152,10 @@ export default function Home() {
       }
     }
 
-    pdf.save(`${fileName}_chatter_insights.pdf`);
+    // Remove .txt extension and append the desired suffix
+    const baseFileName = fileName.replace(/\.txt$/, '');
+    pdf.save(`${baseFileName}_chipku_AI_fanatiAK💖🧿.pdf`);
+
     setIsExportDialogOpen(false);
   };
 
