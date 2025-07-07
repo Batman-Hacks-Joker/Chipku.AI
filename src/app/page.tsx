@@ -4,7 +4,7 @@ import * as React from "react";
 import { addDays, startOfDay, format } from "date-fns";
 import { DateRange } from "react-day-picker";
 import { Calendar as CalendarIcon, Loader2 } from "lucide-react";
-
+import { Clock } from "lucide-react";
 import type { ParsedChatData, ChatMessage } from "@/lib/types";
 import { Github } from "lucide-react";
 import html2canvas from 'html2canvas';
@@ -215,8 +215,8 @@ export default function Home() {
               <div className="flex gap-4">
                 <AlertDialog open={isExportDialogOpen} onOpenChange={setIsExportDialogOpen}>
                   <AlertDialogTrigger asChild>
-                    <Button variant="outline" className="hover:bg-red-100 hover:text-red-600 transition-colors">
-                      Export 🏹
+ <Button className="bg-red-500 text-white hover:bg-red-600">
+                      Export 🏹 
                     </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
@@ -263,14 +263,16 @@ export default function Home() {
                 <Button variant="outline" onClick={() => setParsedData(null)}>Choose File 📂</Button>
               </div>
             </div>
-            <p className="text-muted-foreground">Displaying insights for the selected date range.</p>
+            <p className="text-muted-foreground">so do you like, what you see 👀⁉️ </p>
           </header>
 
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
 
             <aside className="xl:col-span-3 space-y-6">
               <Card className="p-4 space-y-4 sticky top-6">
-                <h2 className="font-headline text-lg font-semibold">Timeline</h2>
+                <h2 className="font-headline text-xl font-semibold flex items-center gap-2">
+ <Clock className="w-5 h-5 text-purple-600" /> Timeline
+ </h2>
                 <div className="grid gap-2">
                   <Popover>
                     <PopoverTrigger asChild>

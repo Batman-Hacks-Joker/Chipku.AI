@@ -8,6 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts"
+import { Users } from "lucide-react"
 
 import type { ChatMessage } from "@/lib/types"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
@@ -38,7 +39,9 @@ export function MessagesPerUserChart({ messages, users }: MessagesPerUserChartPr
   if (!data || data.every(d => d.value === 0)) {
      return (
         <div>
-            <CardHeader>
+            <CardHeader className="flex flex-row items-center space-x-2 pb-2">
+                <Users className="h-5 w-5 text-purple-600" />
+
                 <CardTitle className="font-headline">Messages Per User</CardTitle>
                 <CardDescription>Distribution of messages sent by each person.</CardDescription>
             </CardHeader>
@@ -52,7 +55,9 @@ export function MessagesPerUserChart({ messages, users }: MessagesPerUserChartPr
   return (
     <>
       <CardHeader>
-        <CardTitle className="font-headline">Messages Per User</CardTitle>
+        <CardTitle className="font-headline flex items-center gap-2">
+ <Users className="h-5 w-5 text-purple-600" /> Messages per User
+ </CardTitle>
         <CardDescription>Distribution of messages sent by each person.</CardDescription>
       </CardHeader>
       <CardContent>

@@ -10,8 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { format } from "date-fns";
-
+import { CalendarClock } from "lucide-react";
 import type { ChatMessage } from "@/lib/types";
 import { ChartTooltipContent, ChartContainer } from "@/components/ui/chart";
 import { CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -63,8 +62,11 @@ export function WeeklyMessagesChart({ messages, users }: WeeklyMessagesChartProp
   if (!data || messages.length === 0) {
     return (
       <>
-        <CardHeader>
-          <CardTitle className="font-headline">Weekly Activity</CardTitle>
+        <CardHeader className="flex flex-col items-start">
+          <div className="flex items-center gap-2">
+            <CalendarClock className="w-5 h-5 text-purple-600" />
+            <CardTitle className="font-headline">Weekly Activity</CardTitle>
+          </div>
           <CardDescription>Messages by day of the week.</CardDescription>
         </CardHeader>
         <div className="h-[250px] w-full flex items-center justify-center text-muted-foreground">
@@ -76,8 +78,11 @@ export function WeeklyMessagesChart({ messages, users }: WeeklyMessagesChartProp
 
   return (
     <>
-      <CardHeader>
-        <CardTitle className="font-headline">Weekly Activity</CardTitle>
+      <CardHeader className="flex flex-col items-start">
+        <div className="flex items-center gap-2 mb-1">
+          <CalendarClock className="w-5 h-5 text-purple-600" />
+          <CardTitle className="font-headline">Weekly Activity</CardTitle>
+        </div>
         <CardDescription>Aggregated messages by day of the week.</CardDescription>
       </CardHeader>
 

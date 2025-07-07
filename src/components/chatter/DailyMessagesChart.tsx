@@ -5,6 +5,7 @@ import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxi
 import { format, eachDayOfInterval, startOfDay } from 'date-fns';
 import { DateRange } from "react-day-picker";
 import { ChartTooltipContent, ChartContainer, ChartConfig } from "@/components/ui/chart";
+import { Calendar } from "lucide-react";
 
 import type { ChatMessage } from "@/lib/types";
 import { CardHeader, CardTitle, CardDescription } from "@/components/ui/card";

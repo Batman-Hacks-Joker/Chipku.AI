@@ -96,7 +96,7 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
     <Card className="overflow-hidden">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Heart className="text-primary" />
+ <Heart className="text-purple-600" />
           <CardTitle className="font-headline">Chipku Meter</CardTitle>
         </div>
         <CardDescription>
