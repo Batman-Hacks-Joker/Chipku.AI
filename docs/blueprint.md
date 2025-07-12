@@ -1,4 +1,4 @@
-# **App Name**: Chatter Insights
+# **App Name**: Chipku AI by FanatiAK
 
 ## Core Features:
 

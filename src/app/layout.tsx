@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'Chatter Insights',
+  title: 'Chipku AI by FanatiAK',
   description: 'Get beautiful data insights from your chat data.',
 };
 

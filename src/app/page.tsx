@@ -5,8 +5,7 @@ import { addDays, startOfDay, format } from "date-fns";
 import { DateRange } from "react-day-picker";
 import { Calendar as CalendarIcon, Loader2 } from "lucide-react";
 import { Clock } from "lucide-react";
-import type { ParsedChatData, ChatMessage } from "@/lib/types";
-import { Github } from "lucide-react";
+import type { ParsedChatData, ChatMessage } from "@/lib/types";import { Github } from "lucide-react";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { parseChatFile } from "@/lib/chat-parser";
@@ -31,9 +30,11 @@ import { RandomMessagePerUser } from "@/components/chatter/RandomMessagePerUser"
 import { TopWordsByUser } from "@/components/chatter/TopWordsByUser";
 import { TopEmojisPerUser } from "@/components/chatter/TopEmojisPerUser";
 import { TopLongestMessages } from "@/components/chatter/TopLongestMessages";
+import Footer from "@/components/ui/Footer";
 
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 export default function Home() {
+
   const { toast } = useToast();
   const [parsedData, setParsedData] = React.useState<ParsedChatData | null>(null);
   const [filteredMessages, setFilteredMessages] = React.useState<ChatMessage[]>([]);
@@ -223,7 +224,8 @@ export default function Home() {
                     <AlertDialogHeader>
                       <AlertDialogTitle>Select Components to Export 📩</AlertDialogTitle>
                       <AlertDialogDescription>
-                        Exporting takes 10-15 seconds as your file needs to be Compressed, Please be patient ❗❗❗
+                        Exporting takes <span style = {{color: 'white', backgroundColor: 'red', fontWeight: 'bold'}}> 10-15 seconds</span> as your file needs to be Compressed, {' '}
+                        <span style={{ color: 'white', backgroundColor: 'red', fontWeight: 'bold' }}>more the selection more the time, Please be patient ❗❗❗</span>
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <div className="grid grid-cols-2 gap-4 max-h-60 overflow-y-auto">
@@ -347,12 +349,7 @@ export default function Home() {
           </div>
         </div>
       )}
-      <footer className="w-full text-center p-4 text-muted-foreground flex flex-col items-center gap-2">
-        <span>Made with 💖 for 💖</span>
-        <a href="https://github.com/Batman-Hacks-Joker" target="_blank" rel="noopener noreferrer">
-        <Github className="w-6 h-6" />
-        </a>
-      </footer>
+ <Footer />
     </> // Closing Fragment
   );
 }
