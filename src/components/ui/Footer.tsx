@@ -8,15 +8,18 @@ const Footer: React.FC = () => {
   return (
     <>
       <footer className="footer">
-        <span>Made with 💖 for 💖 - by FanatiAK (Batman-Hacks-Joker)</span>
-        <a
-          href="https://github.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="github-link"
-        >
-          <Github width={24} height={24} />
-        </a>
+        <span className="first-line">Made with 💖 for 💖</span>
+        <div className="second-line">
+          <a
+            href="https://github.com/Batman-Hacks-Joker"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="github-link"
+          >
+            <Github width={20} height={20} stroke='black' fill='black'/>
+          </a>
+          <span style={{ textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: '8px' }} >- by FanatiAK or (github.com/Batman-Hacks-Joker)</span>
+        </div>
       </footer>
 
       {/* Emoji Carousel */}
@@ -41,6 +44,18 @@ const Footer: React.FC = () => {
           flex-direction: column;
           align-items: center;
           gap: 8px;
+        }
+
+        .first-line {
+          font-weight: bold;
+          cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><text x="50%" y="50%" style="dominant-baseline:central; text-anchor:middle; font-size: 30px;">💕</text></svg>') 20 20, auto;
+        }
+
+        .second-line {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><text x="50%" y="50%" style="dominant-baseline:central; text-anchor:middle; font-size: 30px;">😎</text></svg>') 20 20, auto;
         }
 
         .github-link {

@@ -31,6 +31,7 @@ import { TopWordsByUser } from "@/components/chatter/TopWordsByUser";
 import { TopEmojisPerUser } from "@/components/chatter/TopEmojisPerUser";
 import { TopLongestMessages } from "@/components/chatter/TopLongestMessages";
 import Footer from "@/components/ui/Footer";
+import FloatingActionButton from "@/components/ui/FloatingActionButton";
 
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 export default function Home() {
@@ -224,8 +225,8 @@ export default function Home() {
                     <AlertDialogHeader>
                       <AlertDialogTitle>Select Components to Export 📩</AlertDialogTitle>
                       <AlertDialogDescription>
-                        Exporting takes <span style = {{color: 'white', backgroundColor: 'red', fontWeight: 'bold'}}> 10-15 seconds</span> as your file needs to be Compressed, {' '}
-                        <span style={{ color: 'white', backgroundColor: 'red', fontWeight: 'bold' }}>more the selection more the time, Please be patient ❗❗❗</span>
+                        Exporting takes <span style = {{color: 'white', backgroundColor: 'red', fontWeight: 'bold'}}> 10-15 seconds</span> as your file is being Compressed, {' '}
+                        <span style={{ color: 'white', backgroundColor: 'red', fontWeight: 'bold' }}>more selections take a little longer, Please be patient</span> ❗❗❗
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <div className="grid grid-cols-2 gap-4 max-h-60 overflow-y-auto">
@@ -262,7 +263,7 @@ export default function Home() {
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
-                <Button variant="outline" onClick={() => setParsedData(null)}>Choose File 📂</Button>
+                <Button variant="outline" onClick={() => setParsedData(null)}>Upload 📂</Button>
               </div>
             </div>
             <p className="text-muted-foreground">so do you like, what you see 👀⁉️ </p>
@@ -350,6 +351,7 @@ export default function Home() {
         </div>
       )}
  <Footer />
+ <FloatingActionButton />
     </> // Closing Fragment
   );
 }
