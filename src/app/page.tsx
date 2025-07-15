@@ -46,6 +46,10 @@ export default function Home() {
   const [isExportDialogOpen, setIsExportDialogOpen] = React.useState(false);
   const [selectedComponents, setSelectedComponents] = React.useState<string[]>([]);
   const handleFileProcessed = async (content: string, name: string) => {
+    /**
+ * Processes a file and updates the application state with the parsed chat data.
+ * @param content The content of the chat file.
+ * @param name The name of the file. */
     setIsLoading(true);
     setFileName(name);
     try {
@@ -159,6 +163,11 @@ export default function Home() {
     pdf.save(`${baseFileName}_chipku_AI_fanatiAK💖🧿.pdf`);
 
     setIsExportDialogOpen(false);
+  };
+
+  const resetParsedData = () => {
+    /** Resets the parsed chat data, returning the view to the file upload state. */
+    setParsedData(null);
   };
 
   if (isLoading) {
@@ -351,7 +360,7 @@ export default function Home() {
         </div>
       )}
  <Footer />
- <FloatingActionButton />
+ <FloatingActionButton onHomeClick={resetParsedData} />
     </> // Closing Fragment
   );
 }
