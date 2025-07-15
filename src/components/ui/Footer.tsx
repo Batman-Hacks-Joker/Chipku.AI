@@ -2,7 +2,7 @@ import React from 'react';
 import { Github } from 'lucide-react';
 
 const Footer: React.FC = () => {
-  const emojis = '😊💋😂👍😳😠🥳🔥🥺🧡😉🤓😈😍🤪🥰😘👻😏😡💖👀😤😆✨🤭🧐😪';
+  const emojis = '😊💋😂👍😳😠🥳🔥🥺🧡😉🥱🤓😈😍🤪🥰😘👻😏😡💖👀😤😆✨🤭🧐😪';
   const repeatedEmojis = emojis.repeat(5); // Repeat emojis for smooth loop
 
   return (

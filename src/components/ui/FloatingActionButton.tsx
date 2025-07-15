@@ -8,38 +8,38 @@ const FloatingActionButton: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
-  const emoji = isOpen ? '😱' : (isHovered ? '😯' : '😳');
+  const emoji = isOpen ? '😱' : isHovered ? '😯' : '😳';
+
+  const buttons = [
+    '🏛️ Home Page',
+    '👌🏻 Signup/Login',
+    '☠️ Correlation',
+    '🌓 Dark Mode',
+    '🤑 Donate Me',
+  ];
 
   return (
-    <div className="fixed bottom-4 right-4 flex flex-col items-end">
-      {isOpen && (
-        <div
-          className="flex flex-col items-end space-y-2 mb-2 transition-all duration-300 ease-in-out transform origin-bottom-right
-                     opacity-100 scale-100"
-        >
-          {/* Placeholder buttons */}
-          <button className="p-2 bg-red-500 text-black font-bold rounded-full shadow-lg">
-            <span className="text-white font-bold">Home</span>
+    <div className="fixed bottom-4 right-4 flex flex-col items-end z-50">
+      <div className="flex flex-col items-end space-y-2 mb-2 origin-bottom-right">
+        {buttons.map((label, index) => (
+          <button
+            key={label}
+            className={`p-2 bg-red-500 text-white font-bold rounded-full shadow-lg transform transition-all
+              duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] 
+              ${isOpen ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-8 scale-75'}
+              delay-[${index * 100}ms]
+            `}
+          >
+            {label}
           </button>
-          <button className="p-2 bg-red-500 text-black font-bold rounded-full shadow-lg">
-            <span className="text-white font-bold">Signup</span>
-          </button>
-          <button className="p-2 bg-red-500 text-black font-bold rounded-full shadow-lg">
-            <span className="text-white font-bold">Correlation</span>
-          </button>
-          <button className="p-2 bg-red-500 text-black font-bold rounded-full shadow-lg">
-            <span className="text-white font-bold">Dark</span>
-          </button>
-          <button className="p-2 bg-red-500 text-white font-bold rounded-full shadow-lg">
-            <span className="text-white font-bold">Donate</span>
-          </button>
-        </div>
-      )}
+        ))}
+      </div>
       <button
-        className="p-2 text-6xl"
+        className="p-2 text-6xl transition-transform transform hover:scale-110"
         onClick={toggleOpen}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        aria-label="Toggle action buttons"
       >
         {emoji}
       </button>

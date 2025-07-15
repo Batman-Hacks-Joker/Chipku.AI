@@ -217,7 +217,7 @@ export default function Home() {
               <div className="flex gap-4">
                 <AlertDialog open={isExportDialogOpen} onOpenChange={setIsExportDialogOpen}>
                   <AlertDialogTrigger asChild>
- <Button className="bg-red-500 text-white hover:bg-red-600">
+                    <Button className="bg-red-500 text-white hover:bg-red-600"> 
                       Export 🏹 
                     </Button>
                   </AlertDialogTrigger>
