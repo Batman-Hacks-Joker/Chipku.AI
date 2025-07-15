@@ -40,14 +40,14 @@ const analyzeRelationshipSentimentPrompt = ai.definePrompt({
   prompt: `You are an AI that analyzes chat data between two people to determine the strength of their relationship based on sentiment analysis.  Provide the rating out of 33.
 
   Here's the criteria for the rating:
-  - new bond( 0-5)
-  - common friend (6-10)
-  - good friend (11-15)
-  - best friends (16-20)
-  - GF-BF (21-26)
-  - strong lover (27-30)
-  - beyond husband-wife (31-32)
-  - you guys are GOD (33)
+  - new Bond( 0-5)
+  - common Friend (6-10)
+  - good Friend (11-15)
+  - best Friend (16-20)
+  - pookie Couple (21-26)
+  - intimate Lovers (27-30)
+  - beyond Husband-Wife (31-32)
+  - you Both are GODs !!! (33)
 
   Given the following chat data between {{{startDate}}} and {{{endDate}}}, analyze the sentiment to determine the relationship strength. Return the rating (0-33), the number of balloons which is the same as rating and label indicating relationship strength.
 
