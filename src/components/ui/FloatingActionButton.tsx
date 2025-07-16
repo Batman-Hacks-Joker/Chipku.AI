@@ -9,7 +9,16 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  // Detect mobile screen
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const toggleOpen = () => {
     setIsOpen((prev) => !prev);
@@ -40,7 +49,6 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
         setIsOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
@@ -52,7 +60,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
           <button
             key={btn.label}
             className={`
-              px-6 py-4 text-lg
+              px-4 py-3 text-sm md:text-lg flex items-center space-x-2
               ${btn.label === '☠️' ? 'bg-yellow-500' : 'bg-red-500'}
               text-white font-bold rounded-full shadow-lg transform transition-all
               duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
@@ -61,10 +69,14 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
             `}
             style={{ transitionDelay: `${index * 100}ms` }}
             onClick={() => handleButtonClick(btn.route)}
-            onMouseEnter={(e) => (e.currentTarget.textContent = btn.hover)}
-            onMouseLeave={(e) => (e.currentTarget.textContent = btn.label)}
+            {...(!isMobile && {
+              onMouseEnter: (e) => (e.currentTarget.textContent = btn.hover),
+              onMouseLeave: (e) => (e.currentTarget.textContent = btn.label),
+            })}
+            title={btn.hover} // Always show title
           >
             {btn.label}
+            {isMobile && isOpen && <span className="ml-2">{btn.hover.replace(/^.*?\s/, '')}</span>}
           </button>
         ))}
       </div>
