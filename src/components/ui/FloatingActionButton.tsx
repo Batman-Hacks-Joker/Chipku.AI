@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import useDarkMode from '@/hooks/use-dark-mode'; // Ensure this hook is stable and SSR-compatible
 
 interface FloatingActionButtonProps {
   onHomeClick: () => void;
@@ -11,8 +12,9 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const [isDarkMode, toggleDarkMode] = useDarkMode();
 
-  // Detect mobile screen
+  // Detect screen size
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
     checkMobile();
@@ -20,9 +22,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const toggleOpen = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const toggleOpen = () => setIsOpen((prev) => !prev);
 
   const emoji = isOpen ? '😱' : isHovered ? '😯' : '😳';
 
@@ -30,15 +30,18 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
     { label: '🏛️', hover: '🏛️ Home Page', route: '/' },
     { label: '✍️', hover: '✍️ Signup/Login', route: '/login' },
     { label: '☠️', hover: '☠️ Correlation', route: '/correlation' },
-    { label: '🌓', hover: '🌓 Dark Mode', route: '/dark' },
     { label: '🤑', hover: '🤑 Donate Me', route: '/donate' },
   ];
 
+  const darkModeButton = {
+    label: isDarkMode ? '💡' : '🌙',
+    hover: isDarkMode ? '💡 Light Mode' : '🌙 Dark Mode',
+    onClick: toggleDarkMode,
+  };
+
   const handleButtonClick = (route?: string) => {
-    if (route === '/' && onHomeClick) {
-      onHomeClick();
-    }
     setIsOpen(false);
+    if (route === '/' && onHomeClick) onHomeClick();
     if (route) router.push(route);
   };
 
@@ -53,10 +56,22 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const getHoverHandlers = (hoverText: string, labelText: string) => {
+    if (isMobile) return {};
+    return {
+      onMouseEnter: (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.currentTarget.textContent = hoverText;
+      },
+      onMouseLeave: (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.currentTarget.textContent = labelText;
+      },
+    };
+  };
+
   return (
     <div ref={wrapperRef} className="fixed bottom-4 right-4 flex flex-col items-end z-50">
       <div className="flex flex-col items-end space-y-2 mb-2 origin-bottom-right">
-        {buttons.map((btn, index) => (
+        {[...buttons, darkModeButton].map((btn, index) => (
           <button
             key={btn.label}
             className={`
@@ -65,24 +80,23 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
               text-white font-bold rounded-full shadow-lg transform transition-all
               duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
               ${isOpen ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-8 scale-90'}
-              hover:bg-red-600
+              hover:bg-red-600 dark:hover:bg-red-400
             `}
             style={{ transitionDelay: `${index * 100}ms` }}
-            onClick={() => handleButtonClick(btn.route)}
-            {...(!isMobile && {
-              onMouseEnter: (e) => (e.currentTarget.textContent = btn.hover),
-              onMouseLeave: (e) => (e.currentTarget.textContent = btn.label),
-            })}
-            title={btn.hover} // Always show title
+            onClick={() => (btn.route ? handleButtonClick(btn.route) : btn.onClick?.())}
+            title={'hover' in btn ? btn.hover : ''}
+            {...getHoverHandlers('hover' in btn ? btn.hover : '', btn.label)}
           >
             {btn.label}
-            {isMobile && isOpen && <span className="ml-2">{btn.hover.replace(/^.*?\s/, '')}</span>}
+            {isMobile && isOpen && 'hover' in btn && (
+              <span className="ml-2">{btn.hover.replace(/^.*?\s/, '')}</span>
+            )}
           </button>
         ))}
       </div>
 
       <button
-        className="p-2 text-6xl transition-transform transform hover:scale-125"
+        className="p-2 text-6xl transition-transform transform hover:scale-125 dark:text-white text-gray-800"
         onClick={toggleOpen}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}

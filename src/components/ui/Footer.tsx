@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
             rel="noopener noreferrer"
             className="github-link"
           >
-            <Github width={20} height={20} stroke='black' fill='black'/>
+            <Github width={20} height={20} stroke='black' fill='white'/>
           </a>
           <span style={{ textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: '8px' }} >- by FanatiAK or (github.com/Batman-Hacks-Joker)</span>
         </div>
