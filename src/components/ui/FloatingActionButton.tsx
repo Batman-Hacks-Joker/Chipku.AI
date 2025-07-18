@@ -14,9 +14,13 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [isDarkMode, toggleDarkMode] = useDarkMode();
 
-  // Detect screen size
+  // Detect screen size (SSR-safe)
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    const checkMobile = () => {
+      if (typeof window !== 'undefined') {
+        setIsMobile(window.innerWidth <= 768);
+      }
+    };
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
@@ -60,10 +64,12 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
     if (isMobile) return {};
     return {
       onMouseEnter: (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.currentTarget.textContent = hoverText;
+        const span = e.currentTarget.querySelector('span');
+        if (span) span.textContent = hoverText;
       },
       onMouseLeave: (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.currentTarget.textContent = labelText;
+        const span = e.currentTarget.querySelector('span');
+        if (span) span.textContent = labelText;
       },
     };
   };
@@ -83,11 +89,17 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
               hover:bg-red-600 dark:hover:bg-red-400
             `}
             style={{ transitionDelay: `${index * 100}ms` }}
-            onClick={() => (btn.route ? handleButtonClick(btn.route) : btn.onClick?.())}
+            onClick={() => {
+              if (btn.route) {
+                handleButtonClick(btn.route);
+              } else if (typeof btn.onClick === 'function') {
+                btn.onClick();
+              }
+            }}
             title={'hover' in btn ? btn.hover : ''}
             {...getHoverHandlers('hover' in btn ? btn.hover : '', btn.label)}
           >
-            {btn.label}
+            <span>{btn.label}</span>
             {isMobile && isOpen && 'hover' in btn && (
               <span className="ml-2">{btn.hover.replace(/^.*?\s/, '')}</span>
             )}
