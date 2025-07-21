@@ -140,7 +140,7 @@ export default function Home() {
       // Find the element corresponding to the component name.
       // You'll need to add IDs or refs to your component elements to easily select them.
       // For now, this is a placeholder and needs to be replaced with actual element selection.
-      const element = document.getElementById(componentName.replace(/\s+/g, '-').toLowerCase());
+      const element = document.getElementById(componentName.replace(/s+/g, '-').toLowerCase());
 
       if (element) {
         const canvas = await html2canvas(element, { scale: 0.8 }); // Reduced scale for potentially smaller file size
@@ -159,7 +159,7 @@ export default function Home() {
     }
 
     // Remove .txt extension and append the desired suffix
-    const baseFileName = fileName.replace(/\.txt$/, '');
+    const baseFileName = fileName.replace(/.txt$/, '');
     pdf.save(`${baseFileName}_chipku_AI_fanatiAK💖🧿.pdf`);
 
     setIsExportDialogOpen(false);
@@ -169,33 +169,6 @@ export default function Home() {
     /** Resets the parsed chat data, returning the view to the file upload state. */
     setParsedData(null);
   };
-
-  if (isLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
-        <Loader2 className="h-16 w-16 animate-spin text-primary mb-4" />
-        <h1 className="text-2xl font-headline font-semibold text-primary">Analyzing your chat...</h1>
-        <p className="text-muted-foreground">This might take a moment.</p>
-      </div>
-    );
-  }
-
-  if (!parsedData) {
-    return (
-      <main className="min-h-screen flex flex-col items-center justify-center p-4">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
-            Chipku AI💕
-          </h1>
-          <p className="text-muted-foreground mt-2 max-w-xl mx-auto">
-            Upload your .txt Whatsapp chat to uncover fascinating insights, analyze your chat Sentiments, and even ask our AI questions about your conversations💯
-          </p>
-        </div>
-        <FileUpload onFileProcessed={handleFileProcessed} />
-        <p className="text-xs text-muted-foreground mt-4">Your data is processed on your device and never stored on our servers✌🏻</p>
-      </main>
-    );
-  }
 
   return (
     <> {/* Use a Fragment as the root element */}
@@ -243,7 +216,7 @@ export default function Home() {
                         <div key={componentName} className="flex items-center space-x-2">
                           <input
                             type="checkbox"
-                            id={`export-${componentName.replace(/\s+/g, '-').toLowerCase()}`}
+                            id={`export-${componentName.replace(/s+/g, '-').toLowerCase()}`}
                             checked={selectedComponents.includes(componentName)}
                             onChange={(e) => {
                               setSelectedComponents((prev) =>
@@ -257,7 +230,7 @@ export default function Home() {
                             className="form-checkbox h-4 w-4 text-primary rounded border-gray-300 focus:ring-primary"
                           />
                           <label
-                            htmlFor={componentName.replace(/\s+/g, '-').toLowerCase()}
+                            htmlFor={componentName.replace(/s+/g, '-').toLowerCase()}
                             className="text-sm font-medium leading-none cursor-pointer"
                           >
                             {componentName}
