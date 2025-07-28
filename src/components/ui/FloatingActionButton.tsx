@@ -53,7 +53,9 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
   const handleButtonClick = (btn: ButtonItem) => {
     setIsOpen(false);
     if ('route' in btn) {
-      if (btn.route === '/' && onHomeClick) onHomeClick();
+      if (btn.route === '/' && onHomeClick) {
+        onHomeClick();
+      }
       router.push(btn.route);
     } else if ('onClick' in btn) {
       btn.onClick();
