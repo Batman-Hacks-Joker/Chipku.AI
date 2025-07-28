@@ -98,7 +98,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
               key={`${labelText}-${index}`}
               className={`
                 px-4 py-3 text-sm md:text-lg flex items-center space-x-2
-                ${isSpecial ? 'bg-yellow-500' : 'bg-red-500'}
+                ${isSpecial ? 'bg-blue-500' : 'bg-red-500'}
                 text-white font-bold rounded-full shadow-lg transform transition-all
                 duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
                 ${isOpen ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-8 scale-90 pointer-events-none'}
