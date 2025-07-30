@@ -114,6 +114,27 @@ const DonatePage: React.FC = () => {
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
         }
+
+        .cursor-teddy:hover {
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>🧸</text></svg>") 16 0, auto;
+        }
+        .cursor-letter:hover {
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>💌</text></svg>") 16 0, auto;
+        }
+        .cursor-cloud:hover {
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>☁️</text></svg>") 16 0, auto;
+        }
+        .cursor-heart:hover {
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>❤️</text></svg>") 16 0, auto;
+        }
+        .blur-text {
+            filter: blur(5px);
+            transition: filter 0.3s ease-in-out;
+        }
+        .blur-text:hover {
+            filter: blur(0);
+        }
+
       `}</style>
       <div className="bg-[#F3D5E2] min-h-screen font-body">
         <div className="container mx-auto px-6 py-16 text-center">
@@ -145,8 +166,8 @@ const DonatePage: React.FC = () => {
         <div className="container mx-auto px-6 pb-16 grid md:grid-cols-5 gap-8">
           <div className="md:col-span-2 bg-[#FFEBEE] p-8 rounded-3xl border border-black">
             <h2 className="text-3xl font-headline font-bold text-[#C21E56]">Starts at:</h2>
+            <p className="mt-4 text-5xl font-headline font-bold text-[#C21E56] blur-text">₹19 only◝(˶ˆᗜˆ˵)◜</p>
             <ul className="mt-6 space-y-4 text-left text-gray-700">
-            <p className="mt-4 text-5xl font-headline font-bold text-[#C21E56]">₹19 only◝(˶ˆᗜˆ˵)◜</p>
               <li className="flex items-center">
                 <Check className="w-5 h-5 text-[#A629D3] mr-3" />
                 <span>upto 150 chat uploads for free</span>
@@ -175,7 +196,7 @@ const DonatePage: React.FC = () => {
 
           <div className="md:col-span-3 bg-[#FFD1D7] p-8 rounded-3xl border border-black shadow-2xl">
             <h2 className="text-3xl font-headline font-bold text-[#C21E56]">🎀 Unlock Everything 🎀</h2>
-            <p className="mt-4 text-5xl font-headline font-bold text-[#C21E56]">₹19 plus (づ๑•ᴗ•๑)づ❤︎</p>
+            <p className="mt-4 text-5xl font-headline font-bold text-[#C21E56] blur-text">₹19 plus (づ๑•ᴗ•๑)づ❤︎</p>
             <ul className="mt-6 space-y-4 text-left text-black-700 text-xl">
               <li className="flex items-center">
                 <Check className="w-5 h-5 text-[#A629D3] mr-3" />
@@ -202,50 +223,51 @@ const DonatePage: React.FC = () => {
         </div>
 
         <div className="container mx-auto px-6 py-16">
-          <h2 className="text-4xl font-headline font-bold text-center text-[#C21E56]">What's included?</h2>
+          <h2 className="text-4xl font-headline font-bold text-center text-[#C21E56]">This money won't make me RICH</h2>
           <p className="text-center text-gray-700 mt-4">
-            Access the full Critter platform for less than the cost of one service per month.
+            Assist me pay server bills, so I make this website always running
           </p>
 
           <div className="grid md:grid-cols-4 gap-8 mt-12 text-left">
-            <div className="transform hover:scale-105 transition-transform duration-300">
-              <p className="text-4xl">🧸</p>
-              <h3 className="font-headline font-bold text-lg mt-4 text-[#C21E56]">Scheduling</h3>
+            <div className="transform hover:scale-105 transition-transform duration-300 cursor-teddy">
+              <p className="text-4xl">⍝ʕ´•ᴥ•`ʔ⍝</p>
+              <h3 className="font-headline font-bold text-lg mt-4 text-[#C21E56]">Teddy Bear</h3>
               <ul className="mt-4 space-y-2 text-gray-700">
-                <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Calendar management</span></li>
-                <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Meet and Greets</span></li>
-                <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Service history</span></li>
-                <li className="flex.items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Employee management</span></li>
+                <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>It sits quietly in the corner</span></li>
+                <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Its fur carries old dreams</span></li>
+                <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>A hug brings back warmth</span></li>
+                <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Some things never age</span></li>
+
               </ul>
             </div>
-            <div className="transform hover:scale-105 transition-transform duration-300">
-              <p className="text-4xl">💌</p>
-              <h3 className="font-headline font-bold text-lg mt-4 text-[#C21E56]">Invoicing</h3>
+            <div className="transform hover:scale-105 transition-transform duration-300 cursor-letter">
+              <p className="text-4xl">જ⁀➴ ✉︎</p>
+              <h3 className="font-headline font-bold text-lg mt-4 text-[#C21E56]">Love Letter</h3>
               <ul className="mt-4 space-y-2 text-gray-700">
-                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Flexible invoicing</span></li>
-                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>In-app payments</span></li>
-                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Stripe integration</span></li>
-                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Automation</span></li>
+                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Folded paper, whispered hearts</span></li>
+                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Ink dances with hope</span></li>
+                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>It waits, patient and brave</span></li>
+                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Will you read it?</span></li>
               </ul>
             </div>
-            <div className="transform hover:scale-105 transition-transform duration-300">
-              <p className="text-4xl">☁️</p>
-              <h3 className="font-headline font-bold text-lg mt-4 text-[#C21E56]">Client management</h3>
+            <div className="transform hover:scale-105 transition-transform duration-300 cursor-cloud">
+              <p className="text-4xl">๋࣭ ⭑☁.๋࣭ ⭑</p>
+              <h3 className="font-headline font-bold text-lg mt-4 text-[#C21E56]">Fluffy Cloud</h3>
               <ul className="mt-4 space-y-2 text-gray-700">
-                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Onboarding workflow</span></li>
-                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>In-app communications</span></li>
-                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Policy and record management</span></li>
-                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Care plan and instructions</span></li>
+                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>They float without weight</span></li>
+                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Thoughts gather like mist</span></li>
+                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>A sky full of wonder</span></li>
+                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Dreams pass overhead</span></li>
               </ul>
             </div>
-            <div className="transform hover:scale-105 transition-transform duration-300">
-              <p className="text-4xl">❤️</p>
-              <h3 className="font-headline font-bold text-lg mt-4 text-[#C21E56]">Critter Support</h3>
+            <div className="transform hover:scale-105 transition-transform duration-300 cursor-heart">
+              <p className="text-4xl">˗ˋˏ ʚ❤︎ɞ ˎˊ˗</p>
+              <h3 className="font-headline font-bold text-lg mt-4 text-[#C21E56]">True Love</h3>
               <ul className="mt-4 space-y-2 text-gray-700">
-                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>White glove support</span></li>
-                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Phone, email, & video access</span></li>
-                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Hands-on training</span></li>
-                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Onboarding support</span></li>
+                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>It beats without words</span></li>
+                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>Louder when you're near</span></li>
+                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>No map, just trust</span></li>
+                  <li className="flex items-center"><Check className="w-4 h-4 text-[#A629D3] mr-2" /><span>This is real</span></li>
               </ul>
             </div>
           </div>
