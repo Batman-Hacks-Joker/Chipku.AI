@@ -1,7 +1,9 @@
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
 import './globals.css';
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
 import { ChatDataProvider } from '@/context/ChatDataContext';
+import { DarkModeProvider } from '@/context/DarkModeContext';
+import { ThemeHandler } from '@/components/ThemeHandler';
 
 export const metadata: Metadata = {
   title: 'Chipku AI by FanatiAK',
@@ -21,9 +23,13 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        <ChatDataProvider>
-          {children}
-        </ChatDataProvider>
+        <DarkModeProvider>
+          <ThemeHandler>
+            <ChatDataProvider>
+              {children}
+            </ChatDataProvider>
+          </ThemeHandler>
+        </DarkModeProvider>
         <Toaster />
       </body>
     </html>

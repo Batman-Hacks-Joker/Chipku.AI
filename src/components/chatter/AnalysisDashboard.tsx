@@ -195,7 +195,7 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
             <Button variant="outline" onClick={onNewUpload}>Upload 📂</Button>
           </div>
         </div>
-        <p className="text-muted-foreground">so do you like, what you see -`♡´-👀⁉️ </p>
+        <p className="text-muted-foreground">so do you like, what you see 👀⁉️ </p>
       </header>
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">

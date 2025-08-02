@@ -1,24 +1,32 @@
 import { useState, useEffect } from 'react';
 
-const useDarkMode = () => {
+const useDarkMode = (): readonly [boolean, () => void] => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
       const saved = localStorage.getItem('darkMode');
-      return saved === 'true'; // only true if user has toggled it
+      if (saved !== null) {
+        try {
+          return JSON.parse(saved);
+        } catch {
+          return false;
+        }
+      }
+
+      return window.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
     }
-    return false; // default light mode
+    return false;
   });
 
   useEffect(() => {
-    const body = document.body;
-
-    if (isDarkMode) {
-      body.classList.add('dark');
-    } else {
-      body.classList.remove('dark');
+    if (typeof document !== 'undefined' && typeof localStorage !== 'undefined') {
+      const body = document.body;
+      if (isDarkMode) {
+        body.classList.add('dark');
+      } else {
+        body.classList.remove('dark');
+      }
+      localStorage.setItem('darkMode', JSON.stringify(isDarkMode));
     }
-
-    localStorage.setItem('darkMode', String(isDarkMode));
   }, [isDarkMode]);
 
   const toggleDarkMode = () => {
@@ -28,4 +36,4 @@ const useDarkMode = () => {
   return [isDarkMode, toggleDarkMode] as const;
 };
 
-export { useDarkMode as default };
+export default useDarkMode;
