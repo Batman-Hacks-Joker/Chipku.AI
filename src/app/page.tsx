@@ -10,15 +10,24 @@ import { FileUpload } from "@/components/chatter/FileUpload";
 import Footer from "@/components/ui/Footer";
 import { useChatData } from "@/context/ChatDataContext";
 import FloatingActionButton from "@/components/ui/FloatingActionButton";
+import { LoadingPage } from "@/components/ui/LoadingPage";
 
 export default function Home() {
   const router = useRouter();
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isProcessing, setIsProcessing] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
   const { setChatData, setFileName } = useChatData();
 
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+        setIsLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
   const handleFileProcessed = async (content: string, name: string) => {
-    setIsLoading(true);
+    setIsProcessing(true);
     try {
       const data = await parseChatFile(content);
       if (data.messages.length === 0) {
@@ -27,7 +36,7 @@ export default function Home() {
           title: "Parsing Error",
           description: "Could not find any valid messages in the file. Please check the format.",
         });
-        setIsLoading(false);
+        setIsProcessing(false);
         return;
       }
 
@@ -43,7 +52,7 @@ export default function Home() {
         title: "File Error",
         description: "There was an error processing your file. Please ensure it's a valid chat log.",
       });
-      setIsLoading(false);
+      setIsProcessing(false);
     }
   };
 
@@ -53,9 +62,13 @@ export default function Home() {
     // when the home button on the FAB is clicked from the home page.
   };
 
+  if (isLoading) {
+    return <LoadingPage title="Ringing the Door Bell...🔔🔔🔔" />;
+  }
+
   return (
     <>
-      {isLoading ? (
+      {isProcessing ? (
         <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
           <Loader2 className="h-16 w-16 animate-spin text-primary mb-4" />
           <h1 className="text-2xl font-headline font-semibold text-primary">Analyzing your chat...</h1>

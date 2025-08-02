@@ -1,18 +1,27 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Footer from '@/components/ui/Footer';
 import FloatingActionButton from '@/components/ui/FloatingActionButton';
 import { useDarkModeContext } from '@/context/DarkModeContext';
+import { LoadingPage } from '@/components/ui/LoadingPage';
 
 const DonatePage: React.FC = () => {
+    const [loading, setLoading] = useState(true);
     const [showCoupon, setShowCoupon] = useState(false);
     const [couponCode, setCouponCode] = useState('');
     const [couponMessage, setCouponMessage] = useState('');
     const [isDarkMode] = useDarkModeContext();
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 1500);
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleCouponCheck = () => {
         setCouponMessage('NO coupons on your sister name🙃');
@@ -30,6 +39,10 @@ const DonatePage: React.FC = () => {
             setCouponCode(value);
         }
     };
+
+    if (loading) {
+        return <LoadingPage title="Money is an evil necessity" />;
+    }
 
     return (
         <>

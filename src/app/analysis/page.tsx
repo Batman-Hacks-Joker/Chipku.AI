@@ -2,15 +2,21 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
 import { useChatData } from "@/context/ChatDataContext";
 import { AnalysisDashboard } from "@/components/chatter/AnalysisDashboard";
 import Footer from "@/components/ui/Footer";
 import FloatingActionButton from "@/components/ui/FloatingActionButton";
+import { LoadingPage } from "@/components/ui/LoadingPage";
 
 export default function AnalysisPage() {
   const router = useRouter();
   const { chatData, fileName, setChatData, setFileName } = useChatData();
+
+  React.useEffect(() => {
+    if (!chatData) {
+      router.push('/');
+    }
+  }, [chatData, router]);
 
   const handleNewUpload = () => {
     setChatData(null);
@@ -25,12 +31,7 @@ export default function AnalysisPage() {
   };
 
   if (!chatData) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
-        <Loader2 className="h-16 w-16 animate-spin text-primary mb-4" />
-        <h1 className="text-2xl font-headline font-semibold text-primary">hmmm... Tastyyy 🤤 </h1>
-      </div>
-    );
+    return <LoadingPage title="Ringing the Door Bell...🔔🔔🔔" />;
   }
 
   return (

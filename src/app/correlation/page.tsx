@@ -11,11 +11,13 @@ import FloatingActionButton from "@/components/ui/FloatingActionButton";
 import { ParsedChatData } from "@/lib/types";
 import { useRouter } from "next/navigation";
 import CombinedHourlyMessagesChart from "@/components/chatter/CombinedHourlyMessagesChart";
+import { LoadingPage } from "@/components/ui/LoadingPage";
 
 export default function CorrelationPage() {
   const { toast } = useToast();
   const router = useRouter();
 
+  const [isLoading, setIsLoading] = React.useState(true);
   const [chatData1, setChatData1] = React.useState<ParsedChatData | null>(null);
   const [fileName1, setFileName1] = React.useState<string | null>(null);
   const [isLoading1, setIsLoading1] = React.useState(false);
@@ -23,6 +25,13 @@ export default function CorrelationPage() {
   const [chatData2, setChatData2] = React.useState<ParsedChatData | null>(null);
   const [fileName2, setFileName2] = React.useState<string | null>(null);
   const [isLoading2, setIsLoading2] = React.useState(false);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+        setIsLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleFile1Processed = async (content: string, name: string) => {
     setIsLoading1(true);
@@ -90,6 +99,10 @@ export default function CorrelationPage() {
     const handleNewUpload2 = () => {
     setChatData2(null);
     setFileName2(null);
+  }
+
+  if (isLoading) {
+    return <LoadingPage title="Correlation provides easy decision making" />;
   }
 
   return (
