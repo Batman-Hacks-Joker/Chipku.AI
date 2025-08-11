@@ -11,6 +11,7 @@ import Footer from "@/components/ui/Footer";
 import { useChatData } from "@/context/ChatDataContext";
 import FloatingActionButton from "@/components/ui/FloatingActionButton";
 import { LoadingPage } from "@/components/ui/LoadingPage";
+import FAQ from "@/components/chatter/FAQ";
 
 export default function Home() {
   const router = useRouter();
@@ -18,6 +19,7 @@ export default function Home() {
   const [isProcessing, setIsProcessing] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const { setChatData, setFileName } = useChatData();
+  const [showFaq, setShowFaq] = React.useState(false);
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -25,6 +27,19 @@ export default function Home() {
     }, 1500);
     return () => clearTimeout(timer);
   }, []);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      // Show FAQ when user scrolls down
+      if (window.scrollY > 50) {
+        setShowFaq(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
 
   const handleFileProcessed = async (content: string, name: string) => {
     setIsProcessing(true);
@@ -88,6 +103,20 @@ export default function Home() {
           <p className="text-xs text-muted-foreground mt-4">Your data is processed on your device and never stored on our servers✌🏻</p>
         </main>
       )}
+
+      {/* Add a spacer to make the page scrollable to trigger the animation */}
+      <div className="h-16" />
+
+      <div className="flex justify-center px-4 w-full my-8">
+        <div
+          className={`w-full max-w-4xl transition-all duration-700 ease-in-out ${
+            showFaq ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}
+        >
+          <FAQ />
+        </div>
+      </div>
+      
       <Footer />
       <FloatingActionButton onHomeClick={handleHomeClick} />
     </>
