@@ -12,6 +12,7 @@ import { useChatData } from "@/context/ChatDataContext";
 import FloatingActionButton from "@/components/ui/FloatingActionButton";
 import { LoadingPage } from "@/components/ui/LoadingPage";
 import FAQ from "@/components/chatter/FAQ";
+import InteractiveEmojis from "@/components/chatter/InteractiveEmojis";
 
 export default function Home() {
   const router = useRouter();
@@ -83,6 +84,7 @@ export default function Home() {
 
   return (
     <>
+      <InteractiveEmojis />
       {isProcessing ? (
         <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
           <Loader2 className="h-16 w-16 animate-spin text-primary mb-4" />
@@ -90,7 +92,7 @@ export default function Home() {
           <p className="text-muted-foreground">Feeling stuck? retry it will work 🙃</p>
         </div>
       ) : (
-        <main className="min-h-screen flex flex-col items-center justify-center p-4">
+        <main className="min-h-screen flex flex-col items-center justify-center p-4 relative z-10">
           <div className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
               Chipku AI💕
@@ -107,7 +109,7 @@ export default function Home() {
       {/* Add a spacer to make the page scrollable to trigger the animation */}
       <div className="h-16" />
 
-      <div className="flex justify-center px-4 w-full my-8">
+      <div className="flex justify-center px-4 w-full my-8 relative z-10">
         <div
           className={`w-full max-w-4xl transition-all duration-700 ease-in-out ${
             showFaq ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
