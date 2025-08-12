@@ -26,7 +26,38 @@ const LoginPage: React.FC = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-[#F3D5E2] dark:bg-gray-900 p-4 font-body">
+            <style jsx>{`
+                @keyframes running-border {
+                    0% {
+                        top: -1.5rem;
+                        left: -1.5rem;
+                    }
+                    25% {
+                        top: -1.5rem;
+                        left: calc(100% - 1.5rem);
+                    }
+                    50% {
+                        top: calc(100% - 1.5rem);
+                        left: calc(100% - 1.5rem);
+                    }
+                    75% {
+                        top: calc(100% - 1.5rem);
+                        left: -1.5rem;
+                    }
+                    100% {
+                        top: -1.5rem;
+                        left: -1.5rem;
+                    }
+                }
+
+                .running-emoji {
+                    position: absolute;
+                    font-size: 2rem;
+                    animation: running-border 8s linear infinite;
+                }
+            `}</style>
             <div className="relative w-full max-w-md">
+                <div className="running-emoji">🏃</div>
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-[#C21E56] to-[#A629D3] rounded-3xl blur opacity-75"></div>
                 <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-8 rounded-3xl shadow-2xl">
                     <div className="flex justify-center mb-6">
