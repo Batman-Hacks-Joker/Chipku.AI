@@ -31,7 +31,7 @@ export default function AnalysisPage() {
   };
 
   if (!chatData) {
-    return <LoadingPage title="Ringing the Door Bell...🔔🔔🔔" />;
+    return <LoadingPage title="Ringing the door bell...🔔🔔🔔" />;
   }
 
   return (

@@ -34,7 +34,7 @@ export function TopWordsByUser({ messages, users }: TopWordsByUserProps) {
       words.forEach((word) => {
         const cleanedWord = word.replace(trailingSpecialCharsRegex, "").toLowerCase();
 
-        if (cleanedWord !== 'null' && wordRegex.test(cleanedWord)) {
+        if (cleanedWord !== 'null' && cleanedWord !== 'edited' && cleanedWord !== 'omitted' && cleanedWord !== 'message' && wordRegex.test(cleanedWord)) {
           userWordCounts[user][cleanedWord] =
             (userWordCounts[user][cleanedWord] || 0) + 1;
         }

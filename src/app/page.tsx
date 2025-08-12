@@ -76,7 +76,7 @@ export default function Home() {
   };
 
   if (isLoading) {
-    return <LoadingPage title="Ringing the Door Bell...🔔🔔🔔" />;
+    return <LoadingPage title="Ringing the door bell...🔔🔔🔔" />;
   }
 
   return (
