@@ -36,12 +36,12 @@ export default function Home() {
     if (isProcessing) {
       // Set the initial message
       setLoadingTitle("Analyzing your chat...");
-      setLoadingSubtitle("Feeling stuck? Retrying might help! 🙃");
+      setLoadingSubtitle("Don't worry your data is safe, processing depends on your browser");
       
       // Set a timer to change the message after 5 seconds
       timer = setTimeout(() => {
-        setLoadingTitle("Its your first time here, we are preparing cookies for you 🤤🍪");
-        setLoadingSubtitle("This will only take a moment...");
+        setLoadingTitle("Its your first time, preparing cookies for you 🤤🍪");
+        setLoadingSubtitle("Yeah almost done!!!");
       }, 5000);
     }
     
