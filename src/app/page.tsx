@@ -29,17 +29,20 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
+  // FIX 1: Updated scroll handler to show/hide the FAQ section.
   React.useEffect(() => {
     const handleScroll = () => {
-      // Show FAQ when user scrolls down
+      // Toggle FAQ visibility based on scroll position
       if (window.scrollY > 50) {
         setShowFaq(true);
+      } else {
+        setShowFaq(false);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, []); // Empty dependency array ensures this runs only on mount and unmount.
 
 
   const handleFileProcessed = async (content: string, name: string) => {
@@ -72,12 +75,6 @@ export default function Home() {
     }
   };
 
-  const handleHomeClick = () => {
-    // Since this is the home page, this function can be empty
-    // or you can add any specific logic you want to happen
-    // when the home button on the FAB is clicked from the home page.
-  };
-
   if (isLoading) {
     return <LoadingPage title="Ringing the Door Bell...🔔🔔🔔" />;
   }
@@ -89,16 +86,19 @@ export default function Home() {
         <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
           <Loader2 className="h-16 w-16 animate-spin text-primary mb-4" />
           <h1 className="text-2xl font-headline font-semibold text-primary">Analyzing your chat...</h1>
-          <p className="text-muted-foreground">Feeling stuck? retry it will work 🙃</p>
+          {/* FIX 2: Improved grammar in UI text */}
+          <p className="text-muted-foreground">Feeling stuck? Retrying might help! 🙃</p>
         </div>
       ) : (
-        <main className="min-h-screen flex flex-col items-center justify-center p-4 relative z-10">
+        // FIX 3: Replaced the spacer div with a bottom margin (mb-16) for cleaner code.
+        <main className="min-h-screen flex flex-col items-center justify-center p-4 relative z-10 mb-16">
           <div className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
               Chipku AI💕
             </h1>
             <p className="text-muted-foreground mt-2 max-w-xl mx-auto">
-              Upload your .txt Whatsapp chat to uncover fascinating insights, analyze your chat Sentiments, and even ask our AI questions about your conversations💯
+              {/* FIX 2: Improved grammar in UI text */}
+              Upload your .txt WhatsApp chat to uncover fascinating insights, analyze your chat's sentiment, and even ask our AI questions about your conversations💯
             </p>
           </div>
           <FileUpload onFileProcessed={handleFileProcessed} />
@@ -106,9 +106,7 @@ export default function Home() {
         </main>
       )}
 
-      {/* Add a spacer to make the page scrollable to trigger the animation */}
-      <div className="h-16" />
-
+      {/* This section now correctly appears and disappears on scroll */}
       <div className="flex justify-center px-4 w-full my-8 relative z-10">
         <div
           className={`w-full max-w-4xl transition-all duration-700 ease-in-out ${
@@ -120,7 +118,8 @@ export default function Home() {
       </div>
       
       <Footer />
-      <FloatingActionButton onHomeClick={handleHomeClick} />
+      {/* FIX 4: Replaced verbose handler with a concise inline function. */}
+      <FloatingActionButton onHomeClick={() => {}} />
     </div>
   );
 }

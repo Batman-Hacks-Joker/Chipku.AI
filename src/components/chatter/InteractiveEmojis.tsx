@@ -1,12 +1,21 @@
-
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
 
-const EMOJIS = ["😊", "🥴", "💋", "🤤", "😂", "👍", "😳", "😠", "🥳", "🔥", "🥺", "🧡", "😉", "🥱", "🤓", "😈", "😍", "🤪", "🥰", "😘", "😎", "👻", "😏", "😡", "💖", "👀", "😤", "😆", "✨", "🤭", "🧐", "😪"];
+const EMOJIS = ["😊", "🥴", "💋", "🤤", "😂", "👍", "😠", "🥳", "🔥", "🥺", "🧡", "😉", "🥱", "🤓", "😈", "😍", "🤪", "🥰", "😘", "😎", "👻", "😏", "😡", "💖", "👀", "😤", "😆", "✨", "🤭", "🧐", "😪"];
+
+interface EmojiType {
+    id: number;
+    emoji: string;
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    size: number;
+}
 
 const InteractiveEmojis = () => {
-    const [emojis, setEmojis] = useState<any[]>([]);
+    const [emojis, setEmojis] = useState<EmojiType[]>([]);
     const containerRef = useRef<HTMLDivElement>(null);
     const mousePos = useRef({ x: 0, y: 0 });
 
@@ -27,9 +36,9 @@ const InteractiveEmojis = () => {
                 emoji,
                 x: Math.random() * width,
                 y: Math.random() * height,
-                vx: Math.random() * 0.4 - 0.2, // Slower initial random velocity
-                vy: Math.random() * 0.4 - 0.2, // Slower initial random velocity
-                size: Math.random() * 24 + 24, // font size between 24 and 48
+                vx: Math.random() * 0.4 - 0.2,
+                vy: Math.random() * 0.4 - 0.2,
+                size: Math.random() * 24 + 24,
             })));
         };
         initEmojis();
@@ -38,58 +47,53 @@ const InteractiveEmojis = () => {
     }, []);
 
     useEffect(() => {
+        let frameId: number;
+
         const animate = () => {
             if (!containerRef.current) return;
-            const { width, height } = containerRef.current.getBoundingClientRect();
+            const rect = containerRef.current.getBoundingClientRect();
+            const { width, height } = rect;
 
             setEmojis(prevEmojis => prevEmojis.map(e => {
                 let { x, y, vx, vy } = e;
 
-                // Mouse interaction
-                const dx = x - (mousePos.current.x - containerRef.current!.getBoundingClientRect().left);
-                const dy = y - (mousePos.current.y - containerRef.current!.getBoundingClientRect().top);
+                const dx = x - (mousePos.current.x - rect.left);
+                const dy = y - (mousePos.current.y - rect.top);
                 const dist = Math.sqrt(dx * dx + dy * dy);
-                
+
                 const REPEL_RADIUS = 100;
                 const REPEL_STRENGTH = 3;
 
-                if (dist < REPEL_RADIUS) {
+                if (dist < REPEL_RADIUS && dist !== 0) {
                     const force = (REPEL_RADIUS - dist) / REPEL_RADIUS;
                     vx += (dx / dist) * force * REPEL_STRENGTH;
                     vy += (dy / dist) * force * REPEL_STRENGTH;
                 }
 
-                // Add slight random motion
                 vx += (Math.random() - 0.5) * 0.1;
                 vy += (Math.random() - 0.5) * 0.1;
 
-
-                // Update position
                 x += vx;
                 y += vy;
 
-                // Wall collision
                 if (x < 0) { x = 0; vx *= -1; }
                 if (x > width) { x = width; vx *= -1; }
                 if (y < 0) { y = 0; vy *= -1; }
                 if (y > height) { y = height; vy *= -1; }
 
-
-                // Friction/damping
                 vx *= 0.95;
                 vy *= 0.95;
-                
+
                 return { ...e, x, y, vx, vy };
             }));
 
-            requestAnimationFrame(animate);
+            frameId = requestAnimationFrame(animate);
         };
 
-        const animationFrameId = requestAnimationFrame(animate);
+        frameId = requestAnimationFrame(animate);
 
-        return () => cancelAnimationFrame(animationFrameId);
+        return () => cancelAnimationFrame(frameId);
     }, []);
-
 
     return (
         <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none z-0">

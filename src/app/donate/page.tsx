@@ -167,7 +167,7 @@ const DonatePage: React.FC = () => {
                     {/* Free Tier */}
                     <div className={`lg:col-span-2 p-8 rounded-3xl border w-full flex flex-col bg-[#FFEBEE] border-black dark:bg-black dark:border-gray-700`}>
                         <h2 className={`text-3xl font-headline font-bold text-[#C21E56] dark:text-pink-500`}>Starts at:</h2>
-                        <p className={`mt-4 text-5xl font-headline font-bold blur-text text-[#C21E56] dark:text-pink-500`}>₹19 only◝(˶ˆᗜˆ˵)◜</p>
+                        <p className={`mt-4 text-5xl font-headline font-bold blur-text text-[#C21E56] dark:text-pink-500`}>₹19 only (✿❛֊❛„)</p>
                         <ul className={`mt-6 space-y-4 text-left flex-grow text-gray-700 dark:text-gray-300`}>
                             <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> upto 150 chat uploads for free</li>
                             <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> upto 150 Chipku Meter generations for free</li>
@@ -181,7 +181,7 @@ const DonatePage: React.FC = () => {
                     {/* Premium Tier */}
                     <div className={`lg:col-span-3 p-8 rounded-3xl border shadow-2xl w-full flex flex-col bg-[#FFD1D7] border-black dark:bg-black dark:border-gray-700`}>
                         <h2 className={`text-3xl font-headline font-bold text-[#C21E56] dark:text-pink-500`}>🎀 Unlock Everything 🎀</h2>
-                        <p className={`mt-4 text-5xl font-headline font-bold blur-text text-[#C21E56] dark:text-pink-500`}>₹19plus (づ๑•ᴗ•๑)づ❤︎</p>
+                        <p className={`mt-4 text-5xl font-headline font-bold blur-text text-[#C21E56] dark:text-pink-500`}>₹19 plus (❀◠ᴗ◠)❤︎</p>
                         <ul className={`mt-6 space-y-4 text-left text-xl flex-grow text-black-700 dark:text-gray-300`}>
                             <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> Ask AI, Chipku Meter, Correlation, Everything Free Forever</li>
                             <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> Get free access to future products before anyone else</li>
