@@ -83,7 +83,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div className="relative overflow-hidden">
       <InteractiveEmojis />
       {isProcessing ? (
         <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
@@ -121,6 +121,6 @@ export default function Home() {
       
       <Footer />
       <FloatingActionButton onHomeClick={handleHomeClick} />
-    </>
+    </div>
   );
 }
