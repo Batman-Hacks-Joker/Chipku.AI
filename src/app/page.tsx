@@ -21,6 +21,8 @@ export default function Home() {
   const [isLoading, setIsLoading] = React.useState(true);
   const { setChatData, setFileName } = useChatData();
   const [showFaq, setShowFaq] = React.useState(false);
+  const [loadingTitle, setLoadingTitle] = React.useState("Analyzing your chat...");
+  const [loadingSubtitle, setLoadingSubtitle] = React.useState("Feeling stuck? Retrying might help! 🙃");
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -29,10 +31,26 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  // FIX 1: Updated scroll handler to show/hide the FAQ section.
+  React.useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isProcessing) {
+      // Set the initial message
+      setLoadingTitle("Analyzing your chat...");
+      setLoadingSubtitle("Feeling stuck? Retrying might help! 🙃");
+      
+      // Set a timer to change the message after 5 seconds
+      timer = setTimeout(() => {
+        setLoadingTitle("Its your first time here, we are preparing cookies for you 🤤🍪");
+        setLoadingSubtitle("This will only take a moment...");
+      }, 5000);
+    }
+    
+    // Cleanup the timer if processing finishes before 5 seconds
+    return () => clearTimeout(timer);
+  }, [isProcessing]);
+
   React.useEffect(() => {
     const handleScroll = () => {
-      // Toggle FAQ visibility based on scroll position
       if (window.scrollY > 50) {
         setShowFaq(true);
       } else {
@@ -42,7 +60,7 @@ export default function Home() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []); // Empty dependency array ensures this runs only on mount and unmount.
+  }, []);
 
 
   const handleFileProcessed = async (content: string, name: string) => {
@@ -81,23 +99,22 @@ export default function Home() {
 
   return (
     <div className="relative overflow-hidden">
-      <InteractiveEmojis />
+      <div className="absolute inset-0 w-full h-full z-0">
+        <InteractiveEmojis />
+      </div>
       {isProcessing ? (
         <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
           <Loader2 className="h-16 w-16 animate-spin text-primary mb-4" />
-          <h1 className="text-2xl font-headline font-semibold text-primary">Analyzing your chat...</h1>
-          {/* FIX 2: Improved grammar in UI text */}
-          <p className="text-muted-foreground">Feeling stuck? Retrying might help! 🙃</p>
+          <h1 className="text-2xl font-headline font-semibold text-primary">{loadingTitle}</h1>
+          <p className="text-muted-foreground">{loadingSubtitle}</p>
         </div>
       ) : (
-        // FIX 3: Replaced the spacer div with a bottom margin (mb-16) for cleaner code.
         <main className="min-h-screen flex flex-col items-center justify-center p-4 relative z-10 mb-16">
           <div className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
               Chipku AI💕
             </h1>
             <p className="text-muted-foreground mt-2 max-w-xl mx-auto">
-              {/* FIX 2: Improved grammar in UI text */}
               Upload your .txt WhatsApp chat to uncover fascinating insights, analyze your chat's sentiment, and even ask our AI questions about your conversations💯
             </p>
           </div>
@@ -105,8 +122,7 @@ export default function Home() {
           <p className="text-xs text-muted-foreground mt-4">Your data is processed on your device and never stored on our servers✌🏻</p>
         </main>
       )}
-
-      {/* This section now correctly appears and disappears on scroll */}
+      
       <div className="flex justify-center px-4 w-full my-8 relative z-10">
         <div
           className={`w-full max-w-4xl transition-all duration-700 ease-in-out ${
@@ -118,7 +134,6 @@ export default function Home() {
       </div>
       
       <Footer />
-      {/* FIX 4: Replaced verbose handler with a concise inline function. */}
       <FloatingActionButton onHomeClick={() => {}} />
     </div>
   );
