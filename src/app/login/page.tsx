@@ -42,7 +42,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center bg-[#F3D5E2] dark:bg-gray-900 p-8 font-body">
+      <div className="min-h-screen flex items-center justify-center bg-[#F3D5E2] dark:bg-gray-900 px-4 sm:px-6 lg:px-8 font-body">
         <style jsx global>{`
           @keyframes emoji-movement {
             0% {
