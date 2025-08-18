@@ -35,8 +35,8 @@ const CustomTooltip = ({ active, payload, label }: any) => {
                 <p className="font-bold mb-1">{label}</p>
                 <ul className="space-y-0.5">
                     {filteredPayload.map((entry: any, index: number) => (
-                        <li key={`item-${index}`} className="text-foreground">
-                             <span style={{ color: entry.color }}>●</span> {`${entry.name}: ${entry.value}`}
+                        <li key={`item-${index}`} style={{ color: entry.color }}>
+                           ● {`${entry.name}: ${entry.value}`}
                         </li>
                     ))}
                 </ul>
@@ -93,7 +93,6 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
         usersForLegend.push('Others');
       }
 
-      // Reorder to have Others first for bottom stackingg bar chart
       const reorderUsers = (users: string[]) => {
         const others = users.find(u => u === 'Others');
         const otherUsers = users.filter(u => u !== 'Others');
@@ -129,13 +128,36 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
   
   const getColor = (userName: string, userList: string[]) => {
       if (userName === 'Others') {
-          return COLORS[5]; // Purple for others
+          return COLORS[5];
       }
-      // Non-others users are now after 'Others' in the list if it exists
       const userIndex = userList.filter(u => u !== 'Others').indexOf(userName);
-      return COLORS[userIndex % 5]; // Cycle through first 5 colors
+      return COLORS[userIndex % 5];
   };
 
+  const renderLegend = () => {
+    return (
+      <div className="flex justify-center mt-4 text-xs gap-x-8">
+        <div className="flex flex-col space-y-1">
+          <h4 className="font-bold mb-1">{chatName1}</h4>
+          {chartData.users1.map((user) => (
+            <div key={`${chatName1}-${user}`} className="flex items-center">
+              <span className="w-2.5 h-2.5 mr-2" style={{ backgroundColor: getColor(user, chartData.users1) }}></span>
+              <span>{user}</span>
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-col space-y-1">
+          <h4 className="font-bold mb-1">{chatName2}</h4>
+          {chartData.users2.map((user) => (
+            <div key={`${chatName2}-${user}`} className="flex items-center">
+              <span className="w-2.5 h-2.5 mr-2" style={{ backgroundColor: getColor(user, chartData.users2) }}></span>
+              <span>{user}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <Card>
@@ -146,12 +168,12 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
       <CardContent>
         <div className="w-full overflow-auto h-[500px]">
             <ResponsiveContainer width="100%" height={500} minWidth={500}>
-              <BarChart data={chartData.combined} barGap={10} barCategoryGap="20%">
+              <BarChart data={chartData.combined} barGap={4} barCategoryGap="25%">
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--muted))' }} />
-                <Legend />
+                <Legend content={renderLegend} wrapperStyle={{paddingTop: "20px"}}/>
                 {chartData.users1.map((user) => (
                   <Bar 
                     key={`${chatName1}-${user}`} 
