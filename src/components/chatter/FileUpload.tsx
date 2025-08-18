@@ -66,7 +66,7 @@ export function FileUpload({ onFileProcessed }: FileUploadProps) {
 
   return (
     <Card 
-      className="w-full max-w-lg cursor-pointer border-2 border-dashed border-border hover:border-primary transition-colors duration-300 bg-card/50"
+      className="w-full max-w-lg cursor-pointer border-2 border-dashed border-primary/50 hover:border-primary transition-colors duration-300 bg-card/50 dark:bg-transparent"
       onClick={handleClick}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
@@ -90,3 +90,5 @@ export function FileUpload({ onFileProcessed }: FileUploadProps) {
     </Card>
   );
 }
+
+    

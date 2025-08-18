@@ -154,9 +154,6 @@ export default function CorrelationPage() {
         .dark .gradient-border {
             background: transparent;
         }
-        .dark .gradient-border:after {
-            background: none;
-        }
 
       `}</style>
 
@@ -242,3 +239,5 @@ export default function CorrelationPage() {
     </div>
   );
 }
+
+    
