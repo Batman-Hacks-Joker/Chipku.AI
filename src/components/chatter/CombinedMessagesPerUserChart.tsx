@@ -34,7 +34,10 @@ const COLORS = [
   "#A629D3", // Electric purple
   "#3b82f6", // Blue
   "#f59e0b", // Yellow
+  "#ec4899", // Pink
 ];
+
+const OTHERS_COLOR = "#8884d8"; // A distinct color for 'Others'
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
@@ -107,27 +110,68 @@ export function CombinedMessagesPerUserChart({
     const sortedUsers = Object.entries(userMessageCounts)
       .sort(([, a], [, b]) => b - a);
 
+    let finalData;
+    let usersForLegend = sortedUsers.map(([name]) => name);
+
     if (sortedUsers.length > 5) {
       const top5 = sortedUsers.slice(0, 5);
       const othersCount = sortedUsers.slice(5).reduce((acc, [, count]) => acc + count, 0);
       const top5Data = top5.map(([name, value]) => ({ name, value, chatName }));
+      usersForLegend = [...top5.map(([name]) => name), 'Others'];
       if (othersCount > 0) {
-        return [...top5Data, { name: 'Others', value: othersCount, chatName }];
+        finalData = [...top5Data, { name: 'Others', value: othersCount, chatName }];
+      } else {
+        finalData = top5Data;
       }
-      return top5Data;
+    } else {
+      finalData = sortedUsers.map(([name, value]) => ({ name, value, chatName }));
     }
 
-    return sortedUsers.map(([name, value]) => ({ name, value, chatName }));
-  };
+    // Reorder users for legend to put 'Others' at the bottom
+    const reorderedUsers = [...usersForLegend.filter(u => u !== 'Others'), ...usersForLegend.filter(u => u === 'Others')];
 
+    return { chartData: finalData, usersForLegend: reorderedUsers };
+  };
+  
   const data1 = processData(messages1, users1, chatName1);
   const data2 = processData(messages2, users2, chatName2);
 
-  const allUsers = [...new Set([...data1.map(d => d.name), ...data2.map(d => d.name)])];
+  const allUsers = [...new Set([...data1.usersForLegend, ...data2.usersForLegend])];
+  
   const colorMap = allUsers.reduce((acc, user, index) => {
-    acc[user] = COLORS[index % COLORS.length];
+    if (user === 'Others') {
+      acc[user] = OTHERS_COLOR;
+    } else {
+      acc[user] = COLORS[index % COLORS.length];
+    }
     return acc;
   }, {} as Record<string, string>);
+
+  const renderLegend = () => {
+    return (
+      <div className="flex justify-center mt-4 text-xs gap-x-8">
+        <div className="flex flex-col space-y-1">
+          <h4 className="font-bold mb-1">{chatName1}</h4>
+          {data1.usersForLegend.map((user) => (
+            <div key={`${chatName1}-${user}`} className="flex items-center">
+              <span className="w-2.5 h-2.5 mr-2" style={{ backgroundColor: colorMap[user] }}></span>
+              <span>{user}</span>
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-col space-y-1">
+          <h4 className="font-bold mb-1">{chatName2}</h4>
+          {data2.usersForLegend.map((user) => (
+            <div key={`${chatName2}-${user}`} className="flex items-center">
+              <span className="w-2.5 h-2.5 mr-2" style={{ backgroundColor: colorMap[user] }}></span>
+              <span>{user}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
 
   return (
     <Card>
@@ -138,13 +182,13 @@ export function CombinedMessagesPerUserChart({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="w-full overflow-auto h-[350px]">
-          <ResponsiveContainer width="100%" height={460} minWidth={300}>
+        <div className="w-full overflow-auto h-[460px]">
+          <ResponsiveContainer width="100%" height={400} minWidth={300}>
             <PieChart>
               <Tooltip content={<CustomTooltip />} />
-              <Legend />
+              <Legend content={renderLegend} wrapperStyle={{ paddingTop: "20px" }} />
               <Pie
-                data={data1}
+                data={data1.chartData}
                 dataKey="value"
                 nameKey="name"
                 cx="50%"
@@ -156,12 +200,12 @@ export function CombinedMessagesPerUserChart({
                 labelLine={false}
                 label={renderCustomizedLabel}
               >
-                {data1.map((entry) => (
-                  <Cell key={`cell-${entry.name}`} fill={colorMap[entry.name]} />
+                {data1.chartData.map((entry) => (
+                  <Cell key={`cell-1-${entry.name}`} fill={colorMap[entry.name]} />
                 ))}
               </Pie>
               <Pie
-                data={data2}
+                data={data2.chartData}
                 dataKey="value"
                 nameKey="name"
                 cx="50%"
@@ -173,8 +217,8 @@ export function CombinedMessagesPerUserChart({
                 labelLine={false}
                 label={renderCustomizedLabel}
               >
-                {data2.map((entry) => (
-                  <Cell key={`cell-${entry.name}`} fill={colorMap[entry.name]} />
+                {data2.chartData.map((entry) => (
+                  <Cell key={`cell-2-${entry.name}`} fill={colorMap[entry.name]} />
                 ))}
               </Pie>
             </PieChart>
