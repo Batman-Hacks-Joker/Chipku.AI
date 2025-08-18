@@ -167,7 +167,7 @@ export default function CorrelationPage() {
             )}
           </div>
 
-          {/* Chat 2 Section */}
+          {/* Chat 2 Sectionn */}
           <div className="border p-4 rounded-lg">
             <h2 className="text-2xl font-semibold mb-4 text-center">Chat 2</h2>
             {isLoading2 ? (

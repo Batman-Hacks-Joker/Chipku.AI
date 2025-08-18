@@ -14,7 +14,7 @@ import {
 } from 'recharts';
 import type { ChatMessage } from '@/lib/types';
 
-const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#ff8042", "#0088FE", "#00C49F"];
+const COLORS = ["#82ca9d", "#ffc658", "#3b82f6", "#ff8042", "#ec4899", "#8884d8"];
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 interface CombinedWeeklyActivityChartProps {
