@@ -15,7 +15,7 @@ import { LoadingPage } from "@/components/ui/LoadingPage";
 import { CombinedMessagesPerUserChart } from "@/components/chatter/CombinedMessagesPerUserChart";
 import CombinedWeeklyActivityChart from "@/components/chatter/CombinedWeeklyActivityChart";
 import { Card } from "@/components/ui/card";
-import { Vortex } from "@/components/ui/vortex";
+import { cn } from "@/lib/utils";
 import { useDarkModeContext } from "@/context/DarkModeContext";
 
 export default function CorrelationPage() {
@@ -114,176 +114,93 @@ export default function CorrelationPage() {
 
   return (
     <div className="relative flex flex-col min-h-screen w-full bg-background dark:bg-black">
-      {isDarkMode ? (
-          <Vortex
-            backgroundColor="black"
-            particleCount={500}
-            rangeY={200}
-            baseHue={220}
-            className="flex items-center flex-col justify-start px-2 md:px-10 py-4 w-full h-full"
-          >
-            {/* Content for dark mode */}
-            <div className="relative z-20 flex-grow container mx-auto p-4 w-full">
-               <h1 className="text-4xl font-bold text-center my-8 text-white">Correlation Analysis</h1>
-                <p className="text-lg text-muted-foreground text-center mb-8">
-                Compare two of your chat histories to see how your communication style changes with different people, or compare your chat habits with a friend's.
-                </p>
+      <div
+        className={cn(
+          "absolute inset-0 h-full w-full",
+          "[background-size:20px_20px]",
+          isDarkMode ? "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]" : "[background-image:radial-gradient(white_1px,transparent_1px)]"
+        )}
+      />
+       <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
 
-                {/* Charts */}
-                {chatData1 && chatData2 && fileName1 && fileName2 && (
-                    <Card className="mb-8 dark:bg-transparent">
-                        <CombinedWeeklyActivityChart
-                            messages1={chatData1.messages}
-                            fileName1={fileName1}
-                            messages2={chatData2.messages}
-                            fileName2={fileName2}
-                        />
-                    </Card>
-                )}
-                
-                {chatData1 && chatData2 && fileName1 && fileName2 && (
-                  <Card className="mb-8 dark:bg-transparent">
-                    <CombinedMessagesPerUserChart 
-                      messages1={chatData1.messages}
-                      users1={chatData1.users}
-                      fileName1={fileName1}
-                      messages2={chatData2.messages}
-                      users2={chatData2.users}
-                      fileName2={fileName2}
-                    />
-                  </Card>
-                )}
+      <div className="relative z-10 flex-grow container mx-auto p-4">
+        <h1 className="text-4xl font-bold text-center my-8">Correlation Analysis</h1>
+        <p className="text-lg text-muted-foreground text-center mb-8">
+          Compare two of your chat histories to see how your communication style changes with different people, or compare your chat habits with a friend's.
+        </p>
 
-                {chatData1 && chatData2 && fileName1 && fileName2 && (
-                  <Card className="mb-8 dark:bg-transparent">
-                    <CombinedHourlyMessagesChart 
-                      messages1={chatData1.messages}
-                      messages2={chatData2.messages}
-                      users1={chatData1.users}
-                      users2={chatData2.users}
-                      fileName1={fileName1}
-                      fileName2={fileName2}
-                    />
-                  </Card>
-                )}
-                 {/* Chat upload sections */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="p-4 flex flex-col">
-                    <h2 className="text-2xl font-semibold mb-4 text-center text-white">Chat 1</h2>
-                    {isLoading1 ? (
-                      <div className="flex justify-center items-center h-48">
-                        <Loader2 className="h-16 w-16 animate-spin text-primary" />
-                      </div>
-                    ) : chatData1 ? (
-                      <AnalysisDashboard parsedData={chatData1} fileName={fileName1} onNewUpload={handleNewUpload1} showAskAI={false} />
-                    ) : (
-                        <div className="flex-grow flex items-center justify-center">
-                            <FileUpload onFileProcessed={handleFile1Processed} />
-                        </div>
-                    )}
-                  </div>
+        {chatData1 && chatData2 && fileName1 && fileName2 && (
+          <Card className="mb-8 dark:bg-transparent">
+            <CombinedWeeklyActivityChart
+              messages1={chatData1.messages}
+              fileName1={fileName1}
+              messages2={chatData2.messages}
+              fileName2={fileName2}
+            />
+          </Card>
+        )}
+        
+        {chatData1 && chatData2 && fileName1 && fileName2 && (
+          <Card className="mb-8 dark:bg-transparent">
+            <CombinedMessagesPerUserChart 
+              messages1={chatData1.messages}
+              users1={chatData1.users}
+              fileName1={fileName1}
+              messages2={chatData2.messages}
+              users2={chatData2.users}
+              fileName2={fileName2}
+            />
+          </Card>
+        )}
 
-                  <div className="p-4 flex flex-col">
-                    <h2 className="text-2xl font-semibold mb-4 text-center text-white">Chat 2</h2>
-                    {isLoading2 ? (
-                      <div className="flex justify-center items-center h-48">
-                        <Loader2 className="h-16 w-16 animate-spin text-primary" />
-                      </div>
-                    ) : chatData2 ? (
-                      <AnalysisDashboard parsedData={chatData2} fileName={fileName2} onNewUpload={handleNewUpload2} showAskAI={false} />
-                    ) : (
-                        <div className="flex-grow flex items-center justify-center">
-                            <FileUpload onFileProcessed={handleFile2Processed} />
-                        </div>
-                    )}
-                  </div>
-                </div>
-            </div>
-            <div className="relative z-20 w-full">
-              <Footer showEmojiCarousel={false} />
-            </div>
-            </Vortex>
-      ) : (
-           <div className="relative z-20 flex-grow container mx-auto p-4">
-              {/* Content for light mode */}
-              <h1 className="text-4xl font-bold text-center my-8">Correlation Analysis</h1>
-              <p className="text-lg text-muted-foreground text-center mb-8">
-                Compare two of your chat histories to see how your communication style changes with different people, or compare your chat habits with a friend's.
-              </p>
+        {chatData1 && chatData2 && fileName1 && fileName2 && (
+          <Card className="mb-8 dark:bg-transparent">
+            <CombinedHourlyMessagesChart 
+              messages1={chatData1.messages}
+              messages2={chatData2.messages}
+              users1={chatData1.users}
+              users2={chatData2.users}
+              fileName1={fileName1}
+              fileName2={fileName2}
+            />
+          </Card>
+        )}
 
-              {chatData1 && chatData2 && fileName1 && fileName2 && (
-                  <Card className="mb-8">
-                      <CombinedWeeklyActivityChart
-                          messages1={chatData1.messages}
-                          fileName1={fileName1}
-                          messages2={chatData2.messages}
-                          fileName2={fileName2}
-                      />
-                  </Card>
-              )}
-              
-              {chatData1 && chatData2 && fileName1 && fileName2 && (
-                <Card className="mb-8">
-                  <CombinedMessagesPerUserChart 
-                    messages1={chatData1.messages}
-                    users1={chatData1.users}
-                    fileName1={fileName1}
-                    messages2={chatData2.messages}
-                    users2={chatData2.users}
-                    fileName2={fileName2}
-                  />
-                </Card>
-              )}
-
-              {chatData1 && chatData2 && fileName1 && fileName2 && (
-                <Card className="mb-8">
-                  <CombinedHourlyMessagesChart 
-                    messages1={chatData1.messages}
-                    messages2={chatData2.messages}
-                    users1={chatData1.users}
-                    users2={chatData2.users}
-                    fileName1={fileName1}
-                    fileName2={fileName2}
-                  />
-                </Card>
-              )}
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="p-4 flex flex-col">
-                  <h2 className="text-2xl font-semibold mb-4 text-center">Chat 1</h2>
-                  {isLoading1 ? (
-                    <div className="flex justify-center items-center h-48">
-                      <Loader2 className="h-16 w-16 animate-spin text-primary" />
-                    </div>
-                  ) : chatData1 ? (
-                    <AnalysisDashboard parsedData={chatData1} fileName={fileName1} onNewUpload={handleNewUpload1} showAskAI={false} />
-                  ) : (
-                      <div className="flex-grow flex items-center justify-center">
-                          <FileUpload onFileProcessed={handleFile1Processed} />
-                      </div>
-                  )}
-                </div>
-
-                <div className="p-4 flex flex-col">
-                  <h2 className="text-2xl font-semibold mb-4 text-center">Chat 2</h2>
-                  {isLoading2 ? (
-                    <div className="flex justify-center items-center h-48">
-                      <Loader2 className="h-16 w-16 animate-spin text-primary" />
-                    </div>
-                  ) : chatData2 ? (
-                    <AnalysisDashboard parsedData={chatData2} fileName={fileName2} onNewUpload={handleNewUpload2} showAskAI={false} />
-                  ) : (
-                      <div className="flex-grow flex items-center justify-center">
-                          <FileUpload onFileProcessed={handleFile2Processed} />
-                      </div>
-                  )}
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="p-4 flex flex-col items-center">
+            <h2 className="text-2xl font-semibold mb-4 text-center">Chat 1</h2>
+            {isLoading1 ? (
+              <div className="flex justify-center items-center h-48">
+                <Loader2 className="h-16 w-16 animate-spin text-primary" />
               </div>
-              <div className="relative z-20">
-                <Footer showEmojiCarousel={false} />
+            ) : chatData1 ? (
+              <AnalysisDashboard parsedData={chatData1} fileName={fileName1} onNewUpload={handleNewUpload1} showAskAI={false} />
+            ) : (
+                <div className="flex-grow flex items-center justify-center w-full">
+                    <FileUpload onFileProcessed={handleFile1Processed} />
+                </div>
+            )}
+          </div>
+
+          <div className="p-4 flex flex-col items-center">
+            <h2 className="text-2xl font-semibold mb-4 text-center">Chat 2</h2>
+            {isLoading2 ? (
+              <div className="flex justify-center items-center h-48">
+                <Loader2 className="h-16 w-16 animate-spin text-primary" />
               </div>
-            </div>
-      )}
+            ) : chatData2 ? (
+              <AnalysisDashboard parsedData={chatData2} fileName={fileName2} onNewUpload={handleNewUpload2} showAskAI={false} />
+            ) : (
+                <div className="flex-grow flex items-center justify-center w-full">
+                    <FileUpload onFileProcessed={handleFile2Processed} />
+                </div>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="relative z-10">
+        <Footer showEmojiCarousel={false} />
+      </div>
       <FloatingActionButton onHomeClick={handleHomeClick} />
     </div>
   );
