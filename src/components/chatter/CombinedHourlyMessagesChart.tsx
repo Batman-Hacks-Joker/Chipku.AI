@@ -52,7 +52,7 @@ const CombinedHourlyMessagesChart: React.FC<CombinedHourlyMessagesChartProps> = 
   }));
 
   return (
-    <Card>
+    <Card className="dark:bg-transparent">
       <CardHeader>
         <CardTitle>Combined Hourly Activity</CardTitle>
       </CardHeader>

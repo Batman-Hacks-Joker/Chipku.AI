@@ -160,7 +160,7 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
   };
 {/* hi*/ }
   return (
-    <Card>
+    <Card className="dark:bg-transparent">
       <CardHeader>
         <CardTitle>Combined Weekly Activity</CardTitle>
         <CardDescription>Aggregated messages by day of the week for top 5 users</CardDescription>

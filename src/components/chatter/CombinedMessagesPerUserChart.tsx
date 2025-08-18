@@ -174,7 +174,7 @@ export function CombinedMessagesPerUserChart({
 
 
   return (
-    <Card>
+    <Card className="dark:bg-transparent">
       <CardHeader>
         <CardTitle>Message Contribution</CardTitle>
         <CardDescription>
