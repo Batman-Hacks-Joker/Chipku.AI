@@ -9,7 +9,6 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import { Users } from "lucide-react";
 
 import type { ChatMessage } from "@/lib/types";
 import {
@@ -216,7 +215,7 @@ export function CombinedMessagesPerUserChart({
                 paddingAngle={5}
                 labelLine={false}
                 label={renderCustomizedLabel}
-              > {/* hi*/ }
+              >
                 {data2.chartData.map((entry) => (
                   <Cell key={`cell-2-${entry.name}`} fill={colorMap[entry.name]} />
                 ))}

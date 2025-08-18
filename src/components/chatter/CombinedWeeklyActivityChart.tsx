@@ -158,7 +158,6 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
       </div>
     );
   };
-{/* hi*/ }
   return (
     <Card className="dark:bg-transparent">
       <CardHeader>
