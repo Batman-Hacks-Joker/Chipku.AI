@@ -14,6 +14,7 @@ import CombinedHourlyMessagesChart from "@/components/chatter/CombinedHourlyMess
 import { LoadingPage } from "@/components/ui/LoadingPage";
 import { CombinedMessagesPerUserChart } from "@/components/chatter/CombinedMessagesPerUserChart";
 import CombinedWeeklyActivityChart from "@/components/chatter/CombinedWeeklyActivityChart";
+import { cn } from "@/lib/utils";
 
 export default function CorrelationPage() {
   const { toast } = useToast();
@@ -108,7 +109,17 @@ export default function CorrelationPage() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="relative flex flex-col min-h-screen w-full dark:bg-black">
+       <div
+        className={cn(
+          "absolute inset-0 z-0",
+          "[background-size:20px_20px]",
+          "[background-image:radial-gradient(white_1px,transparent_1px)]",
+          "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",
+        )}
+      />
+      <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
+      
       <style jsx global>{`
         @keyframes animatedgradient {
           0% {
@@ -141,7 +152,8 @@ export default function CorrelationPage() {
           background-size: 300% 300%;
         }
       `}</style>
-      <div className="flex-grow container mx-auto p-4">
+
+      <div className="relative z-20 flex-grow container mx-auto p-4">
         <h1 className="text-4xl font-bold text-center my-8">Correlation Analysis</h1>
         <p className="text-lg text-muted-foreground text-center mb-8">
           Compare two of your chat histories to see how your communication style changes with different people, or compare your chat habits with a friend's.
@@ -216,7 +228,9 @@ export default function CorrelationPage() {
           </div>
         </div>
       </div>
-      <Footer showEmojiCarousel={false} />
+      <div className="relative z-20">
+        <Footer showEmojiCarousel={false} />
+      </div>
       <FloatingActionButton onHomeClick={handleHomeClick} />
     </div>
   );
