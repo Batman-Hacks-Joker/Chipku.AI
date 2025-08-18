@@ -138,46 +138,48 @@ export function CombinedMessagesPerUserChart({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={350}>
-          <PieChart>
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            <Pie
-              data={data1}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={80}
-              innerRadius={50}
-              fill="#8884d8"
-              paddingAngle={5}
-              labelLine={false}
-              label={renderCustomizedLabel}
-            >
-              {data1.map((entry) => (
-                <Cell key={`cell-${entry.name}`} fill={colorMap[entry.name]} />
-              ))}
-            </Pie>
-            <Pie
-              data={data2}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              innerRadius={90}
-              outerRadius={120}
-              fill="#82ca9d"
-              paddingAngle={5}
-              labelLine={false}
-              label={renderCustomizedLabel}
-            >
-              {data2.map((entry) => (
-                <Cell key={`cell-${entry.name}`} fill={colorMap[entry.name]} />
-              ))}
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
+        <div className="w-full overflow-auto h-[350px]">
+          <ResponsiveContainer width="100%" height={460} minWidth={300}>
+            <PieChart>
+              <Tooltip content={<CustomTooltip />} />
+              <Legend />
+              <Pie
+                data={data1}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                innerRadius={50}
+                fill="#8884d8"
+                paddingAngle={5}
+                labelLine={false}
+                label={renderCustomizedLabel}
+              >
+                {data1.map((entry) => (
+                  <Cell key={`cell-${entry.name}`} fill={colorMap[entry.name]} />
+                ))}
+              </Pie>
+              <Pie
+                data={data2}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                innerRadius={90}
+                outerRadius={120}
+                fill="#82ca9d"
+                paddingAngle={5}
+                labelLine={false}
+                label={renderCustomizedLabel}
+              >
+                {data2.map((entry) => (
+                  <Cell key={`cell-${entry.name}`} fill={colorMap[entry.name]} />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
       </CardContent>
     </Card>
   );
