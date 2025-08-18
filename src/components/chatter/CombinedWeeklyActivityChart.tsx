@@ -15,7 +15,7 @@ import {
 } from 'recharts';
 import type { ChatMessage } from '@/lib/types';
 
-const COLORS = ["#82ca9d", "#3b82f6", "#ec4899", "#ff8042", "#ffc658", "#8884d8"];
+const COLORS = ["#82ca9d", "#3b82f6", "#ec4899", "#ff8042", "#f59e0b", "#A629D3"];
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 interface CombinedWeeklyActivityChartProps {
@@ -31,12 +31,12 @@ const CustomTooltip = ({ active, payload, label }: any) => {
         if (filteredPayload.length === 0) return null;
 
         return (
-            <div className="p-2 bg-background/80 backdrop-blur-sm border rounded-md shadow-lg text-foreground">
-                <p className="font-bold mb-2">{label}</p>
-                <ul className="space-y-1">
+            <div className="p-1.5 bg-background border rounded-md shadow-lg text-xs">
+                <p className="font-bold mb-1">{label}</p>
+                <ul className="space-y-0.5">
                     {filteredPayload.map((entry: any, index: number) => (
-                        <li key={`item-${index}`} style={{ color: entry.color }}>
-                            {`${entry.name}: ${entry.value}`}
+                        <li key={`item-${index}`} className="text-foreground">
+                             <span style={{ color: entry.color }}>●</span> {`${entry.name}: ${entry.value}`}
                         </li>
                     ))}
                 </ul>
@@ -140,7 +140,7 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
-                <Tooltip content={<CustomTooltip />} />
+                <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--muted))' }} />
                 <Legend />
                 {chartData.users1.map((user, i) => (
                   <Bar 
