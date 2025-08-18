@@ -107,12 +107,6 @@ export default function CorrelationPage() {
     return <LoadingPage title="Correlation provides easy decision making" />;
   }
 
-  const FileUploadWrapper = ({ children }: { children: React.ReactNode }) => (
-    <div className="relative p-4 rounded-lg bg-card gradient-border flex-grow flex items-center justify-center">
-      {children}
-    </div>
-  );
-
   return (
     <div className="flex flex-col min-h-screen">
       <style jsx global>{`
@@ -131,7 +125,7 @@ export default function CorrelationPage() {
           --borderWidth: 3px;
           background: hsl(var(--card));
           position: relative;
-          border-radius: var(--borderWidth);
+          border-radius: var(--radius);
         }
         .gradient-border:after {
           content: '';
@@ -191,7 +185,7 @@ export default function CorrelationPage() {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="border p-4 rounded-lg bg-card/20 flex flex-col">
+          <div className="gradient-border p-4 rounded-lg flex flex-col">
             <h2 className="text-2xl font-semibold mb-4 text-center">Chat 1</h2>
             {isLoading1 ? (
               <div className="flex justify-center items-center h-48">
@@ -200,13 +194,13 @@ export default function CorrelationPage() {
             ) : chatData1 ? (
               <AnalysisDashboard parsedData={chatData1} fileName={fileName1} onNewUpload={handleNewUpload1} showAskAI={false} />
             ) : (
-                <FileUploadWrapper>
+                <div className="flex-grow flex items-center justify-center">
                     <FileUpload onFileProcessed={handleFile1Processed} />
-                </FileUploadWrapper>
+                </div>
             )}
           </div>
 
-          <div className="border p-4 rounded-lg bg-card/20 flex flex-col">
+          <div className="gradient-border p-4 rounded-lg flex flex-col">
             <h2 className="text-2xl font-semibold mb-4 text-center">Chat 2</h2>
             {isLoading2 ? (
               <div className="flex justify-center items-center h-48">
@@ -215,9 +209,9 @@ export default function CorrelationPage() {
             ) : chatData2 ? (
               <AnalysisDashboard parsedData={chatData2} fileName={fileName2} onNewUpload={handleNewUpload2} showAskAI={false} />
             ) : (
-                <FileUploadWrapper>
+                <div className="flex-grow flex items-center justify-center">
                     <FileUpload onFileProcessed={handleFile2Processed} />
-                </FileUploadWrapper>
+                </div>
             )}
           </div>
         </div>
