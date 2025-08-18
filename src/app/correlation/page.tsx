@@ -153,7 +153,7 @@ export default function CorrelationPage() {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Chat 1 Section */}
+          {/* say hi to file change */}
           <div className="border p-4 rounded-lg">
             <h2 className="text-2xl font-semibold mb-4 text-center">Chat 1</h2>
             {isLoading1 ? (

@@ -68,6 +68,7 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
       
       const usersForLegend = [...topUsers];
       if (hasMoreThan5Users) {
+        {/* say hi to file change */}
         usersForLegend.push('Others');
       }
 
