@@ -93,7 +93,7 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
         usersForLegend.push('Others');
       }
 
-      // Reorder to have Others first for bottom stacking
+      // Reorder to have Others first for bottom stackingg bar chart
       const reorderUsers = (users: string[]) => {
         const others = users.find(u => u === 'Others');
         const otherUsers = users.filter(u => u !== 'Others');
