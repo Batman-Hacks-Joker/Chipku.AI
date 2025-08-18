@@ -15,6 +15,7 @@ import { LoadingPage } from "@/components/ui/LoadingPage";
 import { CombinedMessagesPerUserChart } from "@/components/chatter/CombinedMessagesPerUserChart";
 import CombinedWeeklyActivityChart from "@/components/chatter/CombinedWeeklyActivityChart";
 import { cn } from "@/lib/utils";
+import { Card } from "@/components/ui/card";
 
 export default function CorrelationPage() {
   const { toast } = useToast();
@@ -109,54 +110,17 @@ export default function CorrelationPage() {
   }
 
   return (
-    <div className="relative flex flex-col min-h-screen w-full dark:bg-black">
+    <div className="relative flex flex-col min-h-screen w-full bg-background dark:bg-black">
        <div
         className={cn(
           "absolute inset-0 z-0",
           "[background-size:20px_20px]",
-          "[background-image:radial-gradient(white_1px,transparent_1px)]",
+          "[background-image:radial-gradient(hsl(var(--muted))_1px,transparent_1px)]",
           "dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]",
         )}
       />
       <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
       
-      <style jsx global>{`
-        @keyframes animatedgradient {
-          0% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
-          }
-        }
-        .gradient-border {
-          --borderWidth: 3px;
-          background: hsl(var(--card));
-          position: relative;
-          border-radius: var(--radius);
-        }
-        .gradient-border:after {
-          content: '';
-          position: absolute;
-          top: calc(-1 * var(--borderWidth));
-          left: calc(-1 * var(--borderWidth));
-          height: calc(100% + var(--borderWidth) * 2);
-          width: calc(100% + var(--borderWidth) * 2);
-          background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
-          border-radius: calc(2 * var(--borderWidth));
-          z-index: -1;
-          animation: animatedgradient 3s ease alternate infinite;
-          background-size: 300% 300%;
-        }
-        .dark .gradient-border {
-            background: transparent;
-        }
-
-      `}</style>
-
       <div className="relative z-20 flex-grow container mx-auto p-4">
         <h1 className="text-4xl font-bold text-center my-8">Correlation Analysis</h1>
         <p className="text-lg text-muted-foreground text-center mb-8">
@@ -201,7 +165,7 @@ export default function CorrelationPage() {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="gradient-border p-4 rounded-lg flex flex-col">
+          <Card className="p-4 flex flex-col dark:bg-transparent">
             <h2 className="text-2xl font-semibold mb-4 text-center">Chat 1</h2>
             {isLoading1 ? (
               <div className="flex justify-center items-center h-48">
@@ -214,9 +178,9 @@ export default function CorrelationPage() {
                     <FileUpload onFileProcessed={handleFile1Processed} />
                 </div>
             )}
-          </div>
+          </Card>
 
-          <div className="gradient-border p-4 rounded-lg flex flex-col">
+          <Card className="p-4 flex flex-col dark:bg-transparent">
             <h2 className="text-2xl font-semibold mb-4 text-center">Chat 2</h2>
             {isLoading2 ? (
               <div className="flex justify-center items-center h-48">
@@ -229,7 +193,7 @@ export default function CorrelationPage() {
                     <FileUpload onFileProcessed={handleFile2Processed} />
                 </div>
             )}
-          </div>
+          </Card>
         </div>
       </div>
       <div className="relative z-20">
@@ -239,5 +203,3 @@ export default function CorrelationPage() {
     </div>
   );
 }
-
-    
