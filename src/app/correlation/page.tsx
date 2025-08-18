@@ -151,6 +151,13 @@ export default function CorrelationPage() {
           animation: animatedgradient 3s ease alternate infinite;
           background-size: 300% 300%;
         }
+        .dark .gradient-border {
+            background: transparent;
+        }
+        .dark .gradient-border:after {
+            background: none;
+        }
+
       `}</style>
 
       <div className="relative z-20 flex-grow container mx-auto p-4">
