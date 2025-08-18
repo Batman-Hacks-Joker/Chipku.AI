@@ -158,7 +158,7 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
       </div>
     );
   };
-
+{/* hi*/ }
   return (
     <Card>
       <CardHeader>

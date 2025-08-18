@@ -30,14 +30,14 @@ interface CombinedMessagesPerUserChartProps {
 }
 
 const COLORS = [
-  "#C21E56", // Deep magenta
-  "#A629D3", // Electric purple
-  "#3b82f6", // Blue
-  "#f59e0b", // Yellow
-  "#ec4899", // Pink
+  "#D52DB7", // Pink
+  "#FF0000", // Deep magenta
+  "#52D726", // Electric purple
+  "#FF7300", // Blue
+  "#7031AC", // Yellow
 ];
 
-const OTHERS_COLOR = "#8884d8"; // A distinct color for 'Others'
+const OTHERS_COLOR = "#007ED6"; // A distinct color for 'Others'
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
@@ -183,7 +183,7 @@ export function CombinedMessagesPerUserChart({
       </CardHeader>
       <CardContent>
         <div className="w-full overflow-auto h-[460px]">
-          <ResponsiveContainer width="100%" height={400} minWidth={300}>
+          <ResponsiveContainer width="100%" height={500} minWidth={300}>
             <PieChart>
               <Tooltip content={<CustomTooltip />} />
               <Legend content={renderLegend} wrapperStyle={{ paddingTop: "20px" }} />
@@ -216,7 +216,7 @@ export function CombinedMessagesPerUserChart({
                 paddingAngle={5}
                 labelLine={false}
                 label={renderCustomizedLabel}
-              >
+              > {/* hi*/ }
                 {data2.chartData.map((entry) => (
                   <Cell key={`cell-2-${entry.name}`} fill={colorMap[entry.name]} />
                 ))}
