@@ -145,7 +145,7 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
               <span>{user}</span>
             </div>
           ))}
-        </div>
+        </div> {/* hi*/ }
         <div className="flex flex-col space-y-1">
           <h4 className="font-bold mb-1">{chatName2}</h4>
           {chartData.users2.map((user) => (
