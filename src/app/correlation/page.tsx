@@ -108,7 +108,7 @@ export default function CorrelationPage() {
   }
 
   const FileUploadWrapper = ({ children }: { children: React.ReactNode }) => (
-    <div className="relative p-4 rounded-lg bg-card gradient-border">
+    <div className="relative p-4 rounded-lg bg-card gradient-border flex-grow flex items-center justify-center">
       {children}
     </div>
   );
@@ -191,7 +191,7 @@ export default function CorrelationPage() {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="border p-4 rounded-lg bg-card/20">
+          <div className="border p-4 rounded-lg bg-card/20 flex flex-col">
             <h2 className="text-2xl font-semibold mb-4 text-center">Chat 1</h2>
             {isLoading1 ? (
               <div className="flex justify-center items-center h-48">
@@ -206,7 +206,7 @@ export default function CorrelationPage() {
             )}
           </div>
 
-          <div className="border p-4 rounded-lg bg-card/20">
+          <div className="border p-4 rounded-lg bg-card/20 flex flex-col">
             <h2 className="text-2xl font-semibold mb-4 text-center">Chat 2</h2>
             {isLoading2 ? (
               <div className="flex justify-center items-center h-48">
