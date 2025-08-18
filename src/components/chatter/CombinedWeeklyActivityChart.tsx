@@ -94,33 +94,35 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
         <CardDescription>Aggregated messages by day of the week for top 5 users</CardDescription>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={400}>
-          <BarChart data={chartData.combined} barGap={10} barCategoryGap="20%">
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            {chartData.users1.map((user, i) => (
-              <Bar 
-                key={`${chatName1}-${user}`} 
-                dataKey={`${chatName1}-${user}`} 
-                stackId="a" 
-                fill={COLORS[i % COLORS.length]} 
-                name={`${user} (${chatName1})`} 
-              />
-            ))}
-            {chartData.users2.map((user, i) => (
-              <Bar 
-                key={`${chatName2}-${user}`} 
-                dataKey={`${chatName2}-${user}`} 
-                stackId="b" 
-                fill={COLORS[i % COLORS.length]} 
-                name={`${user} (${chatName2})`}
-              />
-            ))}
-          </BarChart>
-        </ResponsiveContainer>
+        <div className="w-full overflow-auto h-[400px]">
+            <ResponsiveContainer width="100%" height={400} minWidth={500}>
+              <BarChart data={chartData.combined} barGap={10} barCategoryGap="20%">
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                {chartData.users1.map((user, i) => (
+                  <Bar 
+                    key={`${chatName1}-${user}`} 
+                    dataKey={`${chatName1}-${user}`} 
+                    stackId="a" 
+                    fill={COLORS[i % COLORS.length]} 
+                    name={`${user} (${chatName1})`} 
+                  />
+                ))}
+                {chartData.users2.map((user, i) => (
+                  <Bar 
+                    key={`${chatName2}-${user}`} 
+                    dataKey={`${chatName2}-${user}`} 
+                    stackId="b" 
+                    fill={COLORS[i % COLORS.length]} 
+                    name={`${user} (${chatName2})`}
+                  />
+                ))}
+              </BarChart>
+            </ResponsiveContainer>
+        </div>
       </CardContent>
     </Card>
   );
