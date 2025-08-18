@@ -108,18 +108,45 @@ export default function CorrelationPage() {
   }
 
   const FileUploadWrapper = ({ children }: { children: React.ReactNode }) => (
-    <div className="relative p-4 rounded-lg bg-card overflow-hidden">
-        <div 
-            className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600 opacity-20 blur-3xl"
-        ></div>
-        <div className="relative">
-            {children}
-        </div>
+    <div className="relative p-4 rounded-lg bg-card gradient-border">
+      {children}
     </div>
   );
 
   return (
     <div className="flex flex-col min-h-screen">
+      <style jsx global>{`
+        @keyframes animatedgradient {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+        .gradient-border {
+          --borderWidth: 3px;
+          background: hsl(var(--card));
+          position: relative;
+          border-radius: var(--borderWidth);
+        }
+        .gradient-border:after {
+          content: '';
+          position: absolute;
+          top: calc(-1 * var(--borderWidth));
+          left: calc(-1 * var(--borderWidth));
+          height: calc(100% + var(--borderWidth) * 2);
+          width: calc(100% + var(--borderWidth) * 2);
+          background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+          border-radius: calc(2 * var(--borderWidth));
+          z-index: -1;
+          animation: animatedgradient 3s ease alternate infinite;
+          background-size: 300% 300%;
+        }
+      `}</style>
       <div className="flex-grow container mx-auto p-4">
         <h1 className="text-4xl font-bold text-center my-8">Correlation Analysis</h1>
         <p className="text-lg text-muted-foreground text-center mb-8">
