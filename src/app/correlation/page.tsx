@@ -107,8 +107,30 @@ export default function CorrelationPage() {
     return <LoadingPage title="Correlation provides easy decision making" />;
   }
 
+  const FileUploadWrapper = ({ children }: { children: React.ReactNode }) => (
+    <div className="relative p-4 rounded-lg bg-card group">
+        <div 
+            className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg blur opacity-0 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-tilt"
+            style={{
+                animation: 'gradient-flow 5s ease infinite',
+                backgroundSize: '200% 200%',
+            }}
+        ></div>
+        <div className="relative">
+            {children}
+        </div>
+    </div>
+);
+
   return (
     <div className="flex flex-col min-h-screen">
+       <style jsx>{`
+        @keyframes gradient-flow {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `}</style>
       <div className="flex-grow container mx-auto p-4">
         <h1 className="text-4xl font-bold text-center my-8">Correlation Analysis</h1>
         <p className="text-lg text-muted-foreground text-center mb-8">
@@ -163,7 +185,9 @@ export default function CorrelationPage() {
             ) : chatData1 ? (
               <AnalysisDashboard parsedData={chatData1} fileName={fileName1} onNewUpload={handleNewUpload1} showAskAI={false} />
             ) : (
-              <FileUpload onFileProcessed={handleFile1Processed} />
+                <FileUploadWrapper>
+                    <FileUpload onFileProcessed={handleFile1Processed} />
+                </FileUploadWrapper>
             )}
           </div>
 
@@ -177,7 +201,9 @@ export default function CorrelationPage() {
             ) : chatData2 ? (
               <AnalysisDashboard parsedData={chatData2} fileName={fileName2} onNewUpload={handleNewUpload2} showAskAI={false} />
             ) : (
-              <FileUpload onFileProcessed={handleFile2Processed} />
+                <FileUploadWrapper>
+                    <FileUpload onFileProcessed={handleFile2Processed} />
+                </FileUploadWrapper>
             )}
           </div>
         </div>
