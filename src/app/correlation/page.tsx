@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import CombinedHourlyMessagesChart from "@/components/chatter/CombinedHourlyMessagesChart";
 import { LoadingPage } from "@/components/ui/LoadingPage";
 import { CombinedMessagesPerUserChart } from "@/components/chatter/CombinedMessagesPerUserChart";
+import CombinedWeeklyActivityChart from "@/components/chatter/CombinedWeeklyActivityChart";
 
 export default function CorrelationPage() {
   const { toast } = useToast();
@@ -113,6 +114,17 @@ export default function CorrelationPage() {
         <p className="text-lg text-muted-foreground text-center mb-8">
           Compare two of your chat histories to see how your communication style changes with different people, or compare your chat habits with a friend's.
         </p>
+
+        {chatData1 && chatData2 && fileName1 && fileName2 && (
+            <div className="mb-8">
+                <CombinedWeeklyActivityChart
+                    messages1={chatData1.messages}
+                    fileName1={fileName1}
+                    messages2={chatData2.messages}
+                    fileName2={fileName2}
+                />
+            </div>
+        )}
         
         {chatData1 && chatData2 && fileName1 && fileName2 && (
           <div className="mb-8">
