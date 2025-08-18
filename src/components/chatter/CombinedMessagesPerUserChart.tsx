@@ -36,6 +36,45 @@ const COLORS = [
   "#f59e0b", // Yellow
 ];
 
+const RADIAN = Math.PI / 180;
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
+  if (percent < 0.03) { // Do not render labels for small segments
+    return null;
+  }
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text
+      x={x}
+      y={y}
+      fill="white"
+      textAnchor="middle"
+      dominantBaseline="central"
+      fontSize="12"
+      fontWeight="bold"
+    >
+      {`${(percent * 100).toFixed(0)}%`}
+    </text>
+  );
+};
+
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    return (
+      <div className="p-2 bg-gray-800 text-white rounded-md shadow-lg">
+        <p className="font-bold">{data.name}</p>
+        <p>Messages: {data.value}</p>
+        <p>Chat: {data.chatName}</p>
+      </div>
+    );
+  }
+
+  return null;
+};
+
 export function CombinedMessagesPerUserChart({
   messages1,
   users1,
@@ -44,7 +83,16 @@ export function CombinedMessagesPerUserChart({
   users2,
   fileName2,
 }: CombinedMessagesPerUserChartProps) {
-  const processData = (messages: ChatMessage[], users: string[]) => {
+  const getChatName = (fileName: string) => {
+    return fileName
+      .replace('WhatsApp Chat with ', '')
+      .replace('.txt', '');
+  };
+
+  const chatName1 = getChatName(fileName1);
+  const chatName2 = getChatName(fileName2);
+
+  const processData = (messages: ChatMessage[], users: string[], chatName: string) => {
     const userMessageCounts = users.reduce((acc, user) => {
       acc[user] = 0;
       return acc;
@@ -62,34 +110,24 @@ export function CombinedMessagesPerUserChart({
     if (sortedUsers.length > 5) {
       const top5 = sortedUsers.slice(0, 5);
       const othersCount = sortedUsers.slice(5).reduce((acc, [, count]) => acc + count, 0);
-      const top5Data = top5.map(([name, value]) => ({ name, value }));
+      const top5Data = top5.map(([name, value]) => ({ name, value, chatName }));
       if (othersCount > 0) {
-        return [...top5Data, { name: 'Others', value: othersCount }];
+        return [...top5Data, { name: 'Others', value: othersCount, chatName }];
       }
       return top5Data;
     }
 
-    return sortedUsers.map(([name, value]) => ({ name, value }));
+    return sortedUsers.map(([name, value]) => ({ name, value, chatName }));
   };
 
-  const data1 = processData(messages1, users1);
-  const data2 = processData(messages2, users2);
+  const data1 = processData(messages1, users1, chatName1);
+  const data2 = processData(messages2, users2, chatName2);
 
   const allUsers = [...new Set([...data1.map(d => d.name), ...data2.map(d => d.name)])];
   const colorMap = allUsers.reduce((acc, user, index) => {
     acc[user] = COLORS[index % COLORS.length];
     return acc;
   }, {} as Record<string, string>);
-
-
-  const getChatName = (fileName: string) => {
-    return fileName
-      .replace('WhatsApp Chat with ', '')
-      .replace('.txt', '');
-  };
-
-  const chatName1 = getChatName(fileName1);
-  const chatName2 = getChatName(fileName2);
 
   return (
     <Card>
@@ -102,17 +140,7 @@ export function CombinedMessagesPerUserChart({
       <CardContent>
         <ResponsiveContainer width="100%" height={350}>
           <PieChart>
-            <Tooltip
-              contentStyle={{
-                background: "rgba(20, 20, 20, 0.8)",
-                border: "1px solid #555",
-                borderRadius: "10px",
-                color: "#fff",
-                boxShadow: "0 0 10px rgba(0,0,0,0.5)",
-              }}
-              itemStyle={{ color: "#fff" }}
-              cursor={{ fill: 'transparent' }}
-            />
+            <Tooltip content={<CustomTooltip />} />
             <Legend />
             <Pie
               data={data1}
@@ -124,6 +152,8 @@ export function CombinedMessagesPerUserChart({
               innerRadius={50}
               fill="#8884d8"
               paddingAngle={5}
+              labelLine={false}
+              label={renderCustomizedLabel}
             >
               {data1.map((entry) => (
                 <Cell key={`cell-${entry.name}`} fill={colorMap[entry.name]} />
@@ -139,6 +169,8 @@ export function CombinedMessagesPerUserChart({
               outerRadius={120}
               fill="#82ca9d"
               paddingAngle={5}
+              labelLine={false}
+              label={renderCustomizedLabel}
             >
               {data2.map((entry) => (
                 <Cell key={`cell-${entry.name}`} fill={colorMap[entry.name]} />
