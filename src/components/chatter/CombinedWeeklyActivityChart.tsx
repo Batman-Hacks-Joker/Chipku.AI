@@ -88,12 +88,19 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
         }
       });
       
-      const usersForLegend = [...topUsers];
+      let usersForLegend = [...topUsers];
       if (hasMoreThan5Users) {
         usersForLegend.push('Others');
       }
 
-      return { usersForLegend, weeklyData: weeklyDataByUser };
+      // Reorder to have Others first for bottom stacking
+      const reorderUsers = (users: string[]) => {
+        const others = users.find(u => u === 'Others');
+        const otherUsers = users.filter(u => u !== 'Others');
+        return others ? [others, ...otherUsers] : otherUsers;
+      };
+
+      return { usersForLegend: reorderUsers(usersForLegend), weeklyData: weeklyDataByUser };
     };
 
     const data1 = processChatData(messages1);
@@ -112,20 +119,23 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
         
         return dayData;
     });
-    
-    const reorderUsers = (users: string[]) => {
-      const others = users.find(u => u === 'Others');
-      const otherUsers = users.filter(u => u !== 'Others');
-      return others ? [...otherUsers, others] : otherUsers;
-    };
-
 
     return {
         combined,
-        users1: reorderUsers(data1.usersForLegend),
-        users2: reorderUsers(data2.usersForLegend),
+        users1: data1.usersForLegend,
+        users2: data2.usersForLegend,
     };
   }, [messages1, messages2, chatName1, chatName2]);
+  
+  const getColor = (userName: string, userList: string[]) => {
+      if (userName === 'Others') {
+          return COLORS[5]; // Purple for others
+      }
+      // Non-others users are now after 'Others' in the list if it exists
+      const userIndex = userList.filter(u => u !== 'Others').indexOf(userName);
+      return COLORS[userIndex % 5]; // Cycle through first 5 colors
+  };
+
 
   return (
     <Card>
@@ -142,21 +152,21 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
                 <YAxis />
                 <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--muted))' }} />
                 <Legend />
-                {chartData.users1.map((user, i) => (
+                {chartData.users1.map((user) => (
                   <Bar 
                     key={`${chatName1}-${user}`} 
                     dataKey={`${chatName1}-${user}`} 
                     stackId="a" 
-                    fill={COLORS[i % COLORS.length]} 
+                    fill={getColor(user, chartData.users1)}
                     name={`${user} (${chatName1})`} 
                   />
                 ))}
-                {chartData.users2.map((user, i) => (
+                {chartData.users2.map((user) => (
                   <Bar 
                     key={`${chatName2}-${user}`} 
                     dataKey={`${chatName2}-${user}`} 
                     stackId="b" 
-                    fill={COLORS[i % COLORS.length]} 
+                    fill={getColor(user, chartData.users2)}
                     name={`${user} (${chatName2})`}
                   />
                 ))}
