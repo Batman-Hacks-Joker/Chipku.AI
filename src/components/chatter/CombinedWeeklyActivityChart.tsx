@@ -96,7 +96,7 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
       const reorderUsers = (users: string[]) => {
         const others = users.find(u => u === 'Others');
         const otherUsers = users.filter(u => u !== 'Others');
-        return others ? [others, ...otherUsers] : otherUsers;
+        return others ? [...otherUsers, others] : otherUsers;
       };
 
       return { usersForLegend: reorderUsers(usersForLegend), weeklyData: weeklyDataByUser };
