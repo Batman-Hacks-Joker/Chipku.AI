@@ -128,18 +128,18 @@ export default function CorrelationPage() {
         </p>
 
         {chatData1 && chatData2 && fileName1 && fileName2 && (
-            <div className="mb-8">
+            <Card className="mb-8 dark:bg-transparent">
                 <CombinedWeeklyActivityChart
                     messages1={chatData1.messages}
                     fileName1={fileName1}
                     messages2={chatData2.messages}
                     fileName2={fileName2}
                 />
-            </div>
+            </Card>
         )}
         
         {chatData1 && chatData2 && fileName1 && fileName2 && (
-          <div className="mb-8">
+          <Card className="mb-8 dark:bg-transparent">
             <CombinedMessagesPerUserChart 
               messages1={chatData1.messages}
               users1={chatData1.users}
@@ -148,11 +148,11 @@ export default function CorrelationPage() {
               users2={chatData2.users}
               fileName2={fileName2}
             />
-          </div>
+          </Card>
         )}
 
         {chatData1 && chatData2 && fileName1 && fileName2 && (
-          <div className="mb-8">
+          <Card className="mb-8 dark:bg-transparent">
             <CombinedHourlyMessagesChart 
               messages1={chatData1.messages}
               messages2={chatData2.messages}
@@ -161,11 +161,11 @@ export default function CorrelationPage() {
               fileName1={fileName1}
               fileName2={fileName2}
             />
-          </div>
+          </Card>
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <Card className="p-4 flex flex-col dark:bg-transparent">
+          <div className="p-4 flex flex-col">
             <h2 className="text-2xl font-semibold mb-4 text-center">Chat 1</h2>
             {isLoading1 ? (
               <div className="flex justify-center items-center h-48">
@@ -178,9 +178,9 @@ export default function CorrelationPage() {
                     <FileUpload onFileProcessed={handleFile1Processed} />
                 </div>
             )}
-          </Card>
+          </div>
 
-          <Card className="p-4 flex flex-col dark:bg-transparent">
+          <div className="p-4 flex flex-col">
             <h2 className="text-2xl font-semibold mb-4 text-center">Chat 2</h2>
             {isLoading2 ? (
               <div className="flex justify-center items-center h-48">
@@ -193,7 +193,7 @@ export default function CorrelationPage() {
                     <FileUpload onFileProcessed={handleFile2Processed} />
                 </div>
             )}
-          </Card>
+          </div>
         </div>
       </div>
       <div className="relative z-20">
