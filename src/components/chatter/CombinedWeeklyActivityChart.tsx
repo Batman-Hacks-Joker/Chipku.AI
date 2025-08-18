@@ -25,6 +25,28 @@ interface CombinedWeeklyActivityChartProps {
   fileName2: string;
 }
 
+const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+        const filteredPayload = payload.filter((p: any) => p.value > 0);
+        if (filteredPayload.length === 0) return null;
+
+        return (
+            <div className="p-2 bg-background/80 backdrop-blur-sm border rounded-md shadow-lg text-foreground">
+                <p className="font-bold mb-2">{label}</p>
+                <ul className="space-y-1">
+                    {filteredPayload.map((entry: any, index: number) => (
+                        <li key={`item-${index}`} style={{ color: entry.color }}>
+                            {`${entry.name}: ${entry.value}`}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
+    }
+    return null;
+};
+
+
 const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = ({
   messages1,
   fileName1,
@@ -68,7 +90,6 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
       
       const usersForLegend = [...topUsers];
       if (hasMoreThan5Users) {
-        {/* say hi to file change */}
         usersForLegend.push('Others');
       }
 
@@ -95,7 +116,7 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
     const reorderUsers = (users: string[]) => {
       const others = users.find(u => u === 'Others');
       const otherUsers = users.filter(u => u !== 'Others');
-      return others ? [others, ...otherUsers] : otherUsers;
+      return others ? [...otherUsers, others] : otherUsers;
     };
 
 
@@ -119,7 +140,7 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
-                <Tooltip />
+                <Tooltip content={<CustomTooltip />} />
                 <Legend />
                 {chartData.users1.map((user, i) => (
                   <Bar 
@@ -148,5 +169,3 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
 };
 
 export default CombinedWeeklyActivityChart;
-
-    
