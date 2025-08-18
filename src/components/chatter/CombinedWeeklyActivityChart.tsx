@@ -94,8 +94,8 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
         <CardDescription>Aggregated messages by day of the week for top 5 users</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="w-full overflow-auto h-[400px]">
-            <ResponsiveContainer width="100%" height={400} minWidth={500}>
+        <div className="w-full overflow-auto h-[500px]">
+            <ResponsiveContainer width="100%" height={500} minWidth={500}>
               <BarChart data={chartData.combined} barGap={10} barCategoryGap="20%">
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
