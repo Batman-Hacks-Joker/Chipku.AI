@@ -108,29 +108,18 @@ export default function CorrelationPage() {
   }
 
   const FileUploadWrapper = ({ children }: { children: React.ReactNode }) => (
-    <div className="relative p-4 rounded-lg bg-card group">
+    <div className="relative p-4 rounded-lg bg-card overflow-hidden">
         <div 
-            className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg blur opacity-0 group-hover:opacity-75 transition duration-1000 group-hover:duration-200 animate-tilt"
-            style={{
-                animation: 'gradient-flow 5s ease infinite',
-                backgroundSize: '200% 200%',
-            }}
+            className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600 opacity-20 blur-3xl"
         ></div>
         <div className="relative">
             {children}
         </div>
     </div>
-);
+  );
 
   return (
     <div className="flex flex-col min-h-screen">
-       <style jsx>{`
-        @keyframes gradient-flow {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-      `}</style>
       <div className="flex-grow container mx-auto p-4">
         <h1 className="text-4xl font-bold text-center my-8">Correlation Analysis</h1>
         <p className="text-lg text-muted-foreground text-center mb-8">
@@ -175,11 +164,10 @@ export default function CorrelationPage() {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* say hi to file change */}
-          <div className="border p-4 rounded-lg">
+          <div className="border p-4 rounded-lg bg-card/20">
             <h2 className="text-2xl font-semibold mb-4 text-center">Chat 1</h2>
             {isLoading1 ? (
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center h-48">
                 <Loader2 className="h-16 w-16 animate-spin text-primary" />
               </div>
             ) : chatData1 ? (
@@ -191,11 +179,10 @@ export default function CorrelationPage() {
             )}
           </div>
 
-          {/* Chat 2 Sectionn */}
-          <div className="border p-4 rounded-lg">
+          <div className="border p-4 rounded-lg bg-card/20">
             <h2 className="text-2xl font-semibold mb-4 text-center">Chat 2</h2>
             {isLoading2 ? (
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center h-48">
                 <Loader2 className="h-16 w-16 animate-spin text-primary" />
               </div>
             ) : chatData2 ? (
