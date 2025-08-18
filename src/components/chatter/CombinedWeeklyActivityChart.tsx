@@ -15,7 +15,7 @@ import {
 } from 'recharts';
 import type { ChatMessage } from '@/lib/types';
 
-const COLORS = ["#82ca9d", "#ffc658", "#3b82f6", "#ff8042", "#ec4899", "#8884d8"];
+const COLORS = ["#82ca9d", "#3b82f6", "#ec4899", "#ff8042", "#ffc658", "#8884d8"];
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 interface CombinedWeeklyActivityChartProps {
@@ -90,11 +90,18 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
         
         return dayData;
     });
+    
+    const reorderUsers = (users: string[]) => {
+      const others = users.find(u => u === 'Others');
+      const otherUsers = users.filter(u => u !== 'Others');
+      return others ? [others, ...otherUsers] : otherUsers;
+    };
+
 
     return {
         combined,
-        users1: data1.usersForLegend,
-        users2: data2.usersForLegend,
+        users1: reorderUsers(data1.usersForLegend),
+        users2: reorderUsers(data2.usersForLegend),
     };
   }, [messages1, messages2, chatName1, chatName2]);
 
@@ -140,3 +147,5 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
 };
 
 export default CombinedWeeklyActivityChart;
+
+    
