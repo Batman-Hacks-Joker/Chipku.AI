@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useMemo } from 'react';
@@ -45,22 +46,32 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
         .sort(([, a], [, b]) => b - a)
         .map(([user]) => user);
       
-      const top5Users = sortedUsers.slice(0, 5);
-      const otherUsers = sortedUsers.slice(5);
-
-      const weeklyDataByUser: Record<string, number[]> = top5Users.reduce((acc, user) => {
+      const hasMoreThan5Users = sortedUsers.length > 5;
+      const topUsers = sortedUsers.slice(0, 5);
+      
+      const weeklyDataByUser: Record<string, number[]> = topUsers.reduce((acc, user) => {
         acc[user] = Array(7).fill(0);
         return acc;
       }, {} as Record<string, number[]>);
-      weeklyDataByUser['Others'] = Array(7).fill(0);
+
+      if (hasMoreThan5Users) {
+        weeklyDataByUser['Others'] = Array(7).fill(0);
+      }
 
       messages.forEach((msg) => {
         const day = new Date(msg.timestamp).getDay();
-        const author = top5Users.includes(msg.author) ? msg.author : 'Others';
-        weeklyDataByUser[author][day]++;
+        const author = topUsers.includes(msg.author) ? msg.author : 'Others';
+        if (weeklyDataByUser[author]) {
+            weeklyDataByUser[author][day]++;
+        }
       });
+      
+      const usersForLegend = [...topUsers];
+      if (hasMoreThan5Users) {
+        usersForLegend.push('Others');
+      }
 
-      return { topUsers: top5Users, weeklyData: weeklyDataByUser };
+      return { usersForLegend, weeklyData: weeklyDataByUser };
     };
 
     const data1 = processChatData(messages1);
@@ -69,12 +80,12 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
     const combined = WEEKDAYS.map((day, index) => {
         const dayData: Record<string, any> = { name: day };
         
-        [...data1.topUsers, 'Others'].forEach(user => {
-            dayData[`${chatName1}-${user}`] = data1.weeklyData[user][index];
+        data1.usersForLegend.forEach(user => {
+            dayData[`${chatName1}-${user}`] = data1.weeklyData[user] ? data1.weeklyData[user][index] : 0;
         });
 
-        [...data2.topUsers, 'Others'].forEach(user => {
-            dayData[`${chatName2}-${user}`] = data2.weeklyData[user][index];
+        data2.usersForLegend.forEach(user => {
+            dayData[`${chatName2}-${user}`] = data2.weeklyData[user] ? data2.weeklyData[user][index] : 0;
         });
         
         return dayData;
@@ -82,8 +93,8 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
 
     return {
         combined,
-        users1: [...data1.topUsers, 'Others'],
-        users2: [...data2.topUsers, 'Others']
+        users1: data1.usersForLegend,
+        users2: data2.usersForLegend,
     };
   }, [messages1, messages2, chatName1, chatName2]);
 
