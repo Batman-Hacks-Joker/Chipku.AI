@@ -19,9 +19,11 @@ interface CombinedHourlyMessagesChartProps {
   messages2: ChatMessage[];
   users1: string[];
   users2: string[];
+  fileName1: string;
+  fileName2: string;
 }
 
-const CombinedHourlyMessagesChart: React.FC<CombinedHourlyMessagesChartProps> = ({ messages1, messages2, users1, users2 }) => {
+const CombinedHourlyMessagesChart: React.FC<CombinedHourlyMessagesChartProps> = ({ messages1, messages2, users1, users2, fileName1, fileName2 }) => {
   const processData = (messages: ChatMessage[]) => {
     const hourlyData = Array(24).fill(0).map(() => 0);
     messages.forEach((msg) => {
@@ -31,13 +33,22 @@ const CombinedHourlyMessagesChart: React.FC<CombinedHourlyMessagesChartProps> = 
     return hourlyData;
   };
 
+  const getChatName = (fileName: string) => {
+    return fileName
+      .replace('WhatsApp Chat with ', '')
+      .replace('.txt', '');
+  };
+
+  const chatName1 = getChatName(fileName1);
+  const chatName2 = getChatName(fileName2);
+
   const data1 = processData(messages1);
   const data2 = processData(messages2);
 
   const combinedData = Array(24).fill(0).map((_, hour) => ({
     hour: `${hour}:00`,
-    'Chat 1': data1[hour] || 0,
-    'Chat 2': data2[hour] || 0,
+    [chatName1]: data1[hour] || 0,
+    [chatName2]: data2[hour] || 0,
   }));
 
   return (
@@ -53,8 +64,8 @@ const CombinedHourlyMessagesChart: React.FC<CombinedHourlyMessagesChartProps> = 
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="Chat 1" stroke="#8884d8" />
-            <Line type="monotone" dataKey="Chat 2" stroke="#82ca9d" />
+            <Line type="monotone" dataKey={chatName1} stroke="#8884d8" />
+            <Line type="monotone" dataKey={chatName2} stroke="#82ca9d" />
           </LineChart>
         </ResponsiveContainer>
       </CardContent>

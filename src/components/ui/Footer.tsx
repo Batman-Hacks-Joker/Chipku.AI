@@ -1,7 +1,11 @@
 import React from 'react';
 import { Github } from 'lucide-react';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  showEmojiCarousel?: boolean;
+}
+
+const Footer: React.FC<FooterProps> = ({ showEmojiCarousel = true }) => {
   const emojis = '😊🥴💋🤤😂👍😳😠🥳🔥🥺🧡😉🥱🤓😈😍🤪🥰😘😎👻😏😡💖👀😤😆✨🤭🧐😪';
   const repeatedEmojis = emojis.repeat(5); // Repeat emojis for smooth loop
 
@@ -23,15 +27,17 @@ const Footer: React.FC = () => {
       </footer>
 
       {/* Emoji Carousel */}
-      <div className="emoji-carousel" aria-hidden="true">
-        <div className="emoji-track">
-          {[...repeatedEmojis].map((emoji, index) => (
-            <span className="emoji" key={index}>
-              {emoji}
-            </span>
-          ))}
+      {showEmojiCarousel && (
+        <div className="emoji-carousel" aria-hidden="true">
+          <div className="emoji-track">
+            {[...repeatedEmojis].map((emoji, index) => (
+              <span className="emoji" key={index}>
+                {emoji}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* CSS Styling */}
       <style>{`
