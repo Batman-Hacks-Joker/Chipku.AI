@@ -37,7 +37,7 @@ export function WeeklyMessagesChart({ messages, users: allUsers }: WeeklyMessage
       }
     });
 
-    const sortedUsers = Object.entries(userMessageCounts).sort(([, a], [, b]) => b - a);
+    const sortedUsers = Object.entries(userMessageCounts).filter(([,count]) => count > 0).sort(([, a], [, b]) => b - a);
 
     // 2. Determine top 10 users and group others
     let topUsers: string[];
@@ -95,12 +95,11 @@ export function WeeklyMessagesChart({ messages, users: allUsers }: WeeklyMessage
 
   const renderLegend = (props: any) => {
     const { payload } = props;
-    const columns = Math.ceil(payload.length / 5); // Max 5 items per column
     
     return (
-      <div className="flex justify-center mt-4 -mx-2" style={{ columnCount: 2, columnGap: '1rem' }}>
+      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 mt-4">
         {payload.map((entry: any, index: number) => (
-          <div key={`item-${index}`} className="flex items-center space-x-2 text-xs mb-1 break-inside-avoid-column">
+          <div key={`item-${index}`} className="flex items-center space-x-2 text-xs">
             <span className="w-2.5 h-2.5" style={{ backgroundColor: entry.color }} />
             <span className="text-muted-foreground truncate">{entry.value}</span>
           </div>
