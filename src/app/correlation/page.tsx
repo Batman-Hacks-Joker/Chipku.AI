@@ -34,6 +34,7 @@ export default function CorrelationPage() {
   const [isLoading2, setIsLoading2] = React.useState(false);
   const [isDarkMode] = useDarkModeContext();
   const [showCorrelation, setShowCorrelation] = React.useState(false);
+  const [isDiscardHovered, setIsDiscardHovered] = React.useState(false);
 
 
   React.useEffect(() => {
@@ -148,14 +149,31 @@ export default function CorrelationPage() {
   return (
     <div className="relative flex flex-col min-h-screen w-full bg-background dark:bg-black">
        {showCorrelation && (
-        <Button 
-          variant="destructive" 
-          size="icon" 
-          className="fixed top-1/2 right-4 -translate-y-1/2 z-50 rounded-full h-16 w-16"
-          onClick={handleDiscard}
-        >
-          <X className="h-8 w-8" />
-        </Button>
+         <div 
+           className="fixed top-1/2 right-4 -translate-y-1/2 z-50 flex items-center group"
+           onMouseEnter={() => setIsDiscardHovered(true)}
+           onMouseLeave={() => setIsDiscardHovered(false)}
+         >
+          <span
+            className={cn(
+              "mr-2 px-3 py-1.5 bg-destructive text-destructive-foreground rounded-md text-sm font-medium whitespace-nowrap transition-all duration-300",
+              isDiscardHovered ? "opacity-100 scale-100" : "opacity-0 scale-95"
+            )}
+          >
+            Discard files
+          </span>
+          <Button 
+            variant="destructive" 
+            size="icon" 
+            className={cn(
+              "rounded-full h-12 w-12 text-2xl transform transition-transform duration-300",
+              isDiscardHovered ? 'scale-125' : 'scale-100'
+            )}
+            onClick={handleDiscard}
+          >
+            <span role="img" aria-label="cross mark">❌</span>
+          </Button>
+        </div>
       )}
       <div
         className={cn(
