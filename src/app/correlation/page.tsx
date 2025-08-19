@@ -161,7 +161,7 @@ export default function CorrelationPage() {
         <p className="text-lg text-muted-foreground text-center mb-8">
           Compare two of your chat histories to see how your communication style changes with different people, or compare your chat habits with a friend's.
         </p>
-        
+        {/* hi */}
         {chatData1 && chatData2 && (
              <Card className="mb-8 dark:bg-transparent">
               <CardHeader>
