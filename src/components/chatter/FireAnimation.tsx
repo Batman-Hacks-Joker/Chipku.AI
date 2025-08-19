@@ -7,7 +7,7 @@ const FireAnimation = ({ onComplete }: { onComplete: () => void }) => {
   const [emojis, setEmojis] = useState<{ id: number; style: React.CSSProperties }[]>([]);
 
   useEffect(() => {
-    const fireEmojis = Array.from({ length: 50 }).map((_, i) => {
+    const fireEmojis = Array.from({ length: 200 }).map((_, i) => {
       const style: React.CSSProperties = {
         left: `${Math.random() * 100}vw`,
         fontSize: `${Math.random() * 2 + 1}rem`, // bigger and smaller sizes
