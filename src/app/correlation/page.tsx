@@ -2,11 +2,10 @@
 "use client";
 
 import * as React from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { parseChatFile } from "@/lib/chat-parser";
 import { useToast } from "@/hooks/use-toast";
 import { FileUpload } from "@/components/chatter/FileUpload";
-import { AnalysisDashboard } from "@/components/chatter/AnalysisDashboard";
 import Footer from "@/components/ui/Footer";
 import FloatingActionButton from "@/components/ui/FloatingActionButton";
 import { ParsedChatData } from "@/lib/types";
@@ -19,6 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useDarkModeContext } from "@/context/DarkModeContext";
 import { CombinedActivityHeatmap } from "@/components/chatter/CombinedActivityHeatmap";
+import { Button } from "@/components/ui/button";
 
 export default function CorrelationPage() {
   const { toast } = useToast();
@@ -33,6 +33,7 @@ export default function CorrelationPage() {
   const [fileName2, setFileName2] = React.useState<string | null>(null);
   const [isLoading2, setIsLoading2] = React.useState(false);
   const [isDarkMode] = useDarkModeContext();
+  const [showCorrelation, setShowCorrelation] = React.useState(false);
 
 
   React.useEffect(() => {
@@ -126,14 +127,12 @@ export default function CorrelationPage() {
     router.push('/');
   }
 
-  const handleNewUpload1 = () => {
+  const handleDiscard = () => {
     setChatData1(null);
     setFileName1(null);
-  }
-
-    const handleNewUpload2 = () => {
     setChatData2(null);
     setFileName2(null);
+    setShowCorrelation(false);
   }
 
   if (isLoading) {
@@ -148,6 +147,16 @@ export default function CorrelationPage() {
 
   return (
     <div className="relative flex flex-col min-h-screen w-full bg-background dark:bg-black">
+       {showCorrelation && (
+        <Button 
+          variant="destructive" 
+          size="icon" 
+          className="fixed top-4 right-4 z-50 rounded-full"
+          onClick={handleDiscard}
+        >
+          <X className="h-5 w-5" />
+        </Button>
+      )}
       <div
         className={cn(
           "absolute inset-0 h-full w-full",
@@ -163,8 +172,9 @@ export default function CorrelationPage() {
           Compare two of your chat histories to see how your communication style changes with different people, or compare your chat habits with a friend's.
         </p>
         
-        {chatData1 && chatData2 && (
-             <Card className="mb-8 dark:bg-transparent">
+        {showCorrelation && chatData1 && chatData2 && (
+          <div className="space-y-8">
+             <Card className="dark:bg-transparent">
               <CardHeader>
                 <div className="flex items-baseline justify-between">
                   <CardTitle>Combined Overall Stats</CardTitle>
@@ -230,87 +240,96 @@ export default function CorrelationPage() {
                 </div>
               </CardContent>
             </Card>
-        )}
 
-        {chatData1 && chatData2 && fileName1 && fileName2 && (
-          <Card className="mb-8 dark:bg-transparent">
-            <CombinedMessagesPerUserChart 
-              messages1={chatData1.messages}
-              users1={chatData1.users}
-              fileName1={fileName1}
-              messages2={chatData2.messages}
-              users2={chatData2.users}
-              fileName2={fileName2}
-            />
-          </Card>
-        )}
-        
-        {chatData1 && chatData2 && fileName1 && fileName2 && (
-          <Card className="mb-8 dark:bg-transparent">
-            <CombinedWeeklyActivityChart
-              messages1={chatData1.messages}
-              fileName1={fileName1}
-              messages2={chatData2.messages}
-              fileName2={fileName2}
-            />
-          </Card>
-        )}
+            <Card className="dark:bg-transparent">
+              <CombinedMessagesPerUserChart 
+                messages1={chatData1.messages}
+                users1={chatData1.users}
+                fileName1={fileName1}
+                messages2={chatData2.messages}
+                users2={chatData2.users}
+                fileName2={fileName2}
+              />
+            </Card>
+            
+            <Card className="dark:bg-transparent">
+              <CombinedWeeklyActivityChart
+                messages1={chatData1.messages}
+                fileName1={fileName1}
+                messages2={chatData2.messages}
+                fileName2={fileName2}
+              />
+            </Card>
 
-        {chatData1 && chatData2 && fileName1 && fileName2 && (
-          <Card className="mb-8 dark:bg-transparent">
-            <CombinedHourlyMessagesChart 
-              messages1={chatData1.messages}
-              messages2={chatData2.messages}
-              users1={chatData1.users}
-              users2={chatData2.users}
-              fileName1={fileName1}
-              fileName2={fileName2}
-            />
-          </Card>
-        )}
-        
-        {chatData1 && chatData2 && fileName1 && fileName2 && (
-          <Card className="mb-8 dark:bg-transparent">
-            <CombinedActivityHeatmap
-              messages1={chatData1.messages}
-              fileName1={fileName1}
-              messages2={chatData2.messages}
-              fileName2={fileName2}
-            />
-          </Card>
-        )}
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="flex flex-col items-center">
-            <h2 className="text-2xl font-semibold mb-4 text-center">Chat 1</h2>
-            {isLoading1 ? (
-              <div className="flex justify-center items-center h-48">
-                <Loader2 className="h-16 w-16 animate-spin text-primary" />
-              </div>
-            ) : chatData1 ? (
-              <AnalysisDashboard parsedData={chatData1} fileName={fileName1} onNewUpload={handleNewUpload1} showAskAI={false} />
-            ) : (
-                <div className="flex-grow flex items-center justify-center w-full">
-                    <FileUpload onFileProcessed={handleFile1Processed} />
-                </div>
-            )}
+            <Card className="dark:bg-transparent">
+              <CombinedHourlyMessagesChart 
+                messages1={chatData1.messages}
+                messages2={chatData2.messages}
+                users1={chatData1.users}
+                users2={chatData2.users}
+                fileName1={fileName1}
+                fileName2={fileName2}
+              />
+            </Card>
+            
+            <Card className="dark:bg-transparent">
+              <CombinedActivityHeatmap
+                messages1={chatData1.messages}
+                fileName1={fileName1}
+                messages2={chatData2.messages}
+                fileName2={fileName2}
+              />
+            </Card>
           </div>
+        )}
 
-          <div className="flex flex-col items-center">
-            <h2 className="text-2xl font-semibold mb-4 text-center">Chat 2</h2>
-            {isLoading2 ? (
-              <div className="flex justify-center items-center h-48">
-                <Loader2 className="h-16 w-16 animate-spin text-primary" />
+        {!showCorrelation && (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="flex flex-col items-center">
+                <h2 className="text-2xl font-semibold mb-4 text-center">Chat 1</h2>
+                {isLoading1 ? (
+                  <div className="flex justify-center items-center h-48">
+                    <Loader2 className="h-16 w-16 animate-spin text-primary" />
+                  </div>
+                ) : chatData1 ? (
+                  <div className="text-center p-4 border rounded-lg bg-card">
+                    <p className="font-bold">{fileName1}</p>
+                    <p>{stats1.totalMessages} messages</p>
+                  </div>
+                ) : (
+                    <div className="flex-grow flex items-center justify-center w-full">
+                        <FileUpload onFileProcessed={handleFile1Processed} />
+                    </div>
+                )}
               </div>
-            ) : chatData2 ? (
-              <AnalysisDashboard parsedData={chatData2} fileName={fileName2} onNewUpload={handleNewUpload2} showAskAI={false} />
-            ) : (
-                <div className="flex-grow flex items-center justify-center w-full">
-                    <FileUpload onFileProcessed={handleFile2Processed} />
-                </div>
+
+              <div className="flex flex-col items-center">
+                <h2 className="text-2xl font-semibold mb-4 text-center">Chat 2</h2>
+                {isLoading2 ? (
+                  <div className="flex justify-center items-center h-48">
+                    <Loader2 className="h-16 w-16 animate-spin text-primary" />
+                  </div>
+                ) : chatData2 ? (
+                  <div className="text-center p-4 border rounded-lg bg-card">
+                    <p className="font-bold">{fileName2}</p>
+                    <p>{stats2.totalMessages} messages</p>
+                  </div>
+                ) : (
+                    <div className="flex-grow flex items-center justify-center w-full">
+                        <FileUpload onFileProcessed={handleFile2Processed} />
+                    </div>
+                )}
+              </div>
+            </div>
+            
+            {chatData1 && chatData2 && (
+              <div className="flex justify-center mt-8">
+                <Button onClick={() => setShowCorrelation(true)} size="lg">Start Correlation</Button>
+              </div>
             )}
-          </div>
-        </div>
+          </>
+        )}
       </div>
       <div className="relative z-10">
         <Footer showEmojiCarousel={false} />
@@ -319,4 +338,5 @@ export default function CorrelationPage() {
     </div>
   );
 }
-{/* hi */}
+
+    
