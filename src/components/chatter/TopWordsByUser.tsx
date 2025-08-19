@@ -19,7 +19,7 @@ interface TopWordsByUserProps {
   messages: ChatMessage[];
   users: string[];
 }
-
+{/*Hi */}
 export function TopWordsByUser({ messages, users }: TopWordsByUserProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeSearch, setActiveSearch] = useState("");

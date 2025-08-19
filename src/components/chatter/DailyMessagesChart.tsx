@@ -14,7 +14,7 @@ interface DailyMessagesChartProps {
   messages: ChatMessage[];
   users: string[];
 }
-
+{/*Hi */}
 export function DailyMessagesChart({ messages, users }: DailyMessagesChartProps) {
   const data = useMemo(() => {
     if (messages.length === 0) return [];

@@ -128,7 +128,7 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
     }
 
     const baseFileName = fileName ? fileName.replace(/.txt$/, '') : 'chat_analysis';
-    pdf.save(`${baseFileName}_chipku_AI_fanatiAK💖🧿.pdf`);
+    pdf.save(`${baseFileName}_Chipku_AI_fanatiAK❤️🧿.pdf`);
 
     setIsExportDialogOpen(false);
   };

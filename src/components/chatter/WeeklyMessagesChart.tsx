@@ -19,7 +19,7 @@ interface WeeklyMessagesChartProps {
   messages: ChatMessage[];
   users: string[];
 }
-
+{/*Hi */}
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export function WeeklyMessagesChart({ messages, users }: WeeklyMessagesChartProps) {

@@ -23,7 +23,7 @@ interface MessagesPerUserChartProps {
   messages: ChatMessage[];
   users: string[];
 }
-
+{/*Hi */}
 const COLORS = [
   "hsl(var(--chart-1))",
   "hsl(var(--chart-2))",
