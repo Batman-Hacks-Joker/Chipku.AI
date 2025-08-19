@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useEffect, useState } from 'react';
@@ -21,7 +20,7 @@ const FireAnimation = ({ onComplete }: { onComplete: () => void }) => {
     });
     setEmojis(fireEmojis);
 
-    const timer = setTimeout(onComplete, 3000); // Animation completes in ~3s
+    const timer = setTimeout(onComplete, 2000); // Animation completes in ~2s
     return () => clearTimeout(timer);
   }, [onComplete]);
 
