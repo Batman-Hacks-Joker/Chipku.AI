@@ -42,20 +42,28 @@ export default function CorrelationPage() {
   }, []);
 
   const stats1 = React.useMemo(() => {
-    if (!chatData1) return { totalMessages: 0, totalWords: 0, activeUsers: 0 };
+    if (!chatData1) return { totalMessages: 0, totalWords: 0, activeUsers: 0, daysAnalyzed: 0 };
+    const daysAnalyzed = chatData1.startDate && chatData1.endDate
+      ? Math.round((chatData1.endDate.getTime() - chatData1.startDate.getTime()) / (1000 * 3600 * 24)) + 1
+      : 0;
     return {
       totalMessages: chatData1.messages.length,
       totalWords: chatData1.messages.reduce((sum, msg) => sum + msg.wordCount, 0),
       activeUsers: chatData1.users.length,
+      daysAnalyzed,
     };
   }, [chatData1]);
 
   const stats2 = React.useMemo(() => {
-    if (!chatData2) return { totalMessages: 0, totalWords: 0, activeUsers: 0 };
+    if (!chatData2) return { totalMessages: 0, totalWords: 0, activeUsers: 0, daysAnalyzed: 0 };
+    const daysAnalyzed = chatData2.startDate && chatData2.endDate
+      ? Math.round((chatData2.endDate.getTime() - chatData2.startDate.getTime()) / (1000 * 3600 * 24)) + 1
+      : 0;
     return {
       totalMessages: chatData2.messages.length,
       totalWords: chatData2.messages.reduce((sum, msg) => sum + msg.wordCount, 0),
       activeUsers: chatData2.users.length,
+      daysAnalyzed,
     };
   }, [chatData2]);
 
@@ -154,7 +162,7 @@ export default function CorrelationPage() {
                 <CardTitle>Combined Overall Stats</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <Card className="dark:bg-black/20">
                     <CardHeader>
                       <CardTitle className="text-sm font-medium text-muted-foreground">Total Messages 💬</CardTitle>
@@ -188,6 +196,18 @@ export default function CorrelationPage() {
                         <span className="text-red-500">{stats1.activeUsers}</span>
                         <span className="text-muted-foreground"> / </span>
                         <span className="text-blue-500">{stats2.activeUsers}</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card className="dark:bg-black/20">
+                    <CardHeader>
+                      <CardTitle className="text-sm font-medium text-muted-foreground">Days Analyzed 🧐</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                       <div className="text-2xl font-bold">
+                        <span className="text-red-500">{stats1.daysAnalyzed}</span>
+                        <span className="text-muted-foreground"> / </span>
+                        <span className="text-blue-500">{stats2.daysAnalyzed}</span>
                       </div>
                     </CardContent>
                   </Card>
@@ -272,3 +292,5 @@ export default function CorrelationPage() {
     </div>
   );
 }
+
+    
