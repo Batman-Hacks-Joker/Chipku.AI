@@ -10,11 +10,6 @@ import { Calendar } from "lucide-react";
 import type { ChatMessage } from "@/lib/types";
 import { CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
-interface DailyMessagesChartProps {
-  messages: ChatMessage[];
-  users: string[];
-}
-
 const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
         const filteredPayload = payload.filter((p: any) => p.value > 0);
@@ -161,7 +156,7 @@ export function DailyMessagesChart({ messages, users: allUsers }: DailyMessagesC
               <XAxis dataKey="date" tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <YAxis tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <Tooltip
-                cursor={false}
+                cursor={{fill: 'hsl(var(--muted))'}}
                 content={<CustomTooltip />}
               />
               <Legend content={renderLegend} />
