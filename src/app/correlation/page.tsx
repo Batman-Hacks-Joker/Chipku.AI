@@ -338,6 +338,3 @@ export default function CorrelationPage() {
     </div>
   );
 }
-
-    
-    
