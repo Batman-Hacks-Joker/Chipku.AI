@@ -18,7 +18,7 @@ const FireAnimation = ({ onComplete }: { onComplete: () => void }) => {
     });
     setEmojis(fireEmojis);
 
-    const timer = setTimeout(onComplete, 3000);
+    const timer = setTimeout(onComplete, 5000);
     return () => clearTimeout(timer);
   }, [onComplete]);
 
