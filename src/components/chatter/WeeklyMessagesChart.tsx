@@ -23,6 +23,28 @@ interface WeeklyMessagesChartProps {
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+        const filteredPayload = payload.filter((p: any) => p.value > 0);
+        if (filteredPayload.length === 0) return null;
+
+        return (
+            <div className="p-1.5 bg-background border rounded-md shadow-lg text-xs">
+                <p className="font-bold mb-1">{label}</p>
+                <ul className="space-y-0.5">
+                    {filteredPayload.map((entry: any, index: number) => (
+                        <li key={`item-${index}`} style={{ color: entry.color }}>
+                           ● {`${entry.name}: ${entry.value.toLocaleString()}`}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
+    }
+    return null;
+};
+
+
 export function WeeklyMessagesChart({ messages, users: allUsers }: WeeklyMessagesChartProps) {
   const { data, legendUsers, chartConfig } = React.useMemo(() => {
     // 1. Calculate total messages per user to find top 10
@@ -154,7 +176,7 @@ export function WeeklyMessagesChart({ messages, users: allUsers }: WeeklyMessage
                 stroke="hsl(var(--muted-foreground))"
                 fontSize={12}
               />
-              <Tooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
+              <Tooltip cursor={{fill: 'hsl(var(--muted))'}} content={<CustomTooltip />} />
               <Legend content={renderLegend} />
               {legendUsers.map((user) => (
                 <Bar

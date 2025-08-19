@@ -25,16 +25,16 @@ interface MessagesPerUserChartProps {
 }
 
 const COLORS = [
-  "#7cb518",
-  "#ef233c",
-  "#7371fc",
-  "#15616d",
+  "#b33dc6",
+  "#b30000",
+  "#0bb4ff",
+  "#f46a9b",
   "#81c3d7",
   "#f4a259",
   "#17c3b2",
   "#caffbf",
   "#b5179e",
-  "#f15bb5",
+  "#9b19f5",
 ];
 const OTHERS_COLOR = "#ff99c8";
 
