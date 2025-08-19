@@ -151,10 +151,10 @@ export default function CorrelationPage() {
         <Button 
           variant="destructive" 
           size="icon" 
-          className="fixed top-4 right-4 z-50 rounded-full"
+          className="fixed top-1/2 right-4 -translate-y-1/2 z-50 rounded-full h-12 w-12"
           onClick={handleDiscard}
         >
-          <X className="h-5 w-5" />
+          <X className="h-6 w-6" />
         </Button>
       )}
       <div
@@ -339,4 +339,5 @@ export default function CorrelationPage() {
   );
 }
 
+    
     
