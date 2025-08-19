@@ -48,10 +48,10 @@ export function MessageHeatmap({ messages }: MessageHeatmapProps) {
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="p-0">
+      <CardContent className="p-4">
         <div className="overflow-x-auto">
-          <div className="mx-auto"
-            className="grid grid-cols-[auto_repeat(24,_2rem)] gap-1 p-2 min-w-[52rem] text-xs justify-items-center"
+          <div
+            className="grid grid-cols-[auto_repeat(24,_minmax(0,1fr))] gap-px p-2 min-w-[52rem] text-xs justify-items-center"
           >
             {/* Top-left corner empty cell */}
             <div></div>
@@ -60,7 +60,7 @@ export function MessageHeatmap({ messages }: MessageHeatmapProps) {
             {Array.from({ length: 24 }, (_, i) => (
               <div
                 key={`hour-${i}`}
-                className="text-center font-semibold w-8"
+                className="text-center font-semibold w-full"
               >
                 {i.toString().padStart(2, "0")}
               </div>
@@ -70,7 +70,7 @@ export function MessageHeatmap({ messages }: MessageHeatmapProps) {
             {days.map((day, dayIndex) => (
               <React.Fragment key={day}>
                 {/* Day label */}
-                <div className="pr-2 flex items-center justify-end font-semibold">
+                <div className="pr-2 flex items-center justify-end font-semibold text-right">
                   {day}
                 </div>
 
@@ -83,7 +83,7 @@ export function MessageHeatmap({ messages }: MessageHeatmapProps) {
                   return (
                     <div
                       key={`${dayIndex}-${hour}`}
-                      className="h-5 w-8 rounded-sm"
+                      className="h-5 w-full rounded-sm"
                       style={{ backgroundColor }}
                       title={`${day} ${hour.toString().padStart(2, "0")}:00 — ${count} messages`}
                     ></div>

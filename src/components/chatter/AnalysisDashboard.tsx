@@ -97,13 +97,13 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
       'Days Analyzed': <StatCard title="Days Analyzed" value={date?.from && date?.to ? (Math.round((date.to.getTime() - date.from.getTime()) / (1000 * 3600 * 24)) + 1) : 0} />,
       'Messages Per User Chart': <MessagesPerUserChart messages={filteredMessages} users={parsedData?.users || []} />,
       'Weekly Messages Chart': <WeeklyMessagesChart messages={filteredMessages} users={parsedData?.users || []} />,
-      'Daily Messages Chart': <DailyMessagesChart messages={filteredMessages} dateRange={date} users={parsedData?.users || []} />,
+      'Daily Messages Chart': <DailyMessagesChart messages={filteredMessages} users={parsedData?.users || []} />,
       'Hourly Messages Chart': <HourlyMessagesChart messages={filteredMessages} users={parsedData?.users || []} />,
-      'Message Heatmap': <MessageHeatmap messages={filteredMessages} users={parsedData?.users || []} />,
+      'Message Heatmap': <MessageHeatmap messages={filteredMessages} />,
       'Top Emojis Per User': <TopEmojisPerUser messages={filteredMessages} users={parsedData?.users || []} />,
       'Top Longest Messages': <TopLongestMessages messages={filteredMessages} users={parsedData?.users || []} />,
       'Top Words By User': <TopWordsByUser messages={filteredMessages} users={parsedData?.users || []} />,
-      'Random Message Per User': <RandomMessagePerUser messages={filteredMessages} users={parsedData?.users || []} />,
+      'Random Message Per User': <RandomMessagePerUser messages={filteredMessages} />,
     };
     return componentMap;
   }, [stats, parsedData, filteredMessages, date]);
@@ -267,13 +267,13 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
             <Card className="p-4" id="messages-per-user-chart"><MessagesPerUserChart messages={filteredMessages} users={parsedData.users} /></Card>
             <Card className="p-4" id="weekly-messages-chart"><WeeklyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
           </div>
-           <Card className="p-4" id="daily-messages-chart"> <DailyMessagesChart messages={filteredMessages} dateRange={date} users={parsedData.users} /></Card>
+           <Card className="p-4" id="daily-messages-chart"> <DailyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
  <Card className="p-4" id="hourly-messages-chart"><HourlyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
-           <Card className="p-4" id="message-heatmap"><MessageHeatmap messages={filteredMessages} users={parsedData.users} /></Card>
+           <div id="message-heatmap"><MessageHeatmap messages={filteredMessages} /></div>
 <Card className="p-4" id="top-emojis-per-user"><TopEmojisPerUser messages={filteredMessages} users={parsedData.users} /></Card>
            <Card className="p-4" id="top-longest-messages"><TopLongestMessages messages={filteredMessages} users={parsedData.users} /></Card>
  <Card className="p-4" id="top-words-by-user"><TopWordsByUser messages={filteredMessages} users={parsedData.users} /></Card>
-           <Card className="p-4" id="random-message-per-user"><RandomMessagePerUser messages={filteredMessages} users={parsedData.users} /></Card>
+           <Card className="p-4" id="random-message-per-user"><RandomMessagePerUser messages={filteredMessages} /></Card>
         </main>
       </div>
     </div>
