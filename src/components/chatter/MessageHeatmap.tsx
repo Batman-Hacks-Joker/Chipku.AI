@@ -51,7 +51,7 @@ export function MessageHeatmap({ messages }: MessageHeatmapProps) {
       <CardContent className="p-0">
         <div className="overflow-x-auto">
           <div className="mx-auto"
-            className="grid grid-cols-[auto_repeat(24,_2rem)] gap-[2px] min-w-[52rem] text-xs justify-items-center"
+            className="grid grid-cols-[auto_repeat(24,_2rem)] gap-1 p-2 min-w-[52rem] text-xs justify-items-center"
           >
             {/* Top-left corner empty cell */}
             <div></div>
@@ -95,9 +95,12 @@ export function MessageHeatmap({ messages }: MessageHeatmapProps) {
 
           {/* Color Legend */}
           <div className="p-4 flex items-center justify-end gap-2 text-xs text-muted-foreground">
-            <span className="w-4 h-4 rounded-sm bg-[rgba(255,0,0,0.1)]"></span> Low
-            <span className="w-4 h-4 rounded-sm bg-[rgba(255,0,0,0.6)]"></span> Medium
-            <span className="w-4 h-4 rounded-sm bg-[rgba(255,0,0,1)]"></span> High
+            <span>Low</span>
+            <span className="w-4 h-4 rounded-sm bg-[rgba(255,0,0,0.1)]"></span>
+            <span className="w-4 h-4 rounded-sm bg-[rgba(255,0,0,0.3)]"></span>
+            <span className="w-4 h-4 rounded-sm bg-[rgba(255,0,0,0.6)]"></span>
+            <span className="w-4 h-4 rounded-sm bg-[rgba(255,0,0,1)]"></span>
+             <span>High</span>
           </div>
         </div>
       </CardContent>
