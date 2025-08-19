@@ -234,28 +234,6 @@ export default function CorrelationPage() {
 
         {chatData1 && chatData2 && fileName1 && fileName2 && (
           <Card className="mb-8 dark:bg-transparent">
-            <CombinedActivityHeatmap
-              messages1={chatData1.messages}
-              fileName1={fileName1}
-              messages2={chatData2.messages}
-              fileName2={fileName2}
-            />
-          </Card>
-        )}
-
-        {chatData1 && chatData2 && fileName1 && fileName2 && (
-          <Card className="mb-8 dark:bg-transparent">
-            <CombinedWeeklyActivityChart
-              messages1={chatData1.messages}
-              fileName1={fileName1}
-              messages2={chatData2.messages}
-              fileName2={fileName2}
-            />
-          </Card>
-        )}
-        
-        {chatData1 && chatData2 && fileName1 && fileName2 && (
-          <Card className="mb-8 dark:bg-transparent">
             <CombinedMessagesPerUserChart 
               messages1={chatData1.messages}
               users1={chatData1.users}
@@ -269,12 +247,34 @@ export default function CorrelationPage() {
         
         {chatData1 && chatData2 && fileName1 && fileName2 && (
           <Card className="mb-8 dark:bg-transparent">
+            <CombinedWeeklyActivityChart
+              messages1={chatData1.messages}
+              fileName1={fileName1}
+              messages2={chatData2.messages}
+              fileName2={fileName2}
+            />
+          </Card>
+        )}
+
+        {chatData1 && chatData2 && fileName1 && fileName2 && (
+          <Card className="mb-8 dark:bg-transparent">
             <CombinedHourlyMessagesChart 
               messages1={chatData1.messages}
               messages2={chatData2.messages}
               users1={chatData1.users}
               users2={chatData2.users}
               fileName1={fileName1}
+              fileName2={fileName2}
+            />
+          </Card>
+        )}
+        
+        {chatData1 && chatData2 && fileName1 && fileName2 && (
+          <Card className="mb-8 dark:bg-transparent">
+            <CombinedActivityHeatmap
+              messages1={chatData1.messages}
+              fileName1={fileName1}
+              messages2={chatData2.messages}
               fileName2={fileName2}
             />
           </Card>
