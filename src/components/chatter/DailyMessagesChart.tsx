@@ -121,22 +121,6 @@ export function DailyMessagesChart({ messages, users: allUsers }: DailyMessagesC
 
   }, [messages, allUsers]);
 
-  const renderLegend = (props: any) => {
-    const { payload } = props;
-    if (!payload || payload.length === 0) return null;
-
-    return (
-      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 mt-4 text-xs">
-        {payload.map((entry: any, index: number) => (
-          <div key={`item-${index}`} className="flex items-center space-x-2">
-            <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: entry.color }} />
-            <span className="text-muted-foreground truncate">{entry.value}</span>
-          </div>
-        ))}
-      </div>
-    );
-  };
-
   if (!data || data.length === 0) {
      return (
         <>
@@ -168,7 +152,6 @@ export function DailyMessagesChart({ messages, users: allUsers }: DailyMessagesC
                 cursor={{fill: 'hsl(var(--muted))'}}
                 content={<CustomTooltip />}
               />
-              <Legend content={renderLegend} />
               {legendUsers.map((user) => (
                 <Bar
                   key={user}
