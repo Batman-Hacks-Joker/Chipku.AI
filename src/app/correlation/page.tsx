@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import { useDarkModeContext } from "@/context/DarkModeContext";
 import { CombinedActivityHeatmap } from "@/components/chatter/CombinedActivityHeatmap";
 import { Button } from "@/components/ui/button";
+import FireAnimation from "@/components/chatter/FireAnimation";
 
 export default function CorrelationPage() {
   const { toast } = useToast();
@@ -35,6 +36,7 @@ export default function CorrelationPage() {
   const [isDarkMode] = useDarkModeContext();
   const [showCorrelation, setShowCorrelation] = React.useState(false);
   const [isAnimating, setIsAnimating] = React.useState(false);
+  const [showFireAnimation, setShowFireAnimation] = React.useState(false);
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -129,10 +131,13 @@ export default function CorrelationPage() {
 
   const handleStartCorrelation = () => {
     setIsAnimating(true);
-    setTimeout(() => {
-      setShowCorrelation(true);
-      setIsAnimating(false);
-    }, 1000);
+    setShowFireAnimation(true);
+  }
+
+  const handleAnimationComplete = () => {
+    setShowFireAnimation(false);
+    setShowCorrelation(true);
+    setIsAnimating(false);
   }
 
   const handleDiscard = () => {
@@ -159,6 +164,7 @@ export default function CorrelationPage() {
 
   return (
     <>
+    {showFireAnimation && <FireAnimation onComplete={handleAnimationComplete} />}
     <style jsx>{`
       @keyframes spin-twice {
         from { transform: rotate(0deg); }
@@ -169,7 +175,7 @@ export default function CorrelationPage() {
       }
     `}</style>
     <div className="relative flex flex-col min-h-screen w-full bg-background dark:bg-black">
-       {chatData1 && chatData2 && (
+       {chatData1 && chatData2 && !showCorrelation && (
          <div 
            className="fixed top-1/2 right-4 -translate-y-1/2 z-50 group"
          >
@@ -322,7 +328,7 @@ export default function CorrelationPage() {
           </div>
         )}
 
-        {!showCorrelation && (
+        {!showCorrelation && !showFireAnimation && (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="flex flex-col items-center">
