@@ -2,7 +2,7 @@
 "use client";
 
 import * as React from "react";
-import { Loader2, X } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { parseChatFile } from "@/lib/chat-parser";
 import { useToast } from "@/hooks/use-toast";
 import { FileUpload } from "@/components/chatter/FileUpload";
@@ -34,6 +34,7 @@ export default function CorrelationPage() {
   const [isLoading2, setIsLoading2] = React.useState(false);
   const [isDarkMode] = useDarkModeContext();
   const [showCorrelation, setShowCorrelation] = React.useState(false);
+  const [isAnimating, setIsAnimating] = React.useState(false);
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -126,12 +127,24 @@ export default function CorrelationPage() {
     router.push('/');
   }
 
+  const handleStartCorrelation = () => {
+    setIsAnimating(true);
+    setTimeout(() => {
+      setShowCorrelation(true);
+      setIsAnimating(false);
+    }, 1000);
+  }
+
   const handleDiscard = () => {
-    setChatData1(null);
-    setFileName1(null);
-    setChatData2(null);
-    setFileName2(null);
-    setShowCorrelation(false);
+    setIsAnimating(true);
+    setTimeout(() => {
+      setChatData1(null);
+      setFileName1(null);
+      setChatData2(null);
+      setFileName2(null);
+      setShowCorrelation(false);
+      setIsAnimating(false);
+    }, 1000);
   }
 
   if (isLoading) {
@@ -145,6 +158,16 @@ export default function CorrelationPage() {
 
 
   return (
+    <>
+    <style jsx>{`
+      @keyframes spin-twice {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(720deg); }
+      }
+      .animate-spin-twice {
+        animation: spin-twice 1s ease-in-out;
+      }
+    `}</style>
     <div className="relative flex flex-col min-h-screen w-full bg-background dark:bg-black">
        {showCorrelation && (
          <div 
@@ -154,11 +177,17 @@ export default function CorrelationPage() {
              onClick={handleDiscard}
              className="flex items-center space-x-2"
            >
-             <span className="bg-destructive text-destructive-foreground text-sm font-medium px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+             <span className={cn(
+               "bg-destructive text-destructive-foreground text-sm font-medium px-2 py-1 rounded-md transition-opacity duration-300 whitespace-nowrap",
+               isAnimating ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+             )}>
                Discard files
              </span>
              <span
-               className="text-4xl transition-transform duration-300 ease-in-out transform rotate-45 group-hover:rotate-0"
+               className={cn(
+                "text-4xl transition-transform duration-300 ease-in-out transform",
+                isAnimating ? "animate-spin-twice" : "rotate-45 group-hover:rotate-0"
+               )}
                role="img"
                aria-label="Discard files"
              >
@@ -335,7 +364,7 @@ export default function CorrelationPage() {
             
             {chatData1 && chatData2 && (
               <div className="flex justify-center mt-8">
-                <Button onClick={() => setShowCorrelation(true)} size="lg">Start Correlation</Button>
+                <Button onClick={handleStartCorrelation} size="lg" disabled={isAnimating}>Start Correlation</Button>
               </div>
             )}
           </>
@@ -346,5 +375,8 @@ export default function CorrelationPage() {
       </div>
       <FloatingActionButton onHomeClick={handleHomeClick} />
     </div>
+    </>
   );
 }
+
+    
