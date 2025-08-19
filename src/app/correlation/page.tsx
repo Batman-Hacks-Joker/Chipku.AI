@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -14,7 +15,7 @@ import CombinedHourlyMessagesChart from "@/components/chatter/CombinedHourlyMess
 import { LoadingPage } from "@/components/ui/LoadingPage";
 import { CombinedMessagesPerUserChart } from "@/components/chatter/CombinedMessagesPerUserChart";
 import CombinedWeeklyActivityChart from "@/components/chatter/CombinedWeeklyActivityChart";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useDarkModeContext } from "@/context/DarkModeContext";
 
@@ -39,6 +40,24 @@ export default function CorrelationPage() {
     }, 1500);
     return () => clearTimeout(timer);
   }, []);
+
+  const stats1 = React.useMemo(() => {
+    if (!chatData1) return { totalMessages: 0, totalWords: 0, activeUsers: 0 };
+    return {
+      totalMessages: chatData1.messages.length,
+      totalWords: chatData1.messages.reduce((sum, msg) => sum + msg.wordCount, 0),
+      activeUsers: chatData1.users.length,
+    };
+  }, [chatData1]);
+
+  const stats2 = React.useMemo(() => {
+    if (!chatData2) return { totalMessages: 0, totalWords: 0, activeUsers: 0 };
+    return {
+      totalMessages: chatData2.messages.length,
+      totalWords: chatData2.messages.reduce((sum, msg) => sum + msg.wordCount, 0),
+      activeUsers: chatData2.users.length,
+    };
+  }, [chatData2]);
 
   const handleFile1Processed = async (content: string, name: string) => {
     setIsLoading1(true);
@@ -128,6 +147,54 @@ export default function CorrelationPage() {
         <p className="text-lg text-muted-foreground text-center mb-8">
           Compare two of your chat histories to see how your communication style changes with different people, or compare your chat habits with a friend's.
         </p>
+        
+        {chatData1 && chatData2 && (
+             <Card className="mb-8 dark:bg-transparent">
+              <CardHeader>
+                <CardTitle>Combined Overall Stats</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Card className="dark:bg-black/20">
+                    <CardHeader>
+                      <CardTitle className="text-sm font-medium text-muted-foreground">Total Messages 💬</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">
+                        <span className="text-red-500">{stats1.totalMessages.toLocaleString()}</span>
+                        <span className="text-muted-foreground"> / </span>
+                        <span className="text-blue-500">{stats2.totalMessages.toLocaleString()}</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card className="dark:bg-black/20">
+                    <CardHeader>
+                      <CardTitle className="text-sm font-medium text-muted-foreground">Total Words ✍️</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                       <div className="text-2xl font-bold">
+                        <span className="text-red-500">{stats1.totalWords.toLocaleString()}</span>
+                        <span className="text-muted-foreground"> / </span>
+                        <span className="text-blue-500">{stats2.totalWords.toLocaleString()}</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card className="dark:bg-black/20">
+                    <CardHeader>
+                      <CardTitle className="text-sm font-medium text-muted-foreground">Active Users 🙋‍♂️</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                       <div className="text-2xl font-bold">
+                        <span className="text-red-500">{stats1.activeUsers}</span>
+                        <span className="text-muted-foreground"> / </span>
+                        <span className="text-blue-500">{stats2.activeUsers}</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CardContent>
+            </Card>
+        )}
 
         {chatData1 && chatData2 && fileName1 && fileName2 && (
           <Card className="mb-8 dark:bg-transparent">
@@ -152,7 +219,7 @@ export default function CorrelationPage() {
             />
           </Card>
         )}
-        {/* hi*/ }
+        
         {chatData1 && chatData2 && fileName1 && fileName2 && (
           <Card className="mb-8 dark:bg-transparent">
             <CombinedHourlyMessagesChart 
