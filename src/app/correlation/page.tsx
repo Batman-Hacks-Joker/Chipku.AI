@@ -18,6 +18,7 @@ import CombinedWeeklyActivityChart from "@/components/chatter/CombinedWeeklyActi
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useDarkModeContext } from "@/context/DarkModeContext";
+import { CombinedActivityHeatmap } from "@/components/chatter/CombinedActivityHeatmap";
 
 export default function CorrelationPage() {
   const { toast } = useToast();
@@ -161,7 +162,7 @@ export default function CorrelationPage() {
         <p className="text-lg text-muted-foreground text-center mb-8">
           Compare two of your chat histories to see how your communication style changes with different people, or compare your chat habits with a friend's.
         </p>
-        {/* hi */}
+        
         {chatData1 && chatData2 && (
              <Card className="mb-8 dark:bg-transparent">
               <CardHeader>
@@ -233,6 +234,17 @@ export default function CorrelationPage() {
 
         {chatData1 && chatData2 && fileName1 && fileName2 && (
           <Card className="mb-8 dark:bg-transparent">
+            <CombinedActivityHeatmap
+              messages1={chatData1.messages}
+              fileName1={fileName1}
+              messages2={chatData2.messages}
+              fileName2={fileName2}
+            />
+          </Card>
+        )}
+
+        {chatData1 && chatData2 && fileName1 && fileName2 && (
+          <Card className="mb-8 dark:bg-transparent">
             <CombinedWeeklyActivityChart
               messages1={chatData1.messages}
               fileName1={fileName1}
@@ -269,7 +281,7 @@ export default function CorrelationPage() {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="p-4 flex flex-col items-center">
+          <div className="flex flex-col items-center">
             <h2 className="text-2xl font-semibold mb-4 text-center">Chat 1</h2>
             {isLoading1 ? (
               <div className="flex justify-center items-center h-48">
@@ -284,7 +296,7 @@ export default function CorrelationPage() {
             )}
           </div>
 
-          <div className="p-4 flex flex-col items-center">
+          <div className="flex flex-col items-center">
             <h2 className="text-2xl font-semibold mb-4 text-center">Chat 2</h2>
             {isLoading2 ? (
               <div className="flex justify-center items-center h-48">
@@ -307,5 +319,3 @@ export default function CorrelationPage() {
     </div>
   );
 }
-
-    
