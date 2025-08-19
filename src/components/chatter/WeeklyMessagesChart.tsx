@@ -113,7 +113,7 @@ export function WeeklyMessagesChart({ messages, users: allUsers }: WeeklyMessage
         color: `hsl(var(--chart-${(index % 5) + 1}))`,
       };
     });
-    
+    {/* hi */}
     return { data: weeklyData, legendUsers: legendUsersSorted, chartConfig: config };
 
   }, [messages, allUsers]);

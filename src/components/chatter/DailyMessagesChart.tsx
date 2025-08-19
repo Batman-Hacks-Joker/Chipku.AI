@@ -104,7 +104,7 @@ export function DailyMessagesChart({ messages, users: allUsers }: DailyMessagesC
         const totalMessages = usersToShow.reduce((sum, user) => sum + (dayData[user] as number), 0);
         return totalMessages > 0;
     });
-
+{/* hi */}
     // 4. Create chartConfig for colors
     const config: ChartConfig = {
       date: { label: "Date" },

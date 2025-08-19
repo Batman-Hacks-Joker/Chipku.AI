@@ -37,7 +37,7 @@ const COLORS = [
   "#9b19f5",
 ];
 const OTHERS_COLOR = "#ff99c8";
-
+{/* hi */}
 export function MessagesPerUserChart({
   messages,
   users,

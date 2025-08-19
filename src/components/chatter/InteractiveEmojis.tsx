@@ -13,7 +13,7 @@ interface EmojiType {
     vy: number;
     size: number;
 }
-
+{/* hi */}
 const InteractiveEmojis = () => {
     const [emojis, setEmojis] = useState<EmojiType[]>([]);
     const containerRef = useRef<HTMLDivElement>(null);
