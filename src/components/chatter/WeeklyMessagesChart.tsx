@@ -29,13 +29,16 @@ const CustomTooltip = ({ active, payload, label }: any) => {
         if (filteredPayload.length === 0) return null;
 
         return (
-            <div className="p-1.5 bg-background border rounded-md shadow-lg text-xs">
+            <div className="p-1.5 bg-background border rounded-md shadow-lg text-xs min-w-[120px]">
                 <p className="font-bold mb-1">{label}</p>
                 <ul className="space-y-0.5">
                     {filteredPayload.map((entry: any, index: number) => (
-                        <li key={`item-${index}`} className="flex items-center">
-                           <span className="w-2 h-2 rounded-full mr-2" style={{ backgroundColor: entry.color }}></span>
-                           <span>{`${entry.name}: ${entry.value.toLocaleString()}`}</span>
+                        <li key={`item-${index}`} className="flex items-center justify-between">
+                           <div className="flex items-center">
+                             <span className="w-2 h-2 rounded-full mr-2" style={{ backgroundColor: entry.color }}></span>
+                             <span>{entry.name}</span>
+                           </div>
+                           <span>{entry.value.toLocaleString()}</span>
                         </li>
                     ))}
                 </ul>
