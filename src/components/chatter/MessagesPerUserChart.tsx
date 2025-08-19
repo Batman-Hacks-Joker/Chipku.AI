@@ -25,16 +25,16 @@ interface MessagesPerUserChartProps {
 }
 
 const COLORS = [
-  "#c155d1",
-  "#e64444",
-  "#50e991",
-  "#e6d800",
-  "#9b19f5",
-  "#ffa300",
-  "#dc0ab4",
-  "#b3d4ff",
-  "#00bfa0",
-  "#4421af",
+  "#7cb518",
+  "#ef233c",
+  "#7371fc",
+  "#15616d",
+  "#81c3d7",
+  "#f4a259",
+  "#17c3b2",
+  "#caffbf",
+  "#b5179e",
+  "#f15bb5",
 ];
 const OTHERS_COLOR = "#ff99c8";
 
@@ -55,6 +55,7 @@ export function MessagesPerUserChart({
     });
 
     const sortedUsers = Object.entries(userMessageCounts)
+      .filter(([, count]) => count > 0) // Filter out users with 0 messages
       .sort(([, a], [, b]) => b - a);
 
     let topUsers;
