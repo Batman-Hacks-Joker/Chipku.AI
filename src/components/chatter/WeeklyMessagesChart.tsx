@@ -9,11 +9,10 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-  Legend,
 } from "recharts";
 import { CalendarClock } from "lucide-react";
 import type { ChatMessage } from "@/lib/types";
-import { ChartTooltipContent, ChartContainer } from "@/components/ui/chart";
+import { ChartContainer } from "@/components/ui/chart";
 import { CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 interface WeeklyMessagesChartProps {
@@ -119,22 +118,6 @@ export function WeeklyMessagesChart({ messages, users: allUsers }: WeeklyMessage
 
   }, [messages, allUsers]);
 
-  const renderLegend = (props: any) => {
-    const { payload } = props;
-    
-    return (
-      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 mt-4">
-        {payload.map((entry: any, index: number) => (
-          <div key={`item-${index}`} className="flex items-center space-x-2 text-xs">
-            <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: entry.color }} />
-            <span className="text-muted-foreground truncate">{entry.value}</span>
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-
   if (!data || messages.length === 0) {
     return (
       <>
@@ -181,7 +164,6 @@ export function WeeklyMessagesChart({ messages, users: allUsers }: WeeklyMessage
                 fontSize={12}
               />
               <Tooltip cursor={{fill: 'hsl(var(--muted))'}} content={<CustomTooltip />} />
-              <Legend content={renderLegend} />
               {legendUsers.map((user) => (
                 <Bar
                   key={user}
