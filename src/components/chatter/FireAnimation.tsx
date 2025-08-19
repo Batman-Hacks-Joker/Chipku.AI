@@ -8,11 +8,14 @@ const FireAnimation = ({ onComplete }: { onComplete: () => void }) => {
 
   useEffect(() => {
     const fireEmojis = Array.from({ length: 200 }).map((_, i) => {
+      const isExtraLarge = Math.random() < 0.1; // 10% chance for a huge emoji
       const style: React.CSSProperties = {
         left: `${Math.random() * 100}vw`,
-        fontSize: `${Math.random() * 2 + 1}rem`, // bigger and smaller sizes
-        animationDuration: `${Math.random() * 0.8 + 1}s`, // 3x faster
-        animationDelay: `${Math.random() * 1}s`,
+        fontSize: isExtraLarge 
+          ? `${Math.random() * 10 + 10}rem` // 10rem to 20rem
+          : `${Math.random() * 2 + 1}rem`,    // 1rem to 3rem
+        animationDuration: `${Math.random() * 0.4 + 0.4}s`,
+        animationDelay: `${Math.random() * 0.5}s`,
       };
       return { id: i, style };
     });
@@ -27,11 +30,11 @@ const FireAnimation = ({ onComplete }: { onComplete: () => void }) => {
       <style jsx>{`
         @keyframes rise {
           from {
-            transform: translateY(0);
+            transform: translateY(0) scale(0.8);
             opacity: 1;
           }
           to {
-            transform: translateY(-110vh);
+            transform: translateY(-110vh) scale(1.2);
             opacity: 0;
           }
         }
