@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis, Legend } from "recharts";
 import { format, eachDayOfInterval, startOfDay } from 'date-fns';
 import { DateRange } from "react-day-picker";
 import { ChartTooltipContent, ChartContainer, ChartConfig } from "@/components/ui/chart";
@@ -14,58 +14,124 @@ interface DailyMessagesChartProps {
   messages: ChatMessage[];
   users: string[];
 }
-{/*Hi */}
-export function DailyMessagesChart({ messages, users }: DailyMessagesChartProps) {
-  const data = useMemo(() => {
-    if (messages.length === 0) return [];
 
-    // Find the date range from the filtered messages
+const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+        const filteredPayload = payload.filter((p: any) => p.value > 0);
+        if (filteredPayload.length === 0) return null;
+
+        return (
+            <div className="p-1.5 bg-background border rounded-md shadow-lg text-xs min-w-[120px]">
+                <p className="font-bold mb-1">{label}</p>
+                <ul className="space-y-0.5">
+                    {filteredPayload.map((entry: any, index: number) => (
+                        <li key={`item-${index}`} className="flex items-center justify-between">
+                           <div className="flex items-center">
+                             <span className="w-2 h-2 rounded-full mr-2" style={{ backgroundColor: entry.color }}></span>
+                             <span className="text-foreground/80 font-medium">{entry.name}</span>
+                           </div>
+                           <span className="font-bold text-foreground">{entry.value.toLocaleString()}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
+    }
+    return null;
+};
+
+export function DailyMessagesChart({ messages, users: allUsers }: DailyMessagesChartProps) {
+  const { data, legendUsers, chartConfig } = useMemo(() => {
+    if (messages.length === 0) return { data: [], legendUsers: [], chartConfig: {} };
+
+    // 1. Calculate total messages per user
+    const userMessageCounts = allUsers.reduce((acc, user) => {
+      acc[user] = 0;
+      return acc;
+    }, {} as Record<string, number>);
+
+    messages.forEach((message) => {
+      if (userMessageCounts.hasOwnProperty(message.author)) {
+        userMessageCounts[message.author]++;
+      }
+    });
+
+    const sortedUsers = Object.entries(userMessageCounts).filter(([,count]) => count > 0).sort(([, a], [, b]) => b - a);
+
+    // 2. Determine top 10 users and group others
+    let topUsers: string[];
+    const others: string[] = [];
+
+    if (sortedUsers.length > 10) {
+      const tenthValue = sortedUsers[9][1];
+      let cutOffIndex = sortedUsers.findIndex(u => u[1] < tenthValue);
+      if (cutOffIndex === -1) cutOffIndex = sortedUsers.length;
+      if (cutOffIndex < 10) cutOffIndex = 10;
+      
+      topUsers = sortedUsers.slice(0, cutOffIndex).map(([user]) => user);
+      others.push(...sortedUsers.slice(cutOffIndex).map(([user]) => user));
+    } else {
+      topUsers = sortedUsers.map(([user]) => user);
+    }
+    
+    const usersToShow = [...topUsers];
+    if (others.length > 0) {
+      usersToShow.push("Others");
+    }
+
+    // 3. Process daily data
     const minDate = messages.reduce((min, msg) => (msg.timestamp < min ? msg.timestamp : min), messages[0].timestamp);
     const maxDate = messages.reduce((max, msg) => (msg.timestamp > max ? msg.timestamp : max), messages[0].timestamp);
     const days = eachDayOfInterval({ start: startOfDay(minDate), end: startOfDay(maxDate) });
-    const userColors = ["hsl(var(--chart-1))", "hsl(var(--chart-2))", "hsl(var(--chart-3))", "hsl(var(--chart-4))", "hsl(var(--chart-5))"];
 
-    const chartData = days.map(day => {
-      const dayData: Record<string, string | number> = {
-        date: format(day, "MMM d"),
-      };
-      users.forEach(user => {
-        dayData[user] = 0;
-      });
-      return dayData;
-    });
-
-    const dateMap = new Map(chartData.map((d, i) => [format(days[i], 'yyyy-MM-dd'), d]));
+    const dateMap = new Map(days.map(day => {
+        const dayData: Record<string, string | number> = { date: format(day, "MMM d") };
+        usersToShow.forEach(user => { dayData[user] = 0; });
+        return [format(day, 'yyyy-MM-dd'), dayData];
+    }));
 
     messages.forEach(msg => {
-        const dayKey = format(startOfDay(msg.timestamp), 'yyyy-MM-dd');
-        const dayData = dateMap.get(dayKey);
-        if (dayData) {
-            dayData[msg.author] = (dayData[msg.author] as number) + 1;
-        }
+      const dayKey = format(startOfDay(msg.timestamp), 'yyyy-MM-dd');
+      const dayData = dateMap.get(dayKey);
+      if (dayData) {
+        const author = topUsers.includes(msg.author) ? msg.author : "Others";
+        dayData[author] = (dayData[author] as number) + 1;
+      }
     });
 
-    return Array.from(dateMap.values()).sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    const finalData = Array.from(dateMap.values());
 
-  }, [messages, users]);
-
-  const chartConfig = useMemo(() => {
-    const baseConfig: ChartConfig = {
-      date: {
-        label: "Date",
-      },
+    // 4. Create chartConfig for colors
+    const config: ChartConfig = {
+      date: { label: "Date" },
     };
-
-    users.forEach((user, index) => {
-      baseConfig[user] = {
+    const legendUsersSorted = [...topUsers, ...(others.length > 0 ? ["Others"] : [])];
+    legendUsersSorted.forEach((user, index) => {
+      config[user] = {
         label: user,
         color: `hsl(var(--chart-${(index % 5) + 1}))`,
       };
     });
+    
+    return { data: finalData, legendUsers: legendUsersSorted, chartConfig: config };
 
-    return baseConfig;
-  }, [users]);
+  }, [messages, allUsers]);
 
+  const renderLegend = (props: any) => {
+    const { payload } = props;
+    if (!payload || payload.length === 0) return null;
+
+    return (
+      <div className="grid grid-cols-2 gap-x-4 gap-y-1 mt-4 text-xs">
+        {payload.map((entry: any, index: number) => (
+          <div key={`item-${index}`} className="flex items-center space-x-2">
+            <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: entry.color }} />
+            <span className="text-muted-foreground truncate">{entry.value}</span>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   if (!data || data.length === 0) {
      return (
@@ -87,8 +153,8 @@ export function DailyMessagesChart({ messages, users }: DailyMessagesChartProps)
         <CardTitle className="font-headline">Daily Messages</CardTitle>
         <CardDescription>Who sent most messages over the Chat timeline 📆 </CardDescription>
       </CardHeader>
-      <div className="w-full h-[350px]" id="daily-messages"> {/* Keep this div to manage the overall height and width for ChartContainer */}
-        <ChartContainer config={chartConfig} className="w-full h-full"> {/* Make ChartContainer fill the parent div */}
+      <div className="w-full h-[500px]" id="daily-messages">
+        <ChartContainer config={chartConfig} className="w-full h-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data}>
               <CartesianGrid vertical={false} strokeDasharray="3 3" />
@@ -96,14 +162,15 @@ export function DailyMessagesChart({ messages, users }: DailyMessagesChartProps)
               <YAxis tickLine={false} axisLine={false} stroke="hsl(var(--muted-foreground))" fontSize={12} />
               <Tooltip
                 cursor={false}
-                content={<ChartTooltipContent indicator="dot" />}
+                content={<CustomTooltip />}
               />
-              {users.map((user, index) => (
+              <Legend content={renderLegend} />
+              {legendUsers.map((user) => (
                 <Bar
                   key={user}
                   dataKey={user}
                   stackId="a"
-                  fill={`hsl(var(--chart-${(index % 5) + 1}))`}
+                  fill={chartConfig[user]?.color}
                   radius={[4, 4, 0, 0]}
                 />
               ))}
