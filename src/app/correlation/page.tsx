@@ -202,6 +202,33 @@ export default function CorrelationPage() {
            </button>
          </div>
       )}
+       {chatData1 && chatData2 && showCorrelation && (
+         <div 
+           className="fixed top-1/2 right-4 -translate-y-1/2 z-50 group"
+         >
+           <button
+             onClick={handleDiscard}
+             className="flex items-center space-x-2"
+           >
+             <span className={cn(
+               "bg-destructive text-destructive-foreground text-sm font-medium px-2 py-1 rounded-md transition-opacity duration-300 whitespace-nowrap",
+               isAnimating ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+             )}>
+               Discard files
+             </span>
+             <span
+               className={cn(
+                "text-4xl transition-transform duration-300 ease-in-out transform",
+                isAnimating ? "animate-spin-twice" : "rotate-45 group-hover:rotate-0"
+               )}
+               role="img"
+               aria-label="Discard files"
+             >
+               ❌
+             </span>
+           </button>
+         </div>
+      )}
       <div
         className={cn(
           "absolute inset-0 h-full w-full",

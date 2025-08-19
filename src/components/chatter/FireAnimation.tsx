@@ -10,15 +10,15 @@ const FireAnimation = ({ onComplete }: { onComplete: () => void }) => {
     const fireEmojis = Array.from({ length: 50 }).map((_, i) => {
       const style: React.CSSProperties = {
         left: `${Math.random() * 100}vw`,
-        fontSize: `${Math.random() * 3 + 1}rem`,
-        animationDuration: `${Math.random() * 2 + 3}s`,
-        animationDelay: `${Math.random() * 3}s`,
+        fontSize: `${Math.random() * 2 + 1}rem`, // bigger and smaller sizes
+        animationDuration: `${Math.random() * 0.8 + 1}s`, // 3x faster
+        animationDelay: `${Math.random() * 1}s`,
       };
       return { id: i, style };
     });
     setEmojis(fireEmojis);
 
-    const timer = setTimeout(onComplete, 5000);
+    const timer = setTimeout(onComplete, 3000); // Animation completes in ~3s
     return () => clearTimeout(timer);
   }, [onComplete]);
 
@@ -27,11 +27,11 @@ const FireAnimation = ({ onComplete }: { onComplete: () => void }) => {
       <style jsx>{`
         @keyframes rise {
           from {
-            transform: translateY(0) rotate(0deg);
+            transform: translateY(0);
             opacity: 1;
           }
           to {
-            transform: translateY(-110vh) rotate(360deg);
+            transform: translateY(-110vh);
             opacity: 0;
           }
         }
