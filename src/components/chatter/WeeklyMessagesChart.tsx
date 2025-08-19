@@ -36,7 +36,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
                         <li key={`item-${index}`} className="flex items-center justify-between">
                            <div className="flex items-center">
                              <span className="w-2 h-2 rounded-full mr-2" style={{ backgroundColor: entry.color }}></span>
-                             <span className="text-foreground/80">{entry.name}</span>
+                             <span className="text-foreground/80 font-medium">{entry.name}</span>
                            </div>
                            <span className="font-bold text-foreground">{entry.value.toLocaleString()}</span>
                         </li>
@@ -126,7 +126,7 @@ export function WeeklyMessagesChart({ messages, users: allUsers }: WeeklyMessage
       <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 mt-4">
         {payload.map((entry: any, index: number) => (
           <div key={`item-${index}`} className="flex items-center space-x-2 text-xs">
-            <span className="w-2.5 h-2.5" style={{ backgroundColor: entry.color }} />
+            <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: entry.color }} />
             <span className="text-muted-foreground truncate">{entry.value}</span>
           </div>
         ))}
