@@ -10,6 +10,12 @@ import { Calendar } from "lucide-react";
 import type { ChatMessage } from "@/lib/types";
 import { CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
+interface DailyMessagesChartProps {
+  messages: ChatMessage[];
+  users: string[];
+}
+
+
 const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
         const filteredPayload = payload.filter((p: any) => p.value > 0);
@@ -94,7 +100,10 @@ export function DailyMessagesChart({ messages, users: allUsers }: DailyMessagesC
       }
     });
 
-    const finalData = Array.from(dateMap.values());
+    const finalData = Array.from(dateMap.values()).filter(dayData => {
+        const totalMessages = usersToShow.reduce((sum, user) => sum + (dayData[user] as number), 0);
+        return totalMessages > 0;
+    });
 
     // 4. Create chartConfig for colors
     const config: ChartConfig = {
