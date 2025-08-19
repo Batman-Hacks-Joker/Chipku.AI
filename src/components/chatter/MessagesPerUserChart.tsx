@@ -23,20 +23,26 @@ interface MessagesPerUserChartProps {
   messages: ChatMessage[];
   users: string[];
 }
-{/*Hi */}
+
 const COLORS = [
-  "hsl(var(--chart-1))",
-  "hsl(var(--chart-2))",
-  "hsl(var(--chart-3))",
-  "hsl(var(--chart-4))",
-  "hsl(var(--chart-5))",
+  "#7cb518",
+  "#ef233c",
+  "#7371fc",
+  "#15616d",
+  "#81c3d7",
+  "#f4a259",
+  "#17c3b2",
+  "#caffbf",
+  "#b5179e",
+  "#f15bb5",
 ];
+const OTHERS_COLOR = "#ff99c8";
 
 export function MessagesPerUserChart({
   messages,
   users,
 }: MessagesPerUserChartProps) {
-  const data = React.useMemo(() => {
+  const { chartData, legendData } = React.useMemo(() => {
     const userMessageCounts = users.reduce((acc, user) => {
       acc[user] = 0;
       return acc;
@@ -48,13 +54,44 @@ export function MessagesPerUserChart({
       }
     });
 
-    return Object.entries(userMessageCounts).map(([name, value]) => ({
-      name,
-      value,
-    }));
+    const sortedUsers = Object.entries(userMessageCounts)
+      .sort(([, a], [, b]) => b - a);
+
+    let topUsers;
+    let othersCount = 0;
+
+    if (sortedUsers.length > 10) {
+      const tenthValue = sortedUsers[9][1];
+      let cutOffIndex = sortedUsers.findIndex(u => u[1] < tenthValue);
+      if (cutOffIndex === -1) cutOffIndex = sortedUsers.length; // all have same value
+      if (cutOffIndex < 10) cutOffIndex = 10;
+      
+      topUsers = sortedUsers.slice(0, cutOffIndex);
+      const others = sortedUsers.slice(cutOffIndex);
+      othersCount = others.reduce((sum, [, count]) => sum + count, 0);
+    } else {
+      topUsers = sortedUsers;
+    }
+
+    const finalChartData = topUsers.map(([name, value]) => ({ name, value }));
+
+    if (othersCount > 0) {
+      finalChartData.push({ name: "Others", value: othersCount });
+    }
+    
+    const legendItems = [...finalChartData];
+    const othersItem = legendItems.find(item => item.name === 'Others');
+    const regularItems = legendItems.filter(item => item.name !== 'Others');
+
+    return {
+      chartData: finalChartData,
+      legendData: othersItem ? [...regularItems, othersItem] : regularItems
+    };
+
   }, [messages, users]);
 
-  if (!data || data.every((d) => d.value === 0)) {
+
+  if (!chartData || chartData.every((d) => d.value === 0)) {
     return (
       <div id="messages-per-user">
         <CardHeader className="flex flex-row items-center space-x-2 pb-2">
@@ -103,7 +140,7 @@ export function MessagesPerUserChart({
                 }}
               />
               <Pie
-                data={data}
+                data={chartData}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
@@ -139,10 +176,10 @@ export function MessagesPerUserChart({
                   );
                 }}
               >
-                {data.map((entry, index) => (
+                {chartData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
+                    fill={entry.name === 'Others' ? OTHERS_COLOR : COLORS[index % COLORS.length]}
                   />
                 ))}
               </Pie>
@@ -150,19 +187,19 @@ export function MessagesPerUserChart({
           </ResponsiveContainer>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4 text-sm">
-          {data.map((entry, index) => (
+        <div className="grid grid-cols-2 gap-x-4 gap-y-1 mt-4 text-xs">
+          {legendData.map((entry, index) => (
             <div
               key={`legend-${index}`}
               className="flex items-center gap-2"
             >
               <div
-                className="w-3 h-3 rounded-full"
+                className="w-2.5 h-2.5 rounded-full"
                 style={{
-                  backgroundColor: COLORS[index % COLORS.length],
+                  backgroundColor: entry.name === 'Others' ? OTHERS_COLOR : COLORS[index % COLORS.length],
                 }}
               />
-              <span className="text-muted-foreground">{entry.name}:</span>
+              <span className="text-muted-foreground truncate flex-1">{entry.name}:</span>
               <span className="font-medium text-foreground">
                 {entry.value.toLocaleString()}
               </span>
