@@ -27,28 +27,30 @@ const FireAnimation = ({ onComplete }: { onComplete: () => void }) => {
       <style jsx>{`
         @keyframes rise {
           from {
-            transform: translateY(100vh) rotate(0deg);
+            transform: translateY(0) rotate(0deg);
             opacity: 1;
           }
           to {
-            transform: translateY(-10vh) rotate(360deg);
+            transform: translateY(-110vh) rotate(360deg);
             opacity: 0;
           }
         }
-        .fire-emoji {
-          position: fixed;
-          bottom: -10vh;
-          will-change: transform, opacity;
-          animation-name: rise;
-          animation-timing-function: linear;
-          animation-fill-mode: forwards;
+        .fire-emoji-container {
+            position: fixed;
+            top: 100vh;
+            will-change: transform, opacity;
+            animation-name: rise;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
         }
       `}</style>
       <div className="fixed inset-0 w-full h-full z-[100] pointer-events-none overflow-hidden">
         {emojis.map(({ id, style }) => (
-          <span key={id} className="fire-emoji" style={style}>
-            🔥
-          </span>
+          <div key={id} className="fire-emoji-container" style={style}>
+            <span>
+                🔥
+            </span>
+          </div>
         ))}
       </div>
     </>
