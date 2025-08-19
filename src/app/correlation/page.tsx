@@ -169,7 +169,7 @@ export default function CorrelationPage() {
       }
     `}</style>
     <div className="relative flex flex-col min-h-screen w-full bg-background dark:bg-black">
-       {showCorrelation && (
+       {chatData1 && chatData2 && (
          <div 
            className="fixed top-1/2 right-4 -translate-y-1/2 z-50 group"
          >
@@ -220,7 +220,7 @@ export default function CorrelationPage() {
                   {fileName1 && fileName2 && (
                     <p className="text-sm text-muted-foreground truncate">
                       <span className="text-red-500">{getChatName(fileName1)}</span>
-                      <span className="text-muted-foreground"> / </span>
+                      <span className="text-muted-foreground"> / </span> 
                       <span className="text-blue-500">{getChatName(fileName2)}</span>
                     </p>
                   )}
@@ -235,7 +235,7 @@ export default function CorrelationPage() {
                     <CardContent>
                       <div className="text-2xl font-bold">
                         <span className="text-red-500">{stats1.totalMessages.toLocaleString()}</span>
-                        <span className="text-muted-foreground"> / </span>
+                        <span className="text-muted-foreground"> / </span> 
                         <span className="text-blue-500">{stats2.totalMessages.toLocaleString()}</span>
                       </div>
                     </CardContent>
@@ -247,7 +247,7 @@ export default function CorrelationPage() {
                     <CardContent>
                        <div className="text-2xl font-bold">
                         <span className="text-red-500">{stats1.totalWords.toLocaleString()}</span>
-                        <span className="text-muted-foreground"> / </span>
+                        <span className="text-muted-foreground"> / </span> 
                         <span className="text-blue-500">{stats2.totalWords.toLocaleString()}</span>
                       </div>
                     </CardContent>
@@ -259,7 +259,7 @@ export default function CorrelationPage() {
                     <CardContent>
                        <div className="text-2xl font-bold">
                         <span className="text-red-500">{stats1.activeUsers}</span>
-                        <span className="text-muted-foreground"> / </span>
+                        <span className="text-muted-foreground"> / </span> 
                         <span className="text-blue-500">{stats2.activeUsers}</span>
                       </div>
                     </CardContent>
@@ -271,7 +271,7 @@ export default function CorrelationPage() {
                     <CardContent>
                        <div className="text-2xl font-bold">
                         <span className="text-red-500">{stats1.daysAnalyzed}</span>
-                        <span className="text-muted-foreground"> / </span>
+                        <span className="text-muted-foreground"> / </span> 
                         <span className="text-blue-500">{stats2.daysAnalyzed}</span>
                       </div>
                     </CardContent>
