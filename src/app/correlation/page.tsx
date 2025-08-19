@@ -328,7 +328,7 @@ export default function CorrelationPage() {
           </div>
         )}
 
-        {!showCorrelation && !showFireAnimation && (
+        {!showCorrelation && (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="flex flex-col items-center">
@@ -384,4 +384,4 @@ export default function CorrelationPage() {
     </>
   );
 }
-{/*HI */}
+    
