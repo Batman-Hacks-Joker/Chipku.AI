@@ -122,7 +122,7 @@ export function DailyMessagesChart({ messages, users: allUsers }: DailyMessagesC
     if (!payload || payload.length === 0) return null;
 
     return (
-      <div className="grid grid-cols-2 gap-x-4 gap-y-1 mt-4 text-xs">
+      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 mt-4 text-xs">
         {payload.map((entry: any, index: number) => (
           <div key={`item-${index}`} className="flex items-center space-x-2">
             <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: entry.color }} />
