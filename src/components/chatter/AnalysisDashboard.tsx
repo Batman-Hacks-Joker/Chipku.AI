@@ -268,12 +268,12 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
             <Card className="p-4" id="weekly-messages-chart"><WeeklyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
           </div>
            <Card className="p-4" id="daily-messages-chart"> <DailyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
- <Card className="p-4" id="hourly-messages-chart"><HourlyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
+           <Card className="p-4" id="hourly-messages-chart"><HourlyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
            <div id="message-heatmap"><MessageHeatmap messages={filteredMessages} /></div>
-<div id="top-emojis-per-user"><TopEmojisPerUser messages={filteredMessages} users={parsedData.users} /></div>
-           <Card className="p-4" id="top-longest-messages"><TopLongestMessages messages={filteredMessages} users={parsedData.users} /></Card>
- <Card className="p-4" id="top-words-by-user"><TopWordsByUser messages={filteredMessages} users={parsedData.users} /></Card>
-           <Card className="p-4" id="random-message-per-user"><RandomMessagePerUser messages={filteredMessages} /></Card>
+           <div id="top-emojis-per-user"><TopEmojisPerUser messages={filteredMessages} users={parsedData.users} /></div>
+           <div id="top-longest-messages"><TopLongestMessages messages={filteredMessages} users={parsedData.users} /></div>
+           <div id="top-words-by-user"><TopWordsByUser messages={filteredMessages} users={parsedData.users} /></div>
+           <div id="random-message-per-user"><RandomMessagePerUser messages={filteredMessages} /></div>
         </main>
       </div>
     </div>
