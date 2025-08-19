@@ -16,6 +16,8 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 import { StatCard } from "@/components/chatter/StatCard";
 import { ChipkuMeter } from "@/components/chatter/ChipkuMeter";
@@ -45,19 +47,20 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
   
   const [filteredMessages, setFilteredMessages] = React.useState<ChatMessage[]>([]);
   const [date, setDate] = React.useState<DateRange | undefined>(undefined);
+  const [isFullTimeline, setIsFullTimeline] = React.useState(false);
   
   const [isExportDialogOpen, setIsExportDialogOpen] = React.useState(false);
   const [selectedComponents, setSelectedComponents] = React.useState<string[]>([]);
 
-  React.useEffect(() => {
-    const initialDateRange = {
-      from: startOfDay(parsedData.startDate!),
-      to: addDays(startOfDay(parsedData.startDate!), 1),
-    };
-    setDate(initialDateRange);
-    filterMessages(parsedData.messages, initialDateRange);
-  }, [parsedData]);
+  const defaultDateRange = React.useMemo(() => ({
+    from: startOfDay(parsedData.startDate!),
+    to: addDays(startOfDay(parsedData.startDate!), 1),
+  }),[parsedData.startDate]);
 
+  React.useEffect(() => {
+    setDate(defaultDateRange);
+    filterMessages(parsedData.messages, defaultDateRange);
+  }, [parsedData, defaultDateRange]);
 
   const filterMessages = (messages: ChatMessage[], dateRange: DateRange) => {
     if (!dateRange.from || !dateRange.to) {
@@ -80,6 +83,15 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
       });
     }
   };
+
+  const handleFullTimelineToggle = (checked: boolean) => {
+    setIsFullTimeline(checked);
+    if(checked) {
+      setDate({ from: parsedData.startDate!, to: parsedData.endDate! });
+    } else {
+      setDate(defaultDateRange);
+    }
+  }
 
   const stats = React.useMemo(() => {
     if (!filteredMessages) return { totalMessages: 0, totalWords: 0 };
@@ -108,11 +120,23 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
     const margin = 20;
     let yOffset = margin;
 
+    // Add a title to the PDF
+    pdf.setFontSize(22);
+    pdf.text(fileName ? fileName.replace(/.txt$/, '') : 'Chat Analysis', pdf.internal.pageSize.getWidth() / 2, yOffset, { align: 'center' });
+    yOffset += 40;
+    
+    // Add date range to the PDF
+    pdf.setFontSize(12);
+    if(date?.from && date?.to) {
+        pdf.text(`Date Range: ${format(date.from, "PPP")} - ${format(date.to, "PPP")}`, margin, yOffset);
+        yOffset += 20;
+    }
+
     for (const componentName of selectedComponents) {
       const element = document.getElementById(componentName.replace(/\s+/g, '-').toLowerCase());
 
       if (element) {
-        const canvas = await html2canvas(element, { scale: 0.8 });
+        const canvas = await html2canvas(element, { scale: 1 });
         const imgData = canvas.toDataURL('image/png');
         const imgProps = pdf.getImageProperties(imgData);
         const pdfWidth = pdf.internal.pageSize.getWidth() - 2 * margin;
@@ -238,6 +262,14 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
                   />
                 </PopoverContent>
               </Popover>
+              <div className="flex items-center space-x-2 pt-2">
+                <Switch 
+                  id="full-timeline-toggle" 
+                  checked={isFullTimeline}
+                  onCheckedChange={handleFullTimelineToggle}
+                />
+                <Label htmlFor="full-timeline-toggle">Full Timeline</Label>
+              </div>
             </div>
             <Button onClick={handleApplyClick} className="w-full bg-accent hover:bg-accent/90">Apply Changes</Button>
             <div className="text-xs text-muted-foreground space-y-1 pt-2">
@@ -259,8 +291,8 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
           <ChipkuMeter messages={filteredMessages} dateRange={date} />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="p-4" id="messages-per-user"><MessagesPerUserChart messages={filteredMessages} users={parsedData.users} /></Card>
-            <Card className="p-4" id="weekly-activity"><WeeklyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
+            <div id="messages-per-user" className="rounded-lg border bg-card text-card-foreground shadow-sm p-4"><MessagesPerUserChart messages={filteredMessages} users={parsedData.users} /></div>
+            <div id="weekly-activity" className="rounded-lg border bg-card text-card-foreground shadow-sm p-4"><WeeklyMessagesChart messages={filteredMessages} users={parsedData.users} /></div>
           </div>
            <Card className="p-4" id="daily-messages"> <DailyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
            <Card className="p-4" id="hourly-distribution"><HourlyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>

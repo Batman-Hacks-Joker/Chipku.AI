@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 
-const EMOJIS = ["😊", "🥴", "💋", "🤤", "😂", "👍", "🥳", "🥺", "😉", "🥱", "😈", "😍", "🤪", "🥰", "😘", "😎", "👻", "😏", "😡", "👀", "😤", "🤭", "😒"];
+const EMOJIS = ["😊", "💋", "🤤", "😂", "👍", "🥳", "🥱", "😈", "😍", "🤪", "🥰", "😘", "😎", "👻", "😏", "😡", "👀", "😤", "🤭", "😒"];
 
 interface EmojiType {
     id: number;
