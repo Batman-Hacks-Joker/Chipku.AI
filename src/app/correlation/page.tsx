@@ -138,6 +138,12 @@ export default function CorrelationPage() {
   if (isLoading) {
     return <LoadingPage title="Correlation provides easy decision making" />;
   }
+  
+  const getChatName = (fileName: string | null) => {
+    if (!fileName) return "";
+    return fileName.replace('WhatsApp Chat with ', '').replace('.txt', '');
+  };
+
 
   return (
     <div className="relative flex flex-col min-h-screen w-full bg-background dark:bg-black">
@@ -159,7 +165,16 @@ export default function CorrelationPage() {
         {chatData1 && chatData2 && (
              <Card className="mb-8 dark:bg-transparent">
               <CardHeader>
-                <CardTitle>Combined Overall Stats</CardTitle>
+                <div className="flex items-baseline justify-between">
+                  <CardTitle>Combined Overall Stats</CardTitle>
+                  {fileName1 && fileName2 && (
+                    <p className="text-sm text-muted-foreground truncate">
+                      <span className="text-red-500">{getChatName(fileName1)}</span>
+                      <span className="text-muted-foreground"> / </span>
+                      <span className="text-blue-500">{getChatName(fileName2)}</span>
+                    </p>
+                  )}
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
