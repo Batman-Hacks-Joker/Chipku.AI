@@ -91,19 +91,14 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
 
   const componentsToExport = React.useMemo(() => {
     const componentMap = {
-      'Total Messages': <StatCard title="Total Messages" value={stats.totalMessages.toLocaleString()} />,
-      'Total Words': <StatCard title="Total Words" value={stats.totalWords.toLocaleString()} />,
-      'Active Users': <StatCard title="Active Users" value={parsedData?.users.length} />,
-      'Days Analyzed': <StatCard title="Days Analyzed" value={date?.from && date?.to ? (Math.round((date.to.getTime() - date.from.getTime()) / (1000 * 3600 * 24)) + 1) : 0} />,
-      'Messages Per User Chart': <MessagesPerUserChart messages={filteredMessages} users={parsedData?.users || []} />,
-      'Weekly Messages Chart': <WeeklyMessagesChart messages={filteredMessages} users={parsedData?.users || []} />,
-      'Daily Messages Chart': <DailyMessagesChart messages={filteredMessages} users={parsedData?.users || []} />,
-      'Hourly Messages Chart': <HourlyMessagesChart messages={filteredMessages} users={parsedData?.users || []} />,
+      'Messages per User': <MessagesPerUserChart messages={filteredMessages} users={parsedData?.users || []} />,
+      'Weekly Activity': <WeeklyMessagesChart messages={filteredMessages} users={parsedData?.users || []} />,
+      'Daily Messages': <DailyMessagesChart messages={filteredMessages} users={parsedData?.users || []} />,
+      'Hourly Distribution': <HourlyMessagesChart messages={filteredMessages} users={parsedData?.users || []} />,
       'Message Heatmap': <MessageHeatmap messages={filteredMessages} />,
       'Top Emojis Per User': <TopEmojisPerUser messages={filteredMessages} users={parsedData?.users || []} />,
-      'Top Longest Messages': <TopLongestMessages messages={filteredMessages} users={parsedData?.users || []} />,
-      'Top Words By User': <TopWordsByUser messages={filteredMessages} users={parsedData?.users || []} />,
-      'Random Message Per User': <RandomMessagePerUser messages={filteredMessages} />,
+      'Top 5 Longest Messages Per User': <TopLongestMessages messages={filteredMessages} users={parsedData?.users || []} />,
+      'Top 15 Most Common Words by User': <TopWordsByUser messages={filteredMessages} users={parsedData?.users || []} />,
     };
     return componentMap;
   }, [stats, parsedData, filteredMessages, date]);
@@ -264,19 +259,18 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
           <ChipkuMeter messages={filteredMessages} dateRange={date} />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="p-4" id="messages-per-user-chart"><MessagesPerUserChart messages={filteredMessages} users={parsedData.users} /></Card>
-            <Card className="p-4" id="weekly-messages-chart"><WeeklyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
+            <Card className="p-4" id="messages-per-user"><MessagesPerUserChart messages={filteredMessages} users={parsedData.users} /></Card>
+            <Card className="p-4" id="weekly-activity"><WeeklyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
           </div>
-           <Card className="p-4" id="daily-messages-chart"> <DailyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
-           <Card className="p-4" id="hourly-messages-chart"><HourlyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
+           <Card className="p-4" id="daily-messages"> <DailyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
+           <Card className="p-4" id="hourly-distribution"><HourlyMessagesChart messages={filteredMessages} users={parsedData.users} /></Card>
            <div id="message-heatmap"><MessageHeatmap messages={filteredMessages} /></div>
            <div id="top-emojis-per-user"><TopEmojisPerUser messages={filteredMessages} users={parsedData.users} /></div>
-           <div id="top-longest-messages"><TopLongestMessages messages={filteredMessages} users={parsedData.users} /></div>
-           <div id="top-words-by-user"><TopWordsByUser messages={filteredMessages} users={parsedData.users} /></div>
+           <div id="top-5-longest-messages-per-user"><TopLongestMessages messages={filteredMessages} users={parsedData.users} /></div>
+           <div id="top-15-most-common-words-by-user"><TopWordsByUser messages={filteredMessages} users={parsedData.users} /></div>
            <div id="random-message-per-user"><RandomMessagePerUser messages={filteredMessages} /></div>
         </main>
       </div>
     </div>
   );
 };
-{/* hi */}

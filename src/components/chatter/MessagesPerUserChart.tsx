@@ -56,7 +56,7 @@ export function MessagesPerUserChart({
 
   if (!data || data.every((d) => d.value === 0)) {
     return (
-      <div>
+      <div id="messages-per-user">
         <CardHeader className="flex flex-row items-center space-x-2 pb-2">
           <Users className="h-5 w-5 text-purple-600" />
           <CardTitle className="font-headline">Messages Per User</CardTitle>

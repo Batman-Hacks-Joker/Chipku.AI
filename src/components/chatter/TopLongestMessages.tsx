@@ -58,7 +58,7 @@ export function TopLongestMessages({ messages, users }: TopLongestMessagesProps)
   };
 
   return (
-    <Card>
+    <Card id="top-5-longest-messages-per-user">
       <CardHeader>
         <CardTitle className="font-headline">Top 5 Longest Messages Per User</CardTitle>
         <CardDescription>The longest messages sent by each user.</CardDescription>

@@ -86,7 +86,7 @@ export function WeeklyMessagesChart({ messages, users }: WeeklyMessagesChartProp
         <CardDescription>Aggregated messages by day of the week.</CardDescription>
       </CardHeader>
 
-      <div className="h-[250px] w-full">
+      <div className="h-[250px] w-full" id="weekly-activity">
         <ChartContainer config={chartConfig} className="w-full h-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data}>

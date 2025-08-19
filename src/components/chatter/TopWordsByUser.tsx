@@ -99,7 +99,7 @@ export function TopWordsByUser({ messages, users }: TopWordsByUserProps) {
   }
 
   return (
-    <Card>
+    <Card id="top-15-most-common-words-by-user">
       <CardHeader>
         <CardTitle className="font-headline">
           Top 15 Most Common Words by User

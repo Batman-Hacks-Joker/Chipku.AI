@@ -87,7 +87,7 @@ export function DailyMessagesChart({ messages, users }: DailyMessagesChartProps)
         <CardTitle className="font-headline">Daily Messages</CardTitle>
         <CardDescription>Who sent most messages over the Chat timeline 📆 </CardDescription>
       </CardHeader>
-      <div className="w-full h-[350px]"> {/* Keep this div to manage the overall height and width for ChartContainer */}
+      <div className="w-full h-[350px]" id="daily-messages"> {/* Keep this div to manage the overall height and width for ChartContainer */}
         <ChartContainer config={chartConfig} className="w-full h-full"> {/* Make ChartContainer fill the parent div */}
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data}>
