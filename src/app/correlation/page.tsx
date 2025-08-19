@@ -34,8 +34,6 @@ export default function CorrelationPage() {
   const [isLoading2, setIsLoading2] = React.useState(false);
   const [isDarkMode] = useDarkModeContext();
   const [showCorrelation, setShowCorrelation] = React.useState(false);
-  const [isDiscardHovered, setIsDiscardHovered] = React.useState(false);
-
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -150,30 +148,24 @@ export default function CorrelationPage() {
     <div className="relative flex flex-col min-h-screen w-full bg-background dark:bg-black">
        {showCorrelation && (
          <div 
-           className="fixed top-1/2 right-4 -translate-y-1/2 z-50 flex items-center group"
-           onMouseEnter={() => setIsDiscardHovered(true)}
-           onMouseLeave={() => setIsDiscardHovered(false)}
+           className="fixed top-1/2 right-4 -translate-y-1/2 z-50 group"
          >
-          <span
-            className={cn(
-              "mr-2 px-3 py-1.5 bg-destructive text-destructive-foreground rounded-md text-sm font-medium whitespace-nowrap transition-all duration-300",
-              isDiscardHovered ? "opacity-100 scale-100" : "opacity-0 scale-95"
-            )}
-          >
-            Discard files
-          </span>
-          <Button 
-            variant="destructive" 
-            size="icon" 
-            className={cn(
-              "rounded-full h-12 w-12 text-2xl transform transition-transform duration-300",
-              isDiscardHovered ? 'scale-125' : 'scale-100'
-            )}
-            onClick={handleDiscard}
-          >
-            <span role="img" aria-label="cross mark">❌</span>
-          </Button>
-        </div>
+           <button
+             onClick={handleDiscard}
+             className="flex items-center space-x-2"
+           >
+             <span className="bg-destructive text-destructive-foreground text-sm font-medium px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+               Discard files
+             </span>
+             <span
+               className="text-4xl transition-transform duration-300 ease-in-out transform rotate-45 group-hover:rotate-0"
+               role="img"
+               aria-label="Discard files"
+             >
+               ❌
+             </span>
+           </button>
+         </div>
       )}
       <div
         className={cn(
