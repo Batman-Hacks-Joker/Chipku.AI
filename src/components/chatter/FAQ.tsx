@@ -37,6 +37,18 @@ files to find similarities in timing, content, and patterns. It reveals overlaps
 i want to help them, and .... dont worry everything is fine till with god's grace, yeaah i need money bcz the servers bills are not a joke
         </AccordionContent>
       </AccordionItem>
+      <AccordionItem value="item-4">
+        <AccordionTrigger>Is my chat file stored</AccordionTrigger>
+        <AccordionContent>
+        BIG NOOOO. this software is running on your browser only, no servers involved. Only when you use "ASK AI" feature then it goes to Gemini AI Model to provide response but clear the chat files once query is done, which is means neither i can store your chats nor a model.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-5">
+        <AccordionTrigger>whats your intention of creating this awesome website?</AccordionTrigger>
+        <AccordionContent>
+        Straightforward- Wanna surprise my GF; Being a Solo versatile developer I wanted to showcase my creative skills by solving a genuine problem of my GF, yes sometimes she kind of forgets things easily (No Alhzeimer). How can she forget my blood group? even after telling her, she told "Oh! you was confused so i thought you have A+". thats, where i started to work on this project.. interested to know more about our clingy bond ?
+        </AccordionContent>
+      </AccordionItem>
     </Accordion>
         </CardContent>
 
