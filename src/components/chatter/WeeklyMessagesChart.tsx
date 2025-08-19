@@ -33,8 +33,9 @@ const CustomTooltip = ({ active, payload, label }: any) => {
                 <p className="font-bold mb-1">{label}</p>
                 <ul className="space-y-0.5">
                     {filteredPayload.map((entry: any, index: number) => (
-                        <li key={`item-${index}`} style={{ color: entry.color }}>
-                           ● {`${entry.name}: ${entry.value.toLocaleString()}`}
+                        <li key={`item-${index}`} className="flex items-center">
+                           <span className="w-2 h-2 rounded-full mr-2" style={{ backgroundColor: entry.color }}></span>
+                           <span>{`${entry.name}: ${entry.value.toLocaleString()}`}</span>
                         </li>
                     ))}
                 </ul>
