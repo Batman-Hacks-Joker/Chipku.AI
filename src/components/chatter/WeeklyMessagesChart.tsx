@@ -36,9 +36,9 @@ const CustomTooltip = ({ active, payload, label }: any) => {
                         <li key={`item-${index}`} className="flex items-center justify-between">
                            <div className="flex items-center">
                              <span className="w-2 h-2 rounded-full mr-2" style={{ backgroundColor: entry.color }}></span>
-                             <span>{entry.name}</span>
+                             <span className="text-foreground/80">{entry.name}</span>
                            </div>
-                           <span>{entry.value.toLocaleString()}</span>
+                           <span className="font-bold text-foreground">{entry.value.toLocaleString()}</span>
                         </li>
                     ))}
                 </ul>
