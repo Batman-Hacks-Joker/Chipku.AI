@@ -353,10 +353,12 @@ export default function CorrelationPage() {
 
         {!showCorrelation && (
           <>
-            <h1 className="text-4xl font-bold text-center my-8">Correlation Analysis</h1>
-            <p className="text-lg text-muted-foreground text-center mb-8">
-              Compare two of your chat histories to see how your communication style changes with different people, or compare your chat habits with a friend's.
-            </p>
+            <div className={cn(showCorrelation && "hidden")}>
+                <h1 className="text-4xl font-bold text-center my-8">Correlation Analysis</h1>
+                <p className="text-lg text-muted-foreground text-center mb-8">
+                Compare two of your chat histories to see how your communication style changes with different people, or compare your chat habits with a friend's.
+                </p>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="flex flex-col items-center">
                 <h2 className="text-2xl font-semibold mb-4 text-center">Chat 1</h2>
@@ -395,9 +397,15 @@ export default function CorrelationPage() {
               </div>
             </div>
             
-            {chatData1 && chatData2 && (
+            {chatData1 && chatData2 && !showCorrelation && (
               <div className="flex justify-center mt-8">
-                <Button onClick={handleStartCorrelation} size="lg" disabled={isAnimating}>Start Correlation</Button>
+                <Button 
+                    onClick={handleStartCorrelation} 
+                    disabled={isAnimating}
+                    className="text-5xl bg-transparent hover:bg-transparent border-none p-4"
+                >
+                    🔥
+                </Button>
               </div>
             )}
           </>
