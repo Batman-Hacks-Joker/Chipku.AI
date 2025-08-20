@@ -2,25 +2,31 @@
 
 import React, { useEffect, useState } from 'react';
 
-const FireAnimation = ({ onComplete }: { onComplete: () => void }) => {
+interface FireAnimationProps {
+  onComplete: () => void;
+}
+
+const FireAnimation: React.FC<FireAnimationProps> = ({ onComplete }) => {
   const [emojis, setEmojis] = useState<{ id: number; style: React.CSSProperties }[]>([]);
 
   useEffect(() => {
-    const fireEmojis = Array.from({ length: 200 }).map((_, i) => {
-      const isExtraLarge = Math.random() < 0.1; // 10% chance for a huge emoji
+    const fireEmojis = [...Array(200)].map((_, i) => {
+      const isExtraLarge = Math.random() < 0.15;
       const style: React.CSSProperties = {
         left: `${Math.random() * 100}vw`,
         fontSize: isExtraLarge 
-          ? `${Math.random() * 10 + 10}rem` // 10rem to 20rem
-          : `${Math.random() * 2 + 1}rem`,    // 1rem to 3rem
+          ? `${Math.random() * 10 + 10}rem`
+          : `${Math.random() * 2 + 1}rem`,
         animationDuration: `${Math.random() * 0.4 + 0.4}s`,
         animationDelay: `${Math.random() * 0.5}s`,
       };
       return { id: i, style };
     });
+
     setEmojis(fireEmojis);
 
-    const timer = setTimeout(onComplete, 2000); // Animation completes in ~2s
+    const maxDuration = 0.5 + 0.5 + 0.2; // delay + duration + buffer
+    const timer = setTimeout(onComplete, maxDuration * 1000);
     return () => clearTimeout(timer);
   }, [onComplete]);
 
@@ -38,20 +44,18 @@ const FireAnimation = ({ onComplete }: { onComplete: () => void }) => {
           }
         }
         .fire-emoji-container {
-            position: fixed;
-            top: 100vh;
-            will-change: transform, opacity;
-            animation-name: rise;
-            animation-timing-function: linear;
-            animation-fill-mode: forwards;
+          position: fixed;
+          top: 100vh;
+          will-change: transform, opacity;
+          animation-name: rise;
+          animation-timing-function: linear;
+          animation-fill-mode: forwards;
         }
       `}</style>
       <div className="fixed inset-0 w-full h-full z-[100] pointer-events-none overflow-hidden">
         {emojis.map(({ id, style }) => (
           <div key={id} className="fire-emoji-container" style={style}>
-            <span>
-                🔥
-            </span>
+            <span aria-hidden="true">🔥</span>
           </div>
         ))}
       </div>

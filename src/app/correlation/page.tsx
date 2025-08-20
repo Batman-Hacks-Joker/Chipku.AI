@@ -239,10 +239,6 @@ export default function CorrelationPage() {
        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
 
       <div className="relative z-10 flex-grow container mx-auto p-4">
-        <h1 className="text-4xl font-bold text-center my-8">Correlation Analysis</h1>
-        <p className="text-lg text-muted-foreground text-center mb-8">
-          Compare two of your chat histories to see how your communication style changes with different people, or compare your chat habits with a friend's.
-        </p>
         
         {showCorrelation && chatData1 && chatData2 && (
           <div className="space-y-8">
@@ -357,6 +353,10 @@ export default function CorrelationPage() {
 
         {!showCorrelation && (
           <>
+            <h1 className="text-4xl font-bold text-center my-8">Correlation Analysis</h1>
+            <p className="text-lg text-muted-foreground text-center mb-8">
+              Compare two of your chat histories to see how your communication style changes with different people, or compare your chat habits with a friend's.
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="flex flex-col items-center">
                 <h2 className="text-2xl font-semibold mb-4 text-center">Chat 1</h2>
