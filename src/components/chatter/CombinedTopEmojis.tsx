@@ -102,14 +102,19 @@ const EmojiCanvas = ({
         mousePos.current = { x: event.clientX - rect.left, y: event.clientY - rect.top };
       }
     };
+    const handleMouseLeave = () => {
+        mousePos.current = { x: -1, y: -1 };
+    }
     
     const currentContainer = containerRef.current;
     if (currentContainer) {
       currentContainer.addEventListener("mousemove", handleMouseMove);
+      currentContainer.addEventListener("mouseleave", handleMouseLeave);
     }
     return () => {
       if (currentContainer) {
         currentContainer.removeEventListener("mousemove", handleMouseMove);
+        currentContainer.removeEventListener("mouseleave", handleMouseLeave);
       }
     };
   }, []);
@@ -122,7 +127,7 @@ const EmojiCanvas = ({
 
     setEmojis(
       emojisData.map((e, i) => {
-        const size = 16 + (e.totalCount / maxCount) * 48; // min 16, max 64
+        const size = 24 + (e.totalCount / maxCount) * 64; // min 24, max 88
         return {
           ...e,
           x: Math.random() * (width - size) + size / 2,
@@ -155,8 +160,8 @@ const EmojiCanvas = ({
             const REPEL_RADIUS = 100;
             if (dist < REPEL_RADIUS) {
               const force = (REPEL_RADIUS - dist) / REPEL_RADIUS;
-              vx += (dx / dist) * force;
-              vy += (dy / dist) * force;
+              vx += (dx / dist) * force * 0.5;
+              vy += (dy / dist) * force * 0.5;
             }
           }
 
@@ -274,5 +279,3 @@ export function CombinedTopEmojis({
     </Card>
   );
 }
-
-    
