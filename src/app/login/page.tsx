@@ -1,11 +1,14 @@
+
 "use client";
 
 import React, { useState } from "react";
-import { Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, ArrowRight, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import FloatingActionButton from "@/components/ui/FloatingActionButton";
+import { useAuth } from "@/context/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48" {...props}>
@@ -30,10 +33,40 @@ const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 const LoginPage: React.FC = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [isSigningIn, setIsSigningIn] = useState(false);
   const router = useRouter();
+  const { googleSignIn, user } = useAuth();
+  const { toast } = useToast();
+
+  React.useEffect(() => {
+    if (user) {
+      router.push('/dashboard');
+    }
+  }, [user, router]);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
+  };
+
+  const handleGoogleSignIn = async () => {
+    setIsSigningIn(true);
+    try {
+      await googleSignIn();
+      toast({
+        title: "Signed in successfully!",
+        description: "Welcome back!",
+      });
+      router.push('/dashboard');
+    } catch (error) {
+      console.error("Google Sign-In Error:", error);
+      toast({
+        variant: "destructive",
+        title: "Sign-in failed",
+        description: "Could not sign in with Google. Please try again.",
+      });
+    } finally {
+      setIsSigningIn(false);
+    }
   };
 
   const handleHomeClick = () => {
@@ -168,8 +201,14 @@ const LoginPage: React.FC = () => {
               <Button
                 variant="outline"
                 className="w-full bg-white dark:bg-gray-700 rounded-xl py-3 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-white"
+                onClick={handleGoogleSignIn}
+                disabled={isSigningIn}
               >
-                <GoogleIcon className="mr-2" />
+                {isSigningIn ? (
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                ) : (
+                  <GoogleIcon className="mr-2" />
+                )}
                 Sign in with Google
               </Button>
             </div>
