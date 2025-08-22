@@ -100,7 +100,7 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
       const reorderUsers = (users: string[]) => {
         const others = users.find(u => u === 'Others');
         const otherUsers = users.filter(u => u !== 'Others');
-        return others ? [...otherUsers, others] : otherUsers;
+        return others ? [others, ...otherUsers] : otherUsers;
       };
 
       return { usersForLegend: reorderUsers(usersForLegend), weeklyData: weeklyDataByUser };
@@ -133,11 +133,19 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
         
         return dayData;
     });
+    
+    const reorderForLegend = (users: string[]) => {
+        const others = users.find(u => u === 'Others');
+        const otherUsers = users.filter(u => u !== 'Others');
+        return others ? [...otherUsers, others] : otherUsers;
+    }
 
     return {
         combined,
         users1: data1.usersForLegend,
         users2: data2.usersForLegend,
+        legendUsers1: reorderForLegend(data1.usersForLegend),
+        legendUsers2: reorderForLegend(data2.usersForLegend),
         colorMap,
     };
   }, [messages1, messages2, chatName1, chatName2]);
@@ -147,16 +155,16 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
       <div className="flex justify-center mt-4 text-xs gap-x-8">
         <div className="flex flex-col space-y-1">
           <h4 className="font-bold mb-1">{chatName1}</h4>
-          {chartData.users1.map((user) => (
+          {chartData.legendUsers1.map((user) => (
             <div key={`${chatName1}-${user}`} className="flex items-center">
               <span className="w-2.5 h-2.5 mr-2" style={{ backgroundColor: chartData.colorMap[user] }}></span>
               <span>{user}</span>
             </div>
           ))}
-        </div> {/* hi*/ }
+        </div>
         <div className="flex flex-col space-y-1">
           <h4 className="font-bold mb-1">{chatName2}</h4>
-          {chartData.users2.map((user) => (
+          {chartData.legendUsers2.map((user) => (
             <div key={`${chatName2}-${user}`} className="flex items-center">
               <span className="w-2.5 h-2.5 mr-2" style={{ backgroundColor: chartData.colorMap[user] }}></span>
               <span>{user}</span>
