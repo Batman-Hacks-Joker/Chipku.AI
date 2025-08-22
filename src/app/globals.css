@@ -4,19 +4,19 @@
 
 @layer base {
   :root {
-    --background: 334 50% 86%;
+    --background: 334 50% 86%; /* Soft, muted pink */
     --foreground: 339 71% 14%;
     --card: 334 50% 92%;
     --card-foreground: 339 71% 14%;
     --popover: 334 50% 92%;
     --popover-foreground: 339 71% 14%;
-    --primary: 339 71% 44%;
+    --primary: 339 71% 44%; /* Deep magenta */
     --primary-foreground: 0 0% 98%;
     --secondary: 334 40% 80%;
     --secondary-foreground: 339 71% 14%;
     --muted: 334 40% 80%;
     --muted-foreground: 339 71% 25%;
-    --accent: 284 69% 50%;
+    --accent: 284 69% 50%; /* Electric purple */
     --accent-foreground: 0 0% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
