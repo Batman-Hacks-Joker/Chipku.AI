@@ -11,6 +11,7 @@ const firebaseConfig = {
   measurementId: "",
   messagingSenderId: "705505813131"
 };
+{/**hi */}
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();

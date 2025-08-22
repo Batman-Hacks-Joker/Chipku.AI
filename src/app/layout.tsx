@@ -15,7 +15,8 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) { 
+  {/**hi */}
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
