@@ -94,6 +94,27 @@ const EmojiCanvas = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [emojis, setEmojis] = useState<InteractiveEmoji[]>([]);
   const mousePos = useRef({ x: -1, y: -1 });
+  const [isInteracting, setIsInteracting] = useState(false);
+  const interactionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startInteraction = () => {
+    setIsInteracting(true);
+    if (interactionTimeoutRef.current) {
+        clearTimeout(interactionTimeoutRef.current);
+    }
+    interactionTimeoutRef.current = setTimeout(() => {
+        setIsInteracting(false);
+        mousePos.current = { x: -1, y: -1 };
+    }, 3000); // Stop interaction after 3s
+  };
+
+  useEffect(() => {
+    return () => {
+        if (interactionTimeoutRef.current) {
+            clearTimeout(interactionTimeoutRef.current);
+        }
+    };
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
@@ -107,7 +128,7 @@ const EmojiCanvas = ({
     }
     
     const currentContainer = containerRef.current;
-    if (currentContainer) {
+    if (currentContainer && isInteracting) {
       currentContainer.addEventListener("mousemove", handleMouseMove);
       currentContainer.addEventListener("mouseleave", handleMouseLeave);
     }
@@ -117,7 +138,7 @@ const EmojiCanvas = ({
         currentContainer.removeEventListener("mouseleave", handleMouseLeave);
       }
     };
-  }, []);
+  }, [isInteracting]);
 
   useEffect(() => {
     if (!containerRef.current || emojisData.length === 0) return;
@@ -127,7 +148,7 @@ const EmojiCanvas = ({
 
     setEmojis(
       emojisData.map((e, i) => {
-        const size = 24 + (e.totalCount / maxCount) * 64; // min 24, max 88
+        const size = 32 + (e.totalCount / maxCount) * 80; // min 32, max 112
         return {
           ...e,
           x: Math.random() * (width - size) + size / 2,
@@ -153,15 +174,15 @@ const EmojiCanvas = ({
         prevEmojis.map((e) => {
           let { x, y, vx, vy, size } = e;
 
-          if (mousePos.current.x > -1) {
+          if (isInteracting && mousePos.current.x > -1) {
             const dx = x - mousePos.current.x;
             const dy = y - mousePos.current.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            const REPEL_RADIUS = 100;
+            const REPEL_RADIUS = 120;
             if (dist < REPEL_RADIUS) {
               const force = (REPEL_RADIUS - dist) / REPEL_RADIUS;
-              vx += (dx / dist) * force * 0.5;
-              vy += (dy / dist) * force * 0.5;
+              vx += (dx / dist) * force * 0.6;
+              vy += (dy / dist) * force * 0.6;
             }
           }
 
@@ -184,7 +205,7 @@ const EmojiCanvas = ({
 
     frameId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(frameId);
-  }, [emojis]);
+  }, [emojis, isInteracting]);
 
   return (
     <div
@@ -206,6 +227,7 @@ const EmojiCanvas = ({
                   cursor: "pointer",
                   willChange: 'transform',
                 }}
+                onClick={startInteraction}
               >
                 {e.emoji}
               </div>
@@ -279,3 +301,5 @@ export function CombinedTopEmojis({
     </Card>
   );
 }
+
+    
