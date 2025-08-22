@@ -15,7 +15,6 @@ import {
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { HeartBalloon } from "@/components/chatter/HeartBalloon";
-import { Cloud } from "@/components/chatter/Cloud";
 
 interface ChipkuMeterProps {
   messages: ChatMessage[];
@@ -39,7 +38,7 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   const [balloons, setBalloons] = React.useState<BalloonState[]>([]);
   const [animationState, setAnimationState] = React.useState<"idle" | "clouds" | "score" | "balloons" | "finished">("idle");
 
-  const isSameDateRange = (a?: DateRange, b?: DateRange) => {
+  const isSameDateRange = (a?: DateRange | null, b?: DateRange | null) => {
     if (!a || !b || !a.from || !a.to || !b.from || !b.to) return false;
     return a.from.getTime() === b.from.getTime() && a.to.getTime() === b.to.getTime();
   };
@@ -134,7 +133,11 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
     setAnalysisTriggered(true);
   };
 
-  const staggeredDelay = result && result.balloons > 0 ? 5 / result.balloons : 0;
+  const cloudPositions = React.useMemo(() => [
+    { top: '15%', left: '-20%', animation: 'float-horizontal 25s infinite linear' },
+    { top: '30%', left: '-25%', animation: 'float-horizontal 30s infinite linear reverse' },
+    { top: '60%', left: '-15%', animation: 'float-horizontal 20s infinite linear' }
+  ], []);
 
   return (
     <Card className="overflow-hidden">
@@ -170,13 +173,20 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
         {!isLoading && !error && result && !buttonEnabled && (
           <div className="absolute inset-0 flex flex-col items-center justify-center rounded-lg bg-gradient-to-b from-pink-200 via-sky-200 to-sky-300 w-full overflow-hidden">
             <AnimatePresence>
-                {animationState !== "idle" && (
-                    <>
-                        <Cloud style={{ top: '15%', left: '-20%', animation: 'float-horizontal 25s infinite linear' }} />
-                        <Cloud style={{ top: '30%', left: '-25%', animation: 'float-horizontal 30s infinite linear reverse' }} />
-                        <Cloud style={{ top: '60%', left: '-15%', animation: 'float-horizontal 20s infinite linear' }} />
-                    </>
-                )}
+                {animationState === "clouds" || animationState === "score" || animationState === "balloons" || animationState === "finished" ? (
+                    cloudPositions.map((style, index) =>
+                        <motion.div
+                            key={index}
+                            className="absolute text-5xl opacity-30"
+                            style={style}
+                            initial={{ x: -100, opacity: 0 }}
+                            animate={{ x: 0, opacity: 0.3, transition: { duration: 1, ease: 'easeOut' } }}
+                            exit={{ x: 100, opacity: 0, transition: { duration: 0.5 } }}
+                        >
+                            ☁️
+                        </motion.div>
+                    )
+                ) : null}
             </AnimatePresence>
              <AnimatePresence>
               {balloons.map((balloon) => (
@@ -221,7 +231,7 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
             </AnimatePresence>
             
             <AnimatePresence>
-            {animationState === "score" || animationState === "balloons" || animationState === "finished" && (
+            {animationState === "score" || animationState === "balloons" || animationState === "finished" ? (
                 <motion.div
                   className="relative z-20 text-center bg-black/20 backdrop-blur-sm p-4 rounded-lg"
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -233,7 +243,7 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
                   </p>
                   <p className="text-2xl font-semibold text-white mt-2 drop-shadow-md font-headline">{result.label}</p>
                 </motion.div>
-            )}
+            ) : null }
             </AnimatePresence>
           </div>
         )}
