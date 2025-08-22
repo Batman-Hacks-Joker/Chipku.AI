@@ -109,6 +109,17 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
     const data1 = processChatData(messages1);
     const data2 = processChatData(messages2);
     
+    const allUsers = [...new Set([...data1.usersForLegend, ...data2.usersForLegend])];
+    const colorMap: Record<string, string> = allUsers.reduce((acc, user, index) => {
+        if (user === 'Others') {
+            acc[user] = COLORS[5];
+        } else {
+            acc[user] = COLORS[index % 5];
+        }
+        return acc;
+    }, {});
+
+
     const combined = WEEKDAYS.map((day, index) => {
         const dayData: Record<string, any> = { name: day };
         
@@ -127,17 +138,10 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
         combined,
         users1: data1.usersForLegend,
         users2: data2.usersForLegend,
+        colorMap,
     };
   }, [messages1, messages2, chatName1, chatName2]);
   
-  const getColor = (userName: string, userList: string[]) => {
-      if (userName === 'Others') {
-          return COLORS[5];
-      }
-      const userIndex = userList.filter(u => u !== 'Others').indexOf(userName);
-      return COLORS[userIndex % 5];
-  };
-
   const renderLegend = () => {
     return (
       <div className="flex justify-center mt-4 text-xs gap-x-8">
@@ -145,7 +149,7 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
           <h4 className="font-bold mb-1">{chatName1}</h4>
           {chartData.users1.map((user) => (
             <div key={`${chatName1}-${user}`} className="flex items-center">
-              <span className="w-2.5 h-2.5 mr-2" style={{ backgroundColor: getColor(user, chartData.users1) }}></span>
+              <span className="w-2.5 h-2.5 mr-2" style={{ backgroundColor: chartData.colorMap[user] }}></span>
               <span>{user}</span>
             </div>
           ))}
@@ -154,7 +158,7 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
           <h4 className="font-bold mb-1">{chatName2}</h4>
           {chartData.users2.map((user) => (
             <div key={`${chatName2}-${user}`} className="flex items-center">
-              <span className="w-2.5 h-2.5 mr-2" style={{ backgroundColor: getColor(user, chartData.users2) }}></span>
+              <span className="w-2.5 h-2.5 mr-2" style={{ backgroundColor: chartData.colorMap[user] }}></span>
               <span>{user}</span>
             </div>
           ))}
@@ -182,7 +186,7 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
                     key={`${chatName1}-${user}`} 
                     dataKey={`${chatName1}-${user}`} 
                     stackId="a" 
-                    fill={getColor(user, chartData.users1)}
+                    fill={chartData.colorMap[user]}
                     name={`${user} (${chatName1})`} 
                   />
                 ))}
@@ -191,7 +195,7 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
                     key={`${chatName2}-${user}`} 
                     dataKey={`${chatName2}-${user}`} 
                     stackId="b" 
-                    fill={getColor(user, chartData.users2)}
+                    fill={chartData.colorMap[user]}
                     name={`${user} (${chatName2})`}
                   />
                 ))}
