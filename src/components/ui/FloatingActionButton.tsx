@@ -4,13 +4,14 @@ import useDarkMode from '@/hooks/use-dark-mode';
 
 interface FloatingActionButtonProps {
   onHomeClick: () => void;
+  isLoggedIn?: boolean; // Assume we'll get this from auth state later
 }
 
 type RouteButton = { label: string; hover: string; route: string };
 type ClickButton = { label: string; hover: string; onClick: () => void };
 type ButtonItem = RouteButton | ClickButton;
 
-const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick }) => {
+const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick, isLoggedIn = false }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -37,10 +38,29 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
   const toggleOpen = () => setIsOpen((prev) => !prev);
 
   const emoji = isOpen ? '😱' : isHovered ? '😯' : '😳';
+  
+  // For now, we will simulate the logged in state.
+  // In the future, this will come from an authentication provider.
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  
+  // Simulate login state change for demonstration
+  useEffect(() => {
+      // a simple way to toggle for now
+      const handleKeyDown = (e: KeyboardEvent) => {
+          if (e.key === 'l' && e.ctrlKey) {
+              setIsUserLoggedIn(prev => !prev);
+          }
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
 
   const buttons: ButtonItem[] = [
     { label: '🏛️', hover: '🏛️ Home Page', route: '/' },
-    { label: '✍️', hover: '✍️ Signup/Login', route: '/login' },
+    isUserLoggedIn 
+      ? { label: '✨', hover: '✨ Dashboard', route: '/dashboard' }
+      : { label: '✍️', hover: '✍️ Signup/Login', route: '/login' },
     { label: '☠️', hover: '☠️ Correlation', route: '/correlation' },
     { label: '🤑', hover: '🤑 Donate Me', route: '/donate' },
     mounted && {
