@@ -148,7 +148,7 @@ const EmojiCanvas = ({
 
     setEmojis(
       emojisData.map((e, i) => {
-        const size = 48 + (e.totalCount / maxCount) * 96; // min 48, max 144
+        const size = 64 + (e.totalCount / maxCount) * 128; // min 64, max 192
         return {
           ...e,
           x: Math.random() * (width - size) + size / 2,
@@ -233,16 +233,17 @@ const EmojiCanvas = ({
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              <div className="p-2">
+              <div className="p-2 min-w-[150px]">
                 <p className="font-bold text-lg">
                   {e.emoji} (Total: {e.totalCount})
                 </p>
-                <ul className="list-disc list-inside mt-1">
+                <ul className="mt-1 space-y-1">
                   {Object.entries(e.users)
                     .sort(([, a], [, b]) => b - a)
                     .map(([user, count]) => (
-                      <li key={user}>
-                        {user}: {count}
+                      <li key={user} className="flex justify-between items-center text-sm">
+                        <span>{user}:</span>
+                        <span className="font-bold">{count}</span>
                       </li>
                     ))}
                 </ul>
