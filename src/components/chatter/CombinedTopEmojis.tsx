@@ -148,7 +148,7 @@ const EmojiCanvas = ({
 
     setEmojis(
       emojisData.map((e, i) => {
-        const size = 64 + (e.totalCount / maxCount) * 128; // min 64, max 192
+        const size = 40 + (e.totalCount / maxCount) * 120; // min 64, max 192
         return {
           ...e,
           x: Math.random() * (width - size) + size / 2,

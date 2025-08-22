@@ -322,15 +322,6 @@ export default function CorrelationPage() {
             </Card>
 
             <Card className="dark:bg-transparent">
-              <CombinedTopEmojis
-                messages1={chatData1.messages}
-                fileName1={fileName1}
-                messages2={chatData2.messages}
-                fileName2={fileName2}
-              />
-            </Card>
-            
-            <Card className="dark:bg-transparent">
               <CombinedWeeklyActivityChart
                 messages1={chatData1.messages}
                 fileName1={fileName1}
@@ -352,6 +343,15 @@ export default function CorrelationPage() {
             
             <Card className="dark:bg-transparent">
               <CombinedActivityHeatmap
+                messages1={chatData1.messages}
+                fileName1={fileName1}
+                messages2={chatData2.messages}
+                fileName2={fileName2}
+              />
+            </Card>
+
+            <Card className="dark:bg-transparent">
+              <CombinedTopEmojis
                 messages1={chatData1.messages}
                 fileName1={fileName1}
                 messages2={chatData2.messages}
