@@ -148,7 +148,7 @@ const EmojiCanvas = ({
 
     setEmojis(
       emojisData.map((e, i) => {
-        const size = 32 + (e.totalCount / maxCount) * 80; // min 32, max 112
+        const size = 48 + (e.totalCount / maxCount) * 96; // min 48, max 144
         return {
           ...e,
           x: Math.random() * (width - size) + size / 2,
@@ -301,5 +301,3 @@ export function CombinedTopEmojis({
     </Card>
   );
 }
-
-    
