@@ -1,3 +1,4 @@
+
 import { cn } from "@/lib/utils";
 import * as React from "react";
 
@@ -9,7 +10,7 @@ interface HeartBalloonProps {
 export function HeartBalloon({ style, className }: HeartBalloonProps) {
   return (
     <div
-      className={cn("absolute bottom-0 will-change-transform", className)}
+      className={cn("bottom-0 will-change-transform cursor-pointer", className)}
       style={style}
     >
       <div className="relative">
