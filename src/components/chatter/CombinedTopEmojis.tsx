@@ -148,7 +148,7 @@ const EmojiCanvas = ({
 
     setEmojis(
       emojisData.map((e, i) => {
-        const size = 40 + (e.totalCount / maxCount) * 120; // min 64, max 192
+        const size = 30 + (e.totalCount / maxCount) * 80;
         return {
           ...e,
           x: Math.random() * (width - size) + size / 2,
@@ -214,7 +214,7 @@ const EmojiCanvas = ({
     >
       <h3 className="absolute top-2 left-4 font-bold text-foreground text-center w-full">{chatName}</h3>
       {emojis.map((e) => (
-        <TooltipProvider key={e.id} delayDuration={100}>
+        <TooltipProvider key={e.id} delayDuration={0}>
           <Tooltip>
             <TooltipTrigger asChild>
               <div
@@ -228,6 +228,7 @@ const EmojiCanvas = ({
                   willChange: 'transform',
                 }}
                 onClick={startInteraction}
+                onTouchStart={startInteraction}
               >
                 {e.emoji}
               </div>
@@ -277,7 +278,7 @@ export function CombinedTopEmojis({
       <CardHeader>
         <CardTitle className="font-headline">Top Common Emojis</CardTitle>
         <CardDescription>
-          Comparing top 10 most used emojis from each chat.
+          Comparing top 10 most used emojis from each chat. Click to interact.
         </CardDescription>
       </CardHeader>
       <CardContent>
