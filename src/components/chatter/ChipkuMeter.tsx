@@ -21,12 +21,6 @@ interface ChipkuMeterProps {
   dateRange?: DateRange;
 }
 
-interface BalloonState {
-  id: number;
-  popped: boolean;
-  style: React.CSSProperties;
-}
-
 export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   const [result, setResult] = React.useState<RelationshipSentimentOutput | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -35,40 +29,12 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   const [buttonEnabled, setButtonEnabled] = React.useState(true);
   const [lastAnalyzedRange, setLastAnalyzedRange] = React.useState<DateRange | null>(null);
   const initialLoad = React.useRef(true);
-  const [balloons, setBalloons] = React.useState<BalloonState[]>([]);
-  const [animationState, setAnimationState] = React.useState<"idle" | "clouds" | "score" | "balloons" | "finished">("idle");
+  const [balloons, setBalloons] = React.useState<number>(0);
 
   const isSameDateRange = (a?: DateRange | null, b?: DateRange | null) => {
     if (!a || !b || !a.from || !a.to || !b.from || !b.to) return false;
     return a.from.getTime() === b.from.getTime() && a.to.getTime() === b.to.getTime();
   };
-
-  const createBalloonStates = (count: number) => {
-    return [...Array(count)].map((_, i) => ({
-      id: i,
-      popped: false,
-      style: {
-        left: `${10 + Math.random() * 80}%`,
-        animation: `float ${4 + Math.random() * 4}s ease-in-out infinite`,
-        animationDelay: `${Math.random() * 3}s`,
-      },
-    }));
-  };
-
-  const handlePop = (id: number) => {
-    setBalloons(prev => prev.map(b => b.id === id ? { ...b, popped: true } : b));
-    setTimeout(() => {
-        setBalloons(prev => prev.map(b => b.id === id ? {
-            ...b,
-            popped: false,
-            style: {
-                ...b.style,
-                left: `${10 + Math.random() * 80}%`,
-            }
-        } : b));
-    }, 3000);
-  };
-
 
   const analyzeSentiment = async () => {
     if (messages.length === 0 || !dateRange?.from || !dateRange?.to) {
@@ -80,7 +46,6 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
     setIsLoading(true);
     setError(null);
     setButtonEnabled(false);
-    setAnimationState("idle");
 
     try {
       const chatData = messages.map((m) => `${m.author}: ${m.message}`).join("\n");
@@ -91,16 +56,9 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
       });
 
       setResult(analysis);
-      setBalloons(createBalloonStates(analysis.balloons));
+      setBalloons(analysis.balloons);
       setLastAnalyzedRange(dateRange);
       setAnalysisTriggered(false);
-      
-      setAnimationState("clouds");
-      setTimeout(() => setAnimationState("score"), 1000);
-      setTimeout(() => setAnimationState("balloons"), 1500);
-      setTimeout(() => setAnimationState("finished"), 1500 + (analysis.balloons > 0 ? 5000 : 0));
-
-
     } catch (e) {
       console.error("Sentiment analysis failed:", e);
       setError("Could not analyze relationship strength. Please try a different date range.");
@@ -124,20 +82,12 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
     if (result && dateRange && lastAnalyzedRange && !isSameDateRange(dateRange, lastAnalyzedRange)) {
       setButtonEnabled(true);
       setResult(null);
-      setBalloons([]);
-      setAnimationState("idle");
     }
   }, [dateRange, result, lastAnalyzedRange]);
 
   const handleAnalyzeClick = () => {
     setAnalysisTriggered(true);
   };
-
-  const cloudPositions = React.useMemo(() => [
-    { top: '15%', left: '-20%', animation: 'float-horizontal 25s infinite linear' },
-    { top: '30%', left: '-25%', animation: 'float-horizontal 30s infinite linear reverse' },
-    { top: '60%', left: '-15%', animation: 'float-horizontal 20s infinite linear' }
-  ], []);
 
   return (
     <Card className="overflow-hidden">
@@ -148,11 +98,11 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
         </div>
         <CardDescription>Check your relationship strength using Chipku AI</CardDescription>
       </CardHeader>
-      <CardContent className="relative flex-grow flex flex-col items-center justify-center min-h-[350px] w-full p-4">
+      <CardContent className="relative flex flex-col items-center justify-center min-h-[250px] p-4">
         {buttonEnabled && (
           <button
             onClick={handleAnalyzeClick}
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed z-20"
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={!buttonEnabled || isLoading}
           >
             Analyze Relationship Strength
@@ -160,7 +110,7 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
         )}
 
         {isLoading && (
-          <div className="absolute inset-0 bg-card/80 flex flex-col items-center justify-center z-10">
+          <div className="absolute inset-0 bg-card/80 flex flex-col items-center justify-center">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
             <p className="mt-2 text-muted-foreground">Analyzing sentiments...</p>
           </div>
@@ -170,85 +120,34 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
           <div className="text-center py-10 text-destructive">{error}</div>
         )}
 
-        {!isLoading && !error && result && !buttonEnabled && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center rounded-lg bg-gradient-to-b from-pink-200 via-sky-200 to-sky-300 w-full overflow-hidden">
-            <AnimatePresence>
-                {animationState === "clouds" || animationState === "score" || animationState === "balloons" || animationState === "finished" ? (
-                    cloudPositions.map((style, index) =>
-                        <motion.div
-                            key={index}
-                            className="absolute text-5xl opacity-30"
-                            style={style}
-                            initial={{ x: -100, opacity: 0 }}
-                            animate={{ x: 0, opacity: 0.3, transition: { duration: 1, ease: 'easeOut' } }}
-                            exit={{ x: 100, opacity: 0, transition: { duration: 0.5 } }}
-                        >
-                            ☁️
-                        </motion.div>
-                    )
-                ) : null}
-            </AnimatePresence>
-             <AnimatePresence>
-              {balloons.map((balloon) => (
-                !balloon.popped && animationState === "balloons" && (
-                <motion.div
-                  key={balloon.id}
-                  className="absolute bottom-0 z-10"
-                  initial={{ opacity: 0, y: 50, scale: 0.5 }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                    scale: 1,
-                    transition: { delay: balloon.id * (5000 / balloons.length) / 1000, duration: 0.5, ease: "easeOut" },
-                  }}
-                  exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.3 } }}
-                  onClick={() => handlePop(balloon.id)}
-                  
-                >
-                  <HeartBalloon style={balloon.style} />
-                </motion.div>
-                )
-              ))}
-            </AnimatePresence>
-
-             <AnimatePresence>
-              {balloons.map((balloon) => (
-                balloon.popped && (
-                <motion.div
-                  key={`${balloon.id}-popped`}
-                  className="absolute z-20 text-3xl"
-                  style={{
-                    left: balloon.style.left,
-                    bottom: '20%',
-                  }}
-                  initial={{ opacity: 1, scale: 1 }}
-                  animate={{ opacity: 0, scale: 2, transition: { duration: 0.3 } }}
-                >
-                  💔
-                </motion.div>
-                )
-              ))}
-            </AnimatePresence>
-            
-            <AnimatePresence>
-            {animationState === "score" || animationState === "balloons" || animationState === "finished" ? (
-                <motion.div
-                  className="relative z-20 text-center bg-black/20 backdrop-blur-sm p-4 rounded-lg"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1, transition: { duration: 0.5, ease: "backOut" } }}
-                  exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.3 } }}
-                >
-                  <p className="text-5xl font-bold text-white drop-shadow-lg">
-                    {result.rating}<span className="text-3xl opacity-80">/33</span>
-                  </p>
-                  <p className="text-2xl font-semibold text-white mt-2 drop-shadow-md font-headline">{result.label}</p>
-                </motion.div>
-            ) : null }
-            </AnimatePresence>
-          </div>
-        )}
+        <AnimatePresence>
+          {!isLoading && !error && result && !buttonEnabled && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="text-center"
+            >
+              <div className="relative">
+                {[...Array(balloons)].map((_, i) => (
+                  <HeartBalloon
+                    key={i}
+                    style={{
+                      left: `${10 + (i * 80) / (balloons - 1 || 1)}%`,
+                      animationDelay: `${i * 0.1}s`,
+                    }}
+                    className={balloons > 20 ? 'heart-balloon-large' : ''}
+                  />
+                ))}
+              </div>
+              <p className="text-5xl font-bold text-primary mt-12">
+                {result.rating}/33
+              </p>
+              <p className="text-2xl font-semibold text-muted-foreground mt-2 font-headline">{result.label}</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </CardContent>
     </Card>
   );
 }
-

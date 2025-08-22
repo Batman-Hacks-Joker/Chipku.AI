@@ -10,7 +10,7 @@ interface HeartBalloonProps {
 export function HeartBalloon({ style, className }: HeartBalloonProps) {
   return (
     <div
-      className={cn("bottom-0 will-change-transform cursor-pointer", className)}
+      className={cn("absolute bottom-0 animate-float will-change-transform", className)}
       style={style}
     >
       <div className="relative">

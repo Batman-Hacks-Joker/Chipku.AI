@@ -97,30 +97,6 @@
   }
 }
 
-@keyframes float-horizontal {
-    0% {
-        transform: translateX(0);
-    }
-    50% {
-        transform: translateX(20px);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
-
-
 .heart-balloon-large {
   transform: scale(1.5); /* Adjust the scale factor as needed */
-}
-@keyframes animatedgradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
 }
