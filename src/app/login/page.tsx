@@ -115,7 +115,7 @@ const LoginPage: React.FC = () => {
               Sign in with email
             </h1>
             <p className="text-center text-gray-600 dark:text-gray-300 mb-8">
-              Make a new doc to bring your words, data, and teams together. For free
+              Instantly unlock 1 Correlation, AI related features get a chance for coupon
             </p>
 
             <form className="space-y-6">
@@ -167,7 +167,7 @@ const LoginPage: React.FC = () => {
             <div className="flex justify-center">
               <Button
                 variant="outline"
-                className="w-full bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-xl py-3 border border-gray-300 dark:border-gray-600"
+                className="w-full bg-white dark:bg-gray-700 rounded-xl py-3 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-white"
               >
                 <GoogleIcon className="mr-2" />
                 Sign in with Google
