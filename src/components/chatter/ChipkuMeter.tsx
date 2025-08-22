@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from "react";
@@ -8,10 +7,7 @@ import { format } from "date-fns";
 import { motion, AnimatePresence } from "framer-motion";
 
 import type { ChatMessage } from "@/lib/types";
-import {
-  analyzeRelationshipSentiment,
-  type RelationshipSentimentOutput,
-} from "@/ai/flows/relationship-sentiment-analysis";
+import { analyzeRelationshipSentiment, type RelationshipSentimentOutput } from "@/ai/flows/relationship-sentiment-analysis";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { HeartBalloon } from "@/components/chatter/HeartBalloon";
@@ -29,13 +25,14 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   const [buttonEnabled, setButtonEnabled] = React.useState(true);
   const [lastAnalyzedRange, setLastAnalyzedRange] = React.useState<DateRange | null>(null);
   const initialLoad = React.useRef(true);
-  const [balloons, setBalloons] = React.useState<number>(0);
 
-  const isSameDateRange = (a?: DateRange | null, b?: DateRange | null) => {
+  // Helper: Compare two date ranges
+  const isSameDateRange = (a?: DateRange, b?: DateRange) => {
     if (!a || !b || !a.from || !a.to || !b.from || !b.to) return false;
     return a.from.getTime() === b.from.getTime() && a.to.getTime() === b.to.getTime();
   };
 
+  // Only analyze if triggered and valid date range
   const analyzeSentiment = async () => {
     if (messages.length === 0 || !dateRange?.from || !dateRange?.to) {
       setResult(null);
@@ -45,10 +42,11 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
 
     setIsLoading(true);
     setError(null);
-    setButtonEnabled(false);
+    setButtonEnabled(false); // Disable button while analyzing
 
     try {
       const chatData = messages.map((m) => `${m.author}: ${m.message}`).join("\n");
+
       const analysis = await analyzeRelationshipSentiment({
         chatData,
         startDate: format(dateRange.from, "yyyy-MM-dd"),
@@ -56,32 +54,34 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
       });
 
       setResult(analysis);
-      setBalloons(analysis.balloons);
       setLastAnalyzedRange(dateRange);
-      setAnalysisTriggered(false);
+      setButtonEnabled(false); // Keep button disabled after successful analysis
+      setAnalysisTriggered(false); // Reset trigger after analysis is done
     } catch (e) {
       console.error("Sentiment analysis failed:", e);
       setError("Could not analyze relationship strength. Please try a different date range.");
-      setAnalysisTriggered(false);
+      setAnalysisTriggered(false); // Reset trigger even on error
     } finally {
       setIsLoading(false);
     }
   };
 
+  // Trigger analysis only when analysisTriggered is true and not currently loading
   React.useEffect(() => {
     if (analysisTriggered && !isLoading) {
       analyzeSentiment();
     }
-  }, [analysisTriggered, isLoading, messages, dateRange]);
+  }, [analysisTriggered, isLoading, messages, dateRange]); // Added messages and dateRange as dependencies here too
 
+  // Re-show button when date range changes after analysis
   React.useEffect(() => {
     if (initialLoad.current) {
       initialLoad.current = false;
       return;
     }
     if (result && dateRange && lastAnalyzedRange && !isSameDateRange(dateRange, lastAnalyzedRange)) {
-      setButtonEnabled(true);
-      setResult(null);
+      setButtonEnabled(true); // Enable button when date range changes after a result is shown
+      setAnalysisTriggered(false); // Reset trigger so button click will start analysis
     }
   }, [dateRange, result, lastAnalyzedRange]);
 
@@ -89,28 +89,34 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
     setAnalysisTriggered(true);
   };
 
+
+  const staggeredDelay = result && result.balloons > 0 ? 5 / result.balloons : 0;
+
   return (
     <Card className="overflow-hidden">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Heart className="text-purple-600" />
+ <Heart className="text-purple-600" />
           <CardTitle className="font-headline">Chipku Meter</CardTitle>
         </div>
-        <CardDescription>Check your relationship strength using Chipku AI</CardDescription>
+        <CardDescription>
+          Check your relationship strength using Chipku AI
+        </CardDescription>
       </CardHeader>
-      <CardContent className="relative flex flex-col items-center justify-center min-h-[250px] p-4">
-        {buttonEnabled && (
-          <button
-            onClick={handleAnalyzeClick}
-            className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={!buttonEnabled || isLoading}
-          >
-            Analyze Relationship Strength
-          </button>
+      <CardContent className="relative flex-grow flex flex-col items-center justify-center min-h-[200px] w-full p-4">
+        {(!result || buttonEnabled) && (
+ <button
+ onClick={handleAnalyzeClick}
+ className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed mb-4"
+ disabled={!buttonEnabled || isLoading}
+ >
+ Analyze Relationship Strength
+ </button>
+
         )}
 
         {isLoading && (
-          <div className="absolute inset-0 bg-card/80 flex flex-col items-center justify-center">
+          <div className="absolute inset-0 bg-card/80 flex flex-col items-center justify-center z-10">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
             <p className="mt-2 text-muted-foreground">Analyzing sentiments...</p>
           </div>
@@ -120,34 +126,48 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
           <div className="text-center py-10 text-destructive">{error}</div>
         )}
 
-        <AnimatePresence>
-          {!isLoading && !error && result && !buttonEnabled && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="text-center"
-            >
-              <div className="relative">
-                {[...Array(balloons)].map((_, i) => (
+        {!isLoading && !error && result && !buttonEnabled && ( // Only show result when not loading, no error, result exists, and button is disabled
+          <div className="relative flex flex-col items-center justify-center rounded-lg bg-gradient-to-b from-pink-200 via-sky-200 to-sky-300 min-h-[300px] p-4 w-full">
+            <AnimatePresence>
+              {[...Array(result.balloons)].map((_, i) => (
+                <motion.div
+                  className="heart-balloon-large absolute bottom-0"
+                  key={i}
+                  initial={{ opacity: 0, y: 50, scale: 0.5, left: `${10 + Math.random() * 80}%` }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    scale: 1.5,
+                    transition: { delay: i * staggeredDelay, duration: 0.5, ease: "easeOut" },
+                  }}
+                  exit={{ opacity: 0, scale: 0.5 }}
+                >
                   <HeartBalloon
-                    key={i}
                     style={{
-                      left: `${10 + (i * 80) / (balloons - 1 || 1)}%`,
-                      animationDelay: `${i * 0.1}s`,
+                      animation: `float ${4 + Math.random() * 4}s ease-in-out infinite`,
+                      animationDelay: `${Math.random() * 3}s`,
                     }}
-                    className={balloons > 20 ? 'heart-balloon-large' : ''}
                   />
-                ))}
+                </motion.div>
+              ))}
+            </AnimatePresence>
+
+                <div className="relative z-10 text-center bg-black/20 backdrop-blur-sm p-4 rounded-lg">
+                  <p className="text-5xl font-bold text-white drop-shadow-lg">
+                    {result.rating}<span className="text-3xl opacity-80">/33</span>
+                  </p>
+                  <p className="text-2xl font-semibold text-white mt-2 drop-shadow-md font-headline">{result.label}</p>
+                </div>
               </div>
-              <p className="text-5xl font-bold text-primary mt-12">
-                {result.rating}/33
-              </p>
-              <p className="text-2xl font-semibold text-muted-foreground mt-2 font-headline">{result.label}</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            )}
+
+        {!isLoading && !error && !result && messages.length > 0 && !buttonEnabled && ( // Show message when no result, not loading, no error, and messages exist (after potentially hiding a result)
+          <div className="text-center py-10 text-muted-foreground">
+            Select a date range and click "Analyze Relationship Strength".
+          </div>
+        )}
       </CardContent>
     </Card>
   );
 }
+{/*hi */}

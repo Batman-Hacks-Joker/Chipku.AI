@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import * as React from "react";
 
@@ -10,7 +9,7 @@ interface HeartBalloonProps {
 export function HeartBalloon({ style, className }: HeartBalloonProps) {
   return (
     <div
-      className={cn("absolute bottom-0 animate-float will-change-transform", className)}
+      className={cn("absolute bottom-0 will-change-transform", className)}
       style={style}
     >
       <div className="relative">
@@ -29,3 +28,4 @@ export function HeartBalloon({ style, className }: HeartBalloonProps) {
     </div>
   );
 }
+{/*hi */}
