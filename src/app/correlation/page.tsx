@@ -20,6 +20,7 @@ import { useDarkModeContext } from "@/context/DarkModeContext";
 import { CombinedActivityHeatmap } from "@/components/chatter/CombinedActivityHeatmap";
 import { Button } from "@/components/ui/button";
 import FireAnimation from "@/components/chatter/FireAnimation";
+import { CombinedTopEmojis } from "@/components/chatter/CombinedTopEmojis";
 
 export default function CorrelationPage() {
   const { toast } = useToast();
@@ -319,6 +320,15 @@ export default function CorrelationPage() {
                 fileName2={fileName2}
               />
             </Card>
+
+            <Card className="dark:bg-transparent">
+              <CombinedTopEmojis
+                messages1={chatData1.messages}
+                fileName1={fileName1}
+                messages2={chatData2.messages}
+                fileName2={fileName2}
+              />
+            </Card>
             
             <Card className="dark:bg-transparent">
               <CombinedWeeklyActivityChart
@@ -419,4 +429,6 @@ export default function CorrelationPage() {
     </>
   );
 }
+    
+
     

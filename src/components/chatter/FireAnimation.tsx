@@ -11,7 +11,7 @@ const FireAnimation: React.FC<FireAnimationProps> = ({ onComplete }) => {
 
   useEffect(() => {
     const fireEmojis = [...Array(200)].map((_, i) => {
-      const isExtraLarge = Math.random() < 0.15;
+      const isExtraLarge = Math.random() < 0.10;
       const style: React.CSSProperties = {
         left: `${Math.random() * 100}vw`,
         fontSize: isExtraLarge 
