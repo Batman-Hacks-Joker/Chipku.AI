@@ -12,7 +12,7 @@ const firebaseConfig = {
   authDomain: "chatter-insights-oki29.web.app",
   measurementId: "",
   messagingSenderId: "705505813131",
-  databaseURL: "https://chatter-insights-oki29-default-rtdb.firebaseio.com"
+  databaseURL: "https://chatter-insights-oki29-default-rtdb.asia-southeast1.firebasedatabase.app"
 };
 
 // Initialize Firebase
