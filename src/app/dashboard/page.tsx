@@ -28,7 +28,7 @@ const TemplatesIcon = () => (
     <path d="M17 8H19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     <path d="M5 16H11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     <path d="M15 16H19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M13 5L14.0607 7.06066L16.1213 8.12132L14.0607 9.18198L13 11.2426L11.9393 9.18198L9.87868 8.12132L11.9393 7.06066L13 5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M13 5L14.0607 7.06066L16.1213 8.12132L14.0607 9.18198L13 11.2426L11.9393 9.18198L9.87868 8.12132L11.9393 7.06066L13 5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" strokeLinejoin="round"/>
     <path d="M15 13L16.0607 15.0607L18.1213 16.1213L16.0607 17.182L15 19.2426L13.9393 17.182L11.8787 16.1213L13.9393 15.0607L15 13Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
@@ -146,11 +146,16 @@ const DashboardPage: React.FC = () => {
                 "shadow-xl shadow-purple-200/40 dark:shadow-black/30"
             )}>
               <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/80 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out dark:from-white/30"></div>
-              <div className="flex items-start gap-4 relative z-10">
-                  <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
-                      <LayoutGrid className="text-foreground" />
-                  </div>
-              </div>
+                <div className="flex justify-between items-start relative z-10">
+                    <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
+                        <LayoutGrid className="text-foreground" />
+                    </div>
+                    <div className="text-right font-headline font-bold text-2xl text-black">
+                        <p>it takes ✌️</p>
+                        <p>for</p>
+                        <p>wholesome experience</p>
+                    </div>
+                </div>
               <div className="relative z-10 mt-auto">
                 <h3 className="font-semibold text-lg text-foreground">Analysis</h3>
               </div>
