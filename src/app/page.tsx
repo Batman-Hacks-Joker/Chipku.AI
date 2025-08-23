@@ -14,8 +14,8 @@ import FloatingActionButton from "@/components/ui/FloatingActionButton";
 import { LoadingPage } from "@/components/ui/LoadingPage";
 import FAQ from "@/components/chatter/FAQ";
 import InteractiveEmojis from "@/components/chatter/InteractiveEmojis";
-import { Button } from "@/components/ui/button";
 import { useUsage } from "@/context/UsageContext";
+import DraggableBurger from "@/components/chatter/DraggableBurger";
 
 export default function Home() {
   const router = useRouter();
@@ -27,6 +27,7 @@ export default function Home() {
   const [showFaq, setShowFaq] = React.useState(false);
   const [loadingTitle, setLoadingTitle] = React.useState("Analyzing your chat...");
   const [loadingSubtitle, setLoadingSubtitle] = React.useState("Feeling stuck? Retrying might help! 🙃");
+  const fileUploadRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     const timer = setTimeout(() => {
@@ -38,18 +39,15 @@ export default function Home() {
   React.useEffect(() => {
     let timer: NodeJS.Timeout;
     if (isProcessing) {
-      // Set the initial message
       setLoadingTitle("Analyzing your chat...");
       setLoadingSubtitle("Don't worry your data is safe, processing depends on your browser");
       
-      // Set a timer to change the message after 5 seconds
       timer = setTimeout(() => {
         setLoadingTitle("Its your first time, preparing cookies for you 🤤🍪");
         setLoadingSubtitle("Yeah almost done!!!");
       }, 5000);
     }
     
-    // Cleanup the timer if processing finishes before 5 seconds
     return () => clearTimeout(timer);
   }, [isProcessing]);
 
@@ -97,6 +95,21 @@ export default function Home() {
       setIsProcessing(false);
     }
   };
+  
+  const handleBurgerDrop = async () => {
+    try {
+        const response = await fetch('/dummyFile.txt');
+        const content = await response.text();
+        handleFileProcessed(content, "Burger's Secret Chat.txt");
+    } catch (error) {
+        console.error("Failed to fetch dummy file:", error);
+        toast({
+            variant: "destructive",
+            title: "File Error",
+            description: "Could not load the dummy chat file.",
+        });
+    }
+  };
 
   if (isLoading) {
     return <LoadingPage title="Ringing the door bell...🔔🔔🔔" />;
@@ -107,6 +120,7 @@ export default function Home() {
       <div className="absolute inset-0 w-full h-full z-0">
         <InteractiveEmojis />
       </div>
+      {!isProcessing && <DraggableBurger fileUploadRef={fileUploadRef} onDrop={handleBurgerDrop} />}
       {isProcessing ? (
         <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
           <Loader2 className="h-16 w-16 animate-spin text-primary mb-4" />
@@ -123,7 +137,9 @@ export default function Home() {
               Upload your .txt WhatsApp chat to uncover fascinating insights, analyze your chat's sentiment, and even ask our AI questions about your conversations💯
             </p>
           </div>
-          <FileUpload onFileProcessed={handleFileProcessed} />
+          <div ref={fileUploadRef}>
+            <FileUpload onFileProcessed={handleFileProcessed} />
+          </div>
           <p className="text-xs text-muted-foreground mt-4">Your data is processed on your device and never stored on our servers✌🏻</p>
         </main>
       )}
