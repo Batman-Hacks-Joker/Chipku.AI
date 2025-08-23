@@ -11,7 +11,6 @@ import { LoadingPage } from '@/components/ui/LoadingPage';
 import { Button } from '@/components/ui/button';
 import { useDarkModeContext } from '@/context/DarkModeContext';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
-import { BranchIcon } from '@/components/ui/BranchIcon';
 
 
 const TemplatesIcon = () => (
@@ -95,7 +94,9 @@ const DashboardPage: React.FC = () => {
               <div>
                 <h3 className="font-semibold text-lg text-foreground">Templates</h3>
               </div>
-              <BranchIcon />
+              <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out">
+                🧐
+              </div>
             </div>
 
             {/* Card 2: Agents */}
@@ -113,7 +114,9 @@ const DashboardPage: React.FC = () => {
               <div>
                 <h3 className="font-semibold text-lg text-foreground">Agents</h3>
               </div>
-              <BranchIcon />
+               <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out">
+                😪
+              </div>
             </div>
 
             {/* Card 3: Capabilities */}
@@ -131,7 +134,9 @@ const DashboardPage: React.FC = () => {
               <div>
                 <h3 className="font-semibold text-lg text-foreground">Capabilities</h3>
               </div>
-              <BranchIcon />
+              <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out">
+                😚
+              </div>
             </div>
           </div>
         </main>
