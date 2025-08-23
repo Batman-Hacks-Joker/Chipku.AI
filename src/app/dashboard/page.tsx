@@ -83,7 +83,7 @@ const DashboardPage: React.FC = () => {
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
                 "bg-[#e5e6e4] dark:bg-card text-card-foreground",
-                "border border-black/20 dark:border-white/10",
+                "border border-black/10 dark:border-white/10",
                 "shadow-lg shadow-gray-300/40 dark:shadow-black/30"
             )}>
               <div className="flex justify-start">
@@ -100,7 +100,7 @@ const DashboardPage: React.FC = () => {
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
                 "bg-[#dbcdf0] dark:bg-card text-card-foreground",
-                "border border-black/20 dark:border-white/10",
+                "border border-black/10 dark:border-white/10",
                 "shadow-lg shadow-purple-200/40 dark:shadow-black/30"
             )}>
               <div className="flex justify-start">
@@ -117,7 +117,7 @@ const DashboardPage: React.FC = () => {
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
                 "bg-[#cbdfbd] dark:bg-card text-card-foreground",
-                "border border-black/20 dark:border-white/10",
+                "border border-black/10 dark:border-white/10",
                 "shadow-lg shadow-green-200/40 dark:shadow-black/30"
             )}>
               <div className="flex justify-start">
