@@ -44,7 +44,7 @@ const DashboardPage: React.FC = () => {
 
   return (
       <>
-    <div className="min-h-screen bg-[#F3D5E2] dark:bg-[#111111] text-foreground font-sans relative">
+    <div className="min-h-screen bg-[#F3D5E2] dark:bg-black text-foreground font-sans relative">
       <div className="max-w-7xl mx-auto px-8 py-12 relative z-10">
         
         <header className="flex justify-between items-start mb-16">
@@ -71,7 +71,7 @@ const DashboardPage: React.FC = () => {
             {/* Card 1: Templates */}
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
-                "bg-card text-card-foreground",
+                "bg-[#e5e6e4] dark:bg-card text-card-foreground",
                 "border border-gray-200/50 dark:border-white/10",
                 "shadow-lg shadow-gray-200/20 dark:shadow-black/20"
             )}>
@@ -88,7 +88,7 @@ const DashboardPage: React.FC = () => {
             {/* Card 2: Agents */}
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
-                "bg-card text-card-foreground",
+                "bg-[#dbcdf0] dark:bg-card text-card-foreground",
                 "border border-gray-200/50 dark:border-white/10",
                 "shadow-lg shadow-gray-200/20 dark:shadow-black/20"
             )}>
@@ -105,7 +105,7 @@ const DashboardPage: React.FC = () => {
             {/* Card 3: Capabilities */}
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
-                "bg-card text-card-foreground",
+                "bg-[#cbdfbd] dark:bg-card text-card-foreground",
                 "border border-gray-200/50 dark:border-white/10",
                 "shadow-lg shadow-gray-200/20 dark:shadow-black/20"
             )}>
