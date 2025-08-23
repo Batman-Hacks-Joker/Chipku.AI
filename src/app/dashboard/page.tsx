@@ -159,8 +159,8 @@ const DashboardPage: React.FC = () => {
               </div>
                {showAnalysisButtons && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center space-y-4 bg-black/10 backdrop-blur-sm rounded-3xl z-20">
-                    <Button onClick={() => handleNavigation('/')} className="bg-primary hover:bg-primary/80">Analysis</Button>
-                    <Button onClick={() => handleNavigation('/correlation')} className="bg-accent hover:bg-accent/80">Correlation</Button>
+                    <Button onClick={() => handleNavigation('/')} className="bg-[#C21E56] hover:bg-[#C21E56]/90 text-white">Analysis</Button>
+                    <Button onClick={() => handleNavigation('/correlation')} className="bg-[#A629D3] hover:bg-[#A629D3]/90 text-white">Correlation</Button>
                 </div>
               )}
             </div>
@@ -220,5 +220,3 @@ const DashboardPage: React.FC = () => {
 };
 
 export default DashboardPage;
-
-    
