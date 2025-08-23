@@ -11,6 +11,7 @@ import { LoadingPage } from '@/components/ui/LoadingPage';
 import { Button } from '@/components/ui/button';
 import { useDarkModeContext } from '@/context/DarkModeContext';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { BranchIcon } from '@/components/ui/BranchIcon';
 
 
 const TemplatesIcon = () => (
@@ -81,7 +82,7 @@ const DashboardPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Card 1: Templates */}
             <div className={cn(
-                "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
+                "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden",
                 "bg-[#e5e6e4] dark:bg-card text-card-foreground",
                 "border border-black/10 dark:border-white/10",
                 "shadow-lg shadow-gray-300/40 dark:shadow-black/30"
@@ -94,11 +95,12 @@ const DashboardPage: React.FC = () => {
               <div>
                 <h3 className="font-semibold text-lg text-foreground">Templates</h3>
               </div>
+              <BranchIcon />
             </div>
 
             {/* Card 2: Agents */}
             <div className={cn(
-                "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
+                "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden",
                 "bg-[#dbcdf0] dark:bg-card text-card-foreground",
                 "border border-black/10 dark:border-white/10",
                 "shadow-lg shadow-purple-200/40 dark:shadow-black/30"
@@ -111,11 +113,12 @@ const DashboardPage: React.FC = () => {
               <div>
                 <h3 className="font-semibold text-lg text-foreground">Agents</h3>
               </div>
+              <BranchIcon />
             </div>
 
             {/* Card 3: Capabilities */}
             <div className={cn(
-                "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
+                "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden",
                 "bg-[#cbdfbd] dark:bg-card text-card-foreground",
                 "border border-black/10 dark:border-white/10",
                 "shadow-lg shadow-green-200/40 dark:shadow-black/30"
@@ -128,6 +131,7 @@ const DashboardPage: React.FC = () => {
               <div>
                 <h3 className="font-semibold text-lg text-foreground">Capabilities</h3>
               </div>
+              <BranchIcon />
             </div>
           </div>
         </main>
