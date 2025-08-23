@@ -1,25 +1,14 @@
 import React from 'react';
+import { Github } from 'lucide-react';
 
-interface FooterProps {
-  showEmojiCarousel?: boolean;
-}
-
-const BunnyIcon = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="10" fill="#4A4A4A"/>
-      <rect x="8" y="11" width="8" height="2" fill="white" rx="1"/>
-    </svg>
-);
-
-
-const Footer: React.FC<FooterProps> = ({ showEmojiCarousel = true }) => {
-  const emojis = '😊🥴💋🤤😂👍😳😠🥳🔥🥺🧡😉🥱🤓😈😍🤪🥰😘😎👻😏😡💖👀😤😆✨🤭🧐😪';
+const Footer: React.FC = () => {
+  const emojis = '😊💋😂👍😳😠🥳🔥🥺🧡😉🥱🤓😈😍🤪🥰😘👻😏😡💖👀😤😆✨🤭🧐😪';
   const repeatedEmojis = emojis.repeat(5); // Repeat emojis for smooth loop
 
   return (
     <>
       <footer className="footer">
-        <div className="first-line">Made with 💖 for 💖</div>
+        <span className="first-line">Made with 💖 for 💖</span>
         <div className="second-line">
           <a
             href="https://github.com/Batman-Hacks-Joker"
@@ -27,24 +16,22 @@ const Footer: React.FC<FooterProps> = ({ showEmojiCarousel = true }) => {
             rel="noopener noreferrer"
             className="github-link"
           >
-            <BunnyIcon />
+            <Github width={20} height={20} stroke='black' fill='white'/>
           </a>
-          <span className="developer-credit">- by <a href="https://github.com/Batman-Hacks-Joker" target="_blank" rel="noopener noreferrer">FanatiAK</a> or (<a href="https://github.com/Batman-Hacks-Joker" target="_blank" rel="noopener noreferrer">github.com/Batman-Hacks-Joker</a>)</span>
+          <span style={{ textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: '8px' }} >- by FanatiAK or (github.com/Batman-Hacks-Joker)</span>
         </div>
       </footer>
 
       {/* Emoji Carousel */}
-      {showEmojiCarousel && (
-        <div className="emoji-carousel" aria-hidden="true">
-          <div className="emoji-track">
-            {[...repeatedEmojis].map((emoji, index) => (
-              <span className="emoji" key={index}>
-                {emoji}
-              </span>
-            ))}
-          </div>
+      <div className="emoji-carousel" aria-hidden="true">
+        <div className="emoji-track">
+          {[...repeatedEmojis].map((emoji, index) => (
+            <span className="emoji" key={index}>
+              {emoji}
+            </span>
+          ))}
         </div>
-      )}
+      </div>
 
       {/* CSS Styling */}
       <style>{`
@@ -63,25 +50,12 @@ const Footer: React.FC<FooterProps> = ({ showEmojiCarousel = true }) => {
           font-weight: bold;
           cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><text x="50%" y="50%" style="dominant-baseline:central; text-anchor:middle; font-size: 30px;">💕</text></svg>') 20 20, auto;
         }
-        
+
         .second-line {
           display: flex;
           align-items: center;
           gap: 8px;
-        }
-
-        .developer-credit {
           cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><text x="50%" y="50%" style="dominant-baseline:central; text-anchor:middle; font-size: 30px;">😎</text></svg>') 20 20, auto;
-        }
-        
-        .developer-credit a {
-          text-decoration: underline;
-          color: inherit;
-          transition: color 0.3s;
-        }
-        
-        .developer-credit a:hover {
-           color: #3b82f6; /* primary color */
         }
 
         .github-link {

@@ -135,7 +135,9 @@ export default function Home() {
         </div>
       </div>
       
-      <Footer />
+      <div className="relative z-10">
+        <Footer />
+      </div>
       <FloatingActionButton onHomeClick={() => {}} />
     </div>
   );
