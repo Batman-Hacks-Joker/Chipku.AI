@@ -134,7 +134,6 @@ export default function Home() {
           <FAQ />
         </div>
       </div>
-      
       <div className="relative z-10">
         <Footer />
       </div>
