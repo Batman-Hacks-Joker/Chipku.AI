@@ -6,9 +6,8 @@ interface FooterProps {
 
 const BunnyIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="10" fill="#6B7280"/>
-      <path d="M9 11C9 10.4477 9.44772 10 10 10H14C14.5523 10 15 10.4477 15 11V12C15 12.5523 14.5523 13 14 13H10C9.44772 13 9 12.5523 9 12V11Z" fill="white"/>
-      <path d="M9.5 10C9.5 9.72386 9.72386 9.5 10 9.5H14C14.2761 9.5 14.5 9.72386 14.5 10V10.5H9.5V10Z" fill="black"/>
+      <circle cx="12" cy="12" r="10" fill="#4A4A4A"/>
+      <rect x="8" y="11" width="8" height="2" fill="white" rx="1"/>
     </svg>
 );
 
