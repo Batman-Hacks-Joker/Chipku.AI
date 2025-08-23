@@ -273,7 +273,7 @@ const UsageDetails = () => {
 
     const UsageStat = ({ label, value, colorClass }: { label: string, value: number, colorClass: string }) => (
         <div className="bg-card/80 p-4 rounded-xl flex items-center justify-between">
-            <p className="font-semibold">{label}</p>
+            <p className="font-semibold text-foreground">{label}</p>
             <div className={cn("w-16 h-12 flex items-center justify-center rounded-lg font-bold text-lg text-white", colorClass)}>
                 {value}
             </div>
@@ -316,3 +316,5 @@ const UsageDetails = () => {
 
 
 export default DashboardPage;
+
+    
