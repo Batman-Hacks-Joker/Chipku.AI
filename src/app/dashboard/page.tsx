@@ -126,9 +126,6 @@ const DashboardPage: React.FC = () => {
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                       <TemplatesIcon />
                   </div>
-                  <div className="pt-1.5 font-medium text-muted-foreground">
-                    Just upload <br/>don't count
-                  </div>
               </div>
               <div className="relative z-10 mt-auto">
                 <h3 className="font-semibold text-lg text-foreground">Usage</h3>
@@ -152,9 +149,6 @@ const DashboardPage: React.FC = () => {
               <div className="flex items-start gap-4 relative z-10">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                       <LayoutGrid className="text-foreground" />
-                  </div>
-                   <div className="pt-1.5 font-medium text-muted-foreground">
-                    it takes two for <br/>wholesome experience
                   </div>
               </div>
               <div className="relative z-10 mt-auto">
@@ -184,9 +178,6 @@ const DashboardPage: React.FC = () => {
                   <div className="flex items-start gap-4 relative z-10">
                       <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                           <Star className="text-foreground" />
-                      </div>
-                       <div className="pt-1.5 font-medium text-muted-foreground">
-                        its so much for <br/>so less
                       </div>
                   </div>
                   <div className="relative z-10 mt-auto">
