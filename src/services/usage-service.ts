@@ -45,3 +45,4 @@ export const incrementUsageCount = async (userId: string, feature: keyof Omit<Us
     console.error(`Failed to increment ${feature} count for user ${userId}:`, error);
   }
 };
+{/**hi */}

@@ -309,7 +309,7 @@ const UsageDetails = () => {
     return (
         <Card className="relative mt-8 font-headline bg-card/50 overflow-hidden">
             {counts.isPremium && (
-                <div className="absolute top-2 right-2 text-6xl opacity-20 -z-0 animate-float">
+                <div className="absolute top-2 right-2 text-9xl opacity-20 -z-0 animate-float">
                     🤩
                 </div>
             )}
@@ -347,3 +347,4 @@ const UsageDetails = () => {
 
 
 export default DashboardPage;
+{/**hi */}
