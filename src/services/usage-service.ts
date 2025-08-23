@@ -1,3 +1,4 @@
+
 import { rtdb } from '@/lib/firebase';
 import { ref, get, set, update, increment } from 'firebase/database';
 import type { UsageCounts } from '@/context/UsageContext';
@@ -6,6 +7,7 @@ const initialCounts: Omit<UsageCounts, 'uploads'> = {
   correlations: 0,
   chipkuMeter: 0,
   askAI: 0,
+  isPremium: false,
 };
 
 // Gets usage counts for a user from Realtime Database
@@ -25,7 +27,7 @@ export const getUsageCounts = async (userId: string): Promise<Omit<UsageCounts, 
 };
 
 // Increments a specific feature count for a user in Realtime Database
-export const incrementUsageCount = async (userId: string, feature: keyof Omit<UsageCounts, 'uploads'>) => {
+export const incrementUsageCount = async (userId: string, feature: keyof Omit<UsageCounts, 'uploads' | 'isPremium'>) => {
   const userRef = ref(rtdb, `userUsage/${userId}`);
   
   try {
@@ -43,4 +45,3 @@ export const incrementUsageCount = async (userId: string, feature: keyof Omit<Us
     console.error(`Failed to increment ${feature} count for user ${userId}:`, error);
   }
 };
-{/**hi */}

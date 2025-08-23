@@ -10,11 +10,12 @@ export interface UsageCounts {
     correlations: number;
     chipkuMeter: number;
     askAI: number;
+    isPremium: boolean;
 }
 
 interface UsageContextType {
   counts: UsageCounts;
-  incrementCount: (feature: keyof UsageCounts) => void;
+  incrementCount: (feature: keyof Omit<UsageCounts, 'isPremium'>) => void;
   isLoading: boolean;
 }
 
@@ -28,6 +29,7 @@ export const UsageProvider = ({ children }: { children: ReactNode }) => {
     correlations: 0,
     chipkuMeter: 0,
     askAI: 0,
+    isPremium: false,
   });
 
   useEffect(() => {
@@ -47,6 +49,7 @@ export const UsageProvider = ({ children }: { children: ReactNode }) => {
                 correlations: 0,
                 chipkuMeter: 0,
                 askAI: 0,
+                isPremium: false,
             }));
             setIsLoading(false);
         }
@@ -54,7 +57,7 @@ export const UsageProvider = ({ children }: { children: ReactNode }) => {
     fetchCounts();
   }, [user]);
 
-  const incrementCount = useCallback((feature: keyof UsageCounts) => {
+  const incrementCount = useCallback((feature: keyof Omit<UsageCounts, 'isPremium'>) => {
     setCounts(prevCounts => ({
         ...prevCounts,
         [feature]: prevCounts[feature] + 1,
@@ -80,4 +83,3 @@ export const useUsage = () => {
   }
   return context;
 };
-{/*hi*/}

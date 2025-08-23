@@ -295,7 +295,7 @@ const UsageDetails = () => {
                     </div>
                     <div className="space-y-2">
                         <h3 className="flex items-center gap-2 text-lg font-semibold text-muted-foreground"><Trophy className="w-5 h-5" /> Status</h3>
-                        <p><strong>Premium User:</strong> Not Yet</p>
+                        <p><strong>Premium User:</strong> {counts.isPremium ? "Yes, I am Chipku GOD 👏" : "No, I don't want to pay 😒"}</p>
                     </div>
                 </div>
                 <div className="mt-6">
