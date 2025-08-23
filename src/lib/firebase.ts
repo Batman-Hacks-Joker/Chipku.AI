@@ -1,6 +1,6 @@
 
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { getAuth, connectAuthEmulator } from 'firebase/auth';
 
 const firebaseConfig = {
   projectId: "chatter-insights-oki29",
@@ -12,14 +12,16 @@ const firebaseConfig = {
   messagingSenderId: "705505813131"
 };
 
-// When running locally, override authDomain to use localhost
-if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-    firebaseConfig.authDomain = 'localhost';
-}
-{/**hi */}
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
+
+// When running locally, connect to the local Auth Emulator
+if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+    // The default port for the Auth Emulator is 9099
+    connectAuthEmulator(auth, "http://127.0.0.1:9099", { disableWarnings: true });
+}
+
 
 export { app, auth };
