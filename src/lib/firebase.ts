@@ -1,6 +1,6 @@
 
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getAuth, connectAuthEmulator } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   projectId: "chatter-insights-oki29",
@@ -16,12 +16,5 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
-
-// When running locally, connect to the local Auth Emulator
-if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-    // The default port for the Auth Emulator is 9099
-    connectAuthEmulator(auth, "http://127.0.0.1:9099", { disableWarnings: true });
-}
-
 
 export { app, auth };
