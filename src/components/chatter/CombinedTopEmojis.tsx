@@ -145,7 +145,6 @@ const EmojiCanvas = ({
 
     const { width, height } = containerRef.current.getBoundingClientRect();
     const maxCount = Math.max(...emojisData.map((e) => e.totalCount), 1);
-{/* hi */}
     setEmojis(
       emojisData.map((e, i) => {
         const size = 30 + (e.totalCount / maxCount) * 80;
@@ -303,3 +302,5 @@ export function CombinedTopEmojis({
     </Card>
   );
 }
+
+    

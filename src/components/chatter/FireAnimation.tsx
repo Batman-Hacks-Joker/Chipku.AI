@@ -24,7 +24,6 @@ const FireAnimation: React.FC<FireAnimationProps> = ({ onComplete }) => {
     });
 
     setEmojis(fireEmojis);
-{/* hi */}
     const maxDuration = 0.5 + 0.5 + 0.2; // delay + duration + buffer
     const timer = setTimeout(onComplete, maxDuration * 1000);
     return () => clearTimeout(timer);
@@ -64,3 +63,5 @@ const FireAnimation: React.FC<FireAnimationProps> = ({ onComplete }) => {
 };
 
 export default FireAnimation;
+
+    

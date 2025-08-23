@@ -83,7 +83,7 @@
     @apply bg-background text-foreground;
   }
 }
-/* hi*/ 
+
 @keyframes float {
   0% {
     transform: translateY(0px);
@@ -110,3 +110,5 @@
 		background-position: 0% 50%;
 	}
 }
+
+    

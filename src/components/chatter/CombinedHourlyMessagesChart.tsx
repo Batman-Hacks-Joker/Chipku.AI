@@ -13,7 +13,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import type { ChatMessage } from '@/lib/types';
-{/* hi*/ }
+
 interface CombinedHourlyMessagesChartProps {
   messages1: ChatMessage[];
   messages2: ChatMessage[];
@@ -74,3 +74,5 @@ const CombinedHourlyMessagesChart: React.FC<CombinedHourlyMessagesChartProps> = 
 };
 
 export default CombinedHourlyMessagesChart;
+
+    

@@ -20,7 +20,7 @@ interface HourlyMessagesChartProps {
   messages: ChatMessage[];
   users: string[];
 }
-{/* hi */}
+
 const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
         const filteredPayload = payload.filter((p: any) => p.value > 0);
@@ -174,3 +174,5 @@ export function HourlyMessagesChart({ messages, users: allUsers }: HourlyMessage
     </>
   );
 }
+
+    

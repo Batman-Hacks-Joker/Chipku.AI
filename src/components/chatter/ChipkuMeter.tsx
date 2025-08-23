@@ -99,8 +99,6 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   };
 
 
-  const staggeredDelay = result && result.balloons > 0 ? 5 / result.balloons : 0;
-
   const analyzeButton = (
       <button
         onClick={handleAnalyzeClick}
@@ -195,4 +193,5 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
     </Card>
   );
 }
-{/*hi */}
+
+    

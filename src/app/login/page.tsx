@@ -129,7 +129,6 @@ const LoginPage: React.FC = () => {
             animation: emoji-rotation 8s steps(1, end) infinite;
           }
         `}</style>
-{/**hi */}
         <div className="relative w-full max-w-md">
           {/* WRAPPER */}
           <div className="running-emoji-wrapper">
@@ -221,3 +220,5 @@ const LoginPage: React.FC = () => {
 };
 
 export default LoginPage;
+
+    

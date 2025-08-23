@@ -149,7 +149,7 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
         colorMap,
     };
   }, [messages1, messages2, chatName1, chatName2]);
-  {/* hi */}
+  
   const renderLegend = () => {
     return (
       <div className="flex justify-center mt-4 text-xs gap-x-8">
@@ -216,3 +216,5 @@ const CombinedWeeklyActivityChart: React.FC<CombinedWeeklyActivityChartProps> = 
 };
 
 export default CombinedWeeklyActivityChart;
+
+    

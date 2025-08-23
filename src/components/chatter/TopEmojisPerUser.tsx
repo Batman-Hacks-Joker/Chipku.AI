@@ -27,7 +27,7 @@ interface EmojiData {
   name: string;
   value: number;
 }
-{/* hi */}
+
 interface UserEmojiData {
   user: string;
   emojiData: EmojiData[];
@@ -134,3 +134,5 @@ export function TopEmojisPerUser({ messages, users }: TopEmojisPerUserProps) {
     </Card>
   );
 }
+
+    
