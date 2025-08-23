@@ -1,10 +1,11 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 334 50% 86%; /* Soft, muted pink */
+    --background: 334 50% 92%; /* Light Pink from homepage */
     --foreground: 339 71% 14%;
     --card: 334 50% 92%;
     --card-foreground: 339 71% 14%;
@@ -40,7 +41,7 @@
   }
 
   .dark {
-    --background: 284 20% 10%;
+    --background: 284 20% 10%; /* Dark Purple from homepage */
     --foreground: 334 50% 86%;
     --card: 284 20% 12%;
     --card-foreground: 334 50% 86%;

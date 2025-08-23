@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -99,7 +100,7 @@ export default function Home() {
   }
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden bg-background">
       <div className="absolute inset-0 w-full h-full z-0">
         <InteractiveEmojis />
       </div>
