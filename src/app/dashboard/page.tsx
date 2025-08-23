@@ -122,9 +122,13 @@ const DashboardPage: React.FC = () => {
                 "shadow-xl shadow-gray-300/40 dark:shadow-black/30"
             )}>
               <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/80 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out dark:from-white/30"></div>
-              <div className="flex items-start gap-4 relative z-10">
+              <div className="flex justify-between items-start relative z-10">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
-                      <TemplatesIcon />
+                      <SlidersHorizontal className="text-foreground" />
+                  </div>
+                  <div className="text-right font-headline font-bold text-2xl text-black">
+                      <p>Just Upload,</p>
+                      <p>Don't count</p>
                   </div>
               </div>
               <div className="relative z-10 mt-auto">
