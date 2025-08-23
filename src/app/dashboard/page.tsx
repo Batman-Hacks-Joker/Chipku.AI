@@ -1,4 +1,3 @@
-
 "use client";
 import React from 'react';
 import { SlidersHorizontal, LayoutGrid, BookImage, CircleUserRound, LogOut } from 'lucide-react';
@@ -79,7 +78,7 @@ const DashboardPage: React.FC = () => {
 
         <main>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Card 1: Templates */}
+            {/* Card 1: Usage */}
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden",
                 "bg-[#e5e6e4] dark:bg-card text-card-foreground",
@@ -92,14 +91,14 @@ const DashboardPage: React.FC = () => {
                   </div>
               </div>
               <div>
-                <h3 className="font-semibold text-lg text-foreground">Templates</h3>
+                <h3 className="font-semibold text-lg text-foreground">Usage</h3>
               </div>
               <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out">
                 🧐
               </div>
             </div>
 
-            {/* Card 2: Agents */}
+            {/* Card 2: Analysis */}
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden",
                 "bg-[#dbcdf0] dark:bg-card text-card-foreground",
@@ -112,14 +111,14 @@ const DashboardPage: React.FC = () => {
                   </div>
               </div>
               <div>
-                <h3 className="font-semibold text-lg text-foreground">Agents</h3>
+                <h3 className="font-semibold text-lg text-foreground">Analysis</h3>
               </div>
                <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out">
                 😪
               </div>
             </div>
 
-            {/* Card 3: Capabilities */}
+            {/* Card 3: Unlock */}
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden",
                 "bg-[#cbdfbd] dark:bg-card text-card-foreground",
@@ -132,7 +131,7 @@ const DashboardPage: React.FC = () => {
                   </div>
               </div>
               <div>
-                <h3 className="font-semibold text-lg text-foreground">Capabilities</h3>
+                <h3 className="font-semibold text-lg text-foreground">Unlock</h3>
               </div>
               <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out">
                 😚
