@@ -24,37 +24,42 @@ const DraggableBurger: React.FC<DraggableBurgerProps> = ({ fileUploadRef, onDrop
 
     useEffect(() => {
         if (!constraintsRef.current) return;
-
+    
         const calculatePosition = () => {
-            const viewport = constraintsRef.current!;
+            if (!constraintsRef.current) return;
+            const viewport = constraintsRef.current;
             const dropZone = fileUploadRef.current?.getBoundingClientRect();
-
+    
             let x = 0;
             let y = 0;
             let attempts = 0;
             const maxAttempts = 20;
-
+    
             do {
-                x = Math.random() * (viewport.clientWidth - 100); // 100 is burger width
-                y = Math.random() * (viewport.clientHeight - 100); // 100 is burger height
+                x = Math.random() * (viewport.clientWidth - 100);
+                y = Math.random() * (viewport.clientHeight - 100);
                 attempts++;
             } while (
                 dropZone &&
                 x < dropZone.right &&
-                x + 80 > dropZone.left && // 80 is approx burger width
+                x + 80 > dropZone.left &&
                 y < dropZone.bottom &&
-                y + 80 > dropZone.top && // 80 is approx burger height
+                y + 80 > dropZone.top &&
                 attempts < maxAttempts
             );
             
             setInitialPosition({ x, y });
         };
         
-        calculatePosition();
-
+        // Use a timeout to ensure the dropzone has rendered and has dimensions
+        const timer = setTimeout(calculatePosition, 100);
+    
         window.addEventListener('resize', calculatePosition);
-        return () => window.removeEventListener('resize', calculatePosition);
-
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener('resize', calculatePosition);
+        };
+    
     }, [fileUploadRef]);
 
 
