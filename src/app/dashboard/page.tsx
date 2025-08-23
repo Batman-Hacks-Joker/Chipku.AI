@@ -126,7 +126,7 @@ const DashboardPage: React.FC = () => {
                 "border border-black/10 dark:border-white/10",
                 "shadow-xl shadow-green-400/40 dark:shadow-black/30"
             )}>
-               <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/30 to-transparent transform -rotate-45 scale-150 origin-bottom-left"></div>
+               <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/30 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out"></div>
               <div className="flex justify-start relative z-10">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                       <BookImage className="text-foreground" />
