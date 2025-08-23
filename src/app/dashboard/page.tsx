@@ -1,7 +1,7 @@
 
 "use client";
 import React from 'react';
-import { SlidersHorizontal, LayoutGrid, BookImage, CircleUserRound, LogOut, Check } from 'lucide-react';
+import { SlidersHorizontal, LayoutGrid, Star, CircleUserRound, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Footer from '@/components/ui/Footer';
 import FloatingActionButton from '@/components/ui/FloatingActionButton';
@@ -133,18 +133,18 @@ const DashboardPage: React.FC = () => {
               <DialogTrigger asChild>
                 <div className={cn(
                     "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden cursor-pointer",
-                    "bg-gradient-to-br from-green-400 to-green-600",
+                    "bg-gradient-to-br from-green-400 to-green-600 dark:bg-none dark:bg-card",
                     "border border-black/10 dark:border-white/10",
                     "shadow-xl shadow-green-400/40 dark:shadow-black/30"
                 )}>
                   <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/30 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out"></div>
                   <div className="flex justify-start relative z-10">
                       <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
-                          <BookImage className="text-foreground" />
+                          <Star className="text-foreground" />
                       </div>
                   </div>
                   <div className="relative z-10">
-                    <h3 className="font-semibold text-lg text-white">Unlock</h3>
+                    <h3 className="font-semibold text-lg text-foreground dark:text-white">Unlock</h3>
                   </div>
                   <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out z-10">
                     😚
