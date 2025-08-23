@@ -23,43 +23,43 @@ const DraggableBurger: React.FC<DraggableBurgerProps> = ({ fileUploadRef, onDrop
     const [initialPosition, setInitialPosition] = useState<{ x: number, y: number } | null>(null);
 
     useEffect(() => {
-        if (!constraintsRef.current) return;
-    
-        const calculatePosition = () => {
-            if (!constraintsRef.current) return;
-            const viewport = constraintsRef.current;
-            const dropZone = fileUploadRef.current?.getBoundingClientRect();
-    
-            let x = 0;
-            let y = 0;
-            let attempts = 0;
-            const maxAttempts = 20;
-    
-            do {
-                x = Math.random() * (viewport.clientWidth - 100);
-                y = Math.random() * (viewport.clientHeight - 100);
-                attempts++;
-            } while (
-                dropZone &&
-                x < dropZone.right &&
-                x + 80 > dropZone.left &&
-                y < dropZone.bottom &&
-                y + 80 > dropZone.top &&
-                attempts < maxAttempts
-            );
-            
-            setInitialPosition({ x, y });
-        };
+        if (!constraintsRef.current || !fileUploadRef.current) return;
         
-        // Use a timeout to ensure the dropzone has rendered and has dimensions
-        const timer = setTimeout(calculatePosition, 100);
-    
-        window.addEventListener('resize', calculatePosition);
+        const setPosition = () => {
+            if (!constraintsRef.current || !fileUploadRef.current) return;
+
+            const viewport = constraintsRef.current.getBoundingClientRect();
+            const dropZone = fileUploadRef.current.getBoundingClientRect();
+
+            // Default position if something goes wrong
+            let x = viewport.width * 0.25;
+            let y = viewport.height * 0.25;
+
+            // Check for overlap
+            const burgerRight = x + 80; // Approximate width of the burger
+            const burgerBottom = y + 80; // Approximate height of the burger
+
+            if (
+                burgerRight > dropZone.left &&
+                x < dropZone.right &&
+                burgerBottom > dropZone.top &&
+                y < dropZone.bottom
+            ) {
+                // If it overlaps, move it to the top left corner
+                x = 20;
+                y = 20;
+            }
+             setInitialPosition({ x, y });
+        };
+
+        const timer = setTimeout(setPosition, 100);
+        window.addEventListener('resize', setPosition);
+
         return () => {
             clearTimeout(timer);
-            window.removeEventListener('resize', calculatePosition);
+            window.removeEventListener('resize', setPosition);
         };
-    
+
     }, [fileUploadRef]);
 
 
