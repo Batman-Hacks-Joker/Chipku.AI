@@ -277,17 +277,19 @@ const UsageDetails = () => {
                 <CardTitle className="text-3xl font-bold">Usage Details</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                         <h3 className="flex items-center gap-2 text-lg font-semibold text-muted-foreground"><User className="w-5 h-5" /> User Info</h3>
                         <p><strong>Username:</strong> {user?.displayName || 'N/A'}</p>
                         <p><strong>Email:</strong> {user?.email || 'N/A'}</p>
-                        <p><strong>Member Since:</strong> {creationTime}</p>
+                        <p><strong>Created on:</strong> {creationTime}</p>
                     </div>
                     <div className="space-y-2">
                         <h3 className="flex items-center gap-2 text-lg font-semibold text-muted-foreground"><Trophy className="w-5 h-5" /> Status</h3>
                         <p><strong>Premium User:</strong> Not Yet</p>
                     </div>
+                </div>
+                <div className="mt-6">
                     <div className="space-y-2">
                         <h3 className="flex items-center gap-2 text-lg font-semibold text-muted-foreground"><BarChart3 className="w-5 h-5" /> Feature Usage</h3>
                         <p><strong>Uploads:</strong> {counts.uploads}</p>
@@ -303,5 +305,3 @@ const UsageDetails = () => {
 
 
 export default DashboardPage;
-
-    
