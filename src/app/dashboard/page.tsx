@@ -158,7 +158,7 @@ const DashboardPage: React.FC = () => {
                 😪
               </div>
                {showAnalysisButtons && (
-                <div className="absolute inset-0 flex flex-col items-end justify-center pr-4 space-y-3 bg-black/10 backdrop-blur-sm rounded-3xl z-20">
+                <div className="absolute inset-0 flex flex-col items-center justify-center space-y-4 bg-black/10 backdrop-blur-sm rounded-3xl z-20">
                     <Button onClick={() => handleNavigation('/')} className="bg-primary hover:bg-primary/80">Analysis</Button>
                     <Button onClick={() => handleNavigation('/correlation')} className="bg-accent hover:bg-accent/80">Correlation</Button>
                 </div>
@@ -220,3 +220,5 @@ const DashboardPage: React.FC = () => {
 };
 
 export default DashboardPage;
+
+    
