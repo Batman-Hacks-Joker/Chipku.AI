@@ -21,7 +21,7 @@ const TemplatesIcon = () => (
   </svg>
 );
 
-{/**hi */}
+
 const DashboardPage: React.FC = () => {
     const router = useRouter();
     const { user, loading, logout } = useAuth();

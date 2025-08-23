@@ -24,7 +24,7 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
   useEffect(() => {
     setMounted(true);
   }, []);
-{/**hi */}
+
   useEffect(() => {
     const checkMobile = () => {
       if (typeof window !== 'undefined') {

@@ -103,14 +103,6 @@ export default function Home() {
       <div className="absolute inset-0 w-full h-full z-0">
         <InteractiveEmojis />
       </div>
-       {/* Temporary button for dashboard access */}
-       <Button 
-        onClick={() => router.push('/dashboard')}
-        className="fixed top-4 left-4 z-50 bg-green-500 hover:bg-green-600 text-white"
-        variant="secondary"
-      >
-        Go to Dashboard
-      </Button>
       {isProcessing ? (
         <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
           <Loader2 className="h-16 w-16 animate-spin text-primary mb-4" />
