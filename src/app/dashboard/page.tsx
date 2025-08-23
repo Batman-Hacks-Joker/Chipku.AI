@@ -126,7 +126,7 @@ const DashboardPage: React.FC = () => {
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                       <SlidersHorizontal className="text-foreground" />
                   </div>
-                  <div className="text-right font-headline font-bold text-2xl text-black">
+                  <div className="text-right font-headline font-bold text-2xl">
                       <p>Just Upload,</p>
                       <p>Don't count</p>
                   </div>
@@ -154,7 +154,7 @@ const DashboardPage: React.FC = () => {
                     <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                         <LayoutGrid className="text-foreground" />
                     </div>
-                    <div className="text-right font-headline font-bold text-2xl text-black">
+                    <div className="text-right font-headline font-bold text-2xl">
                         <p>it takes ✌️</p>
                         <p>for</p>
                         <p>wholesome experience</p>
@@ -188,7 +188,7 @@ const DashboardPage: React.FC = () => {
                         <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                             <Star className="text-foreground" />
                         </div>
-                        <div className="text-right font-headline font-bold text-2xl text-black">
+                        <div className="text-right font-headline font-bold text-2xl">
                             <p>sooo much,</p>
                             <p>for</p>
                             <p>soooooo less!!</p>
