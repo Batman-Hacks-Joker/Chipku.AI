@@ -20,6 +20,8 @@ import {
   DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog"
+import { useUsage } from '@/context/UsageContext';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 
 const TemplatesIcon = () => (
@@ -39,7 +41,9 @@ const DashboardPage: React.FC = () => {
     const { user, loading, logout } = useAuth();
     const [isDarkMode] = useDarkModeContext();
     const [showAnalysisButtons, setShowAnalysisButtons] = React.useState(false);
+    const [showUsageDetails, setShowUsageDetails] = React.useState(false);
     const analysisCardRef = React.useRef<HTMLDivElement>(null);
+    const usageCardRef = React.useRef<HTMLDivElement>(null);
 
 
     React.useEffect(() => {
@@ -54,8 +58,15 @@ const DashboardPage: React.FC = () => {
     
     const handleAnalysisCardClick = (e: React.MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
+        setShowUsageDetails(false);
         setShowAnalysisButtons(true);
     };
+
+    const handleUsageCardClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation();
+        setShowAnalysisButtons(false);
+        setShowUsageDetails(prev => !prev);
+    }
 
     const handleNavigation = (path: string) => {
         router.push(path);
@@ -66,6 +77,9 @@ const DashboardPage: React.FC = () => {
         const handleClickOutside = (event: MouseEvent) => {
             if (analysisCardRef.current && !analysisCardRef.current.contains(event.target as Node)) {
                 setShowAnalysisButtons(false);
+            }
+             if (usageCardRef.current && !usageCardRef.current.contains(event.target as Node)) {
+                // Don't hide usage details on outside click, only by toggle
             }
         };
 
@@ -115,7 +129,10 @@ const DashboardPage: React.FC = () => {
         <main>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Card 1: Usage */}
-             <div className={cn(
+             <div
+                ref={usageCardRef}
+                onClick={handleUsageCardClick}
+                className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden cursor-pointer transition-shadow duration-300 hover:shadow-2xl",
                 "bg-[#4ea5ff] dark:bg-card text-card-foreground",
                 "border border-black/10 dark:border-white/10",
@@ -126,7 +143,7 @@ const DashboardPage: React.FC = () => {
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                       <SlidersHorizontal className="text-foreground" />
                   </div>
-                  <div className="text-right font-headline font-bold text-2xl">
+                  <div className="text-right font-headline font-bold text-2xl text-foreground">
                       <p>just upload</p>
                       <p>&</p>
                       <p>don't count</p>
@@ -155,7 +172,7 @@ const DashboardPage: React.FC = () => {
                     <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                         <LayoutGrid className="text-foreground" />
                     </div>
-                    <div className="text-right font-headline font-bold text-2xl">
+                    <div className="text-right font-headline font-bold text-2xl text-foreground">
                         <p>it takes ✌️</p>
                         <p>for</p>
                         <p>wholesome experience</p>
@@ -189,7 +206,7 @@ const DashboardPage: React.FC = () => {
                         <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                             <Star className="text-foreground" />
                         </div>
-                        <div className="text-right font-headline font-bold text-2xl">
+                        <div className="text-right font-headline font-bold text-2xl text-foreground">
                             <p>sooo much,</p>
                             <p>for</p>
                             <p>soooooo less!!!</p>
@@ -225,6 +242,7 @@ const DashboardPage: React.FC = () => {
             </Dialog>
 
           </div>
+          {showUsageDetails && <UsageDetails />}
         </main>
       </div>
     </div>
@@ -233,5 +251,40 @@ const DashboardPage: React.FC = () => {
     </>
   );
 };
+
+
+const UsageDetails = () => {
+    const { user } = useAuth();
+    const { counts } = useUsage();
+
+    return (
+        <Card className="mt-8">
+            <CardHeader>
+                <h2 className="text-2xl font-headline font-bold">Usage Details</h2>
+            </CardHeader>
+            <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 className="font-semibold">User Info</h3>
+                        <p><strong>Username:</strong> {user?.displayName || 'N/A'}</p>
+                        <p><strong>Email:</strong> {user?.email || 'N/A'}</p>
+                    </div>
+                    <div>
+                        <h3 className="font-semibold">Status</h3>
+                        <p><strong>Premium User:</strong> Not Yet</p>
+                    </div>
+                    <div>
+                        <h3 className="font-semibold">Feature Usage</h3>
+                        <p><strong>Uploads:</strong> {counts.uploads}</p>
+                        <p><strong>Correlations:</strong> {counts.correlations}</p>
+                        <p><strong>Chipku Meter:</strong> {counts.chipkuMeter}</p>
+                        <p><strong>Ask AI:</strong> {counts.askAI}</p>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
+    );
+}
+
 
 export default DashboardPage;

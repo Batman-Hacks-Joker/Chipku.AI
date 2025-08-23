@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -13,6 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useUsage } from "@/context/UsageContext";
 
 interface AskAIProps {
   messages: ChatMessage[];
@@ -21,6 +23,7 @@ interface AskAIProps {
 
 export function AskAI({ messages, dateRange }: AskAIProps) {
   const { toast } = useToast();
+  const { incrementCount } = useUsage();
   const [prompt, setPrompt] = React.useState("");
   const [result, setResult] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
@@ -45,6 +48,7 @@ export function AskAI({ messages, dateRange }: AskAIProps) {
     
     setIsLoading(true);
     setResult("");
+    incrementCount('askAI');
 
     try {
       const chatData = messages.map(m => `${m.author}: ${m.message}`).join('\n');

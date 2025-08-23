@@ -15,6 +15,7 @@ import { LoadingPage } from "@/components/ui/LoadingPage";
 import FAQ from "@/components/chatter/FAQ";
 import InteractiveEmojis from "@/components/chatter/InteractiveEmojis";
 import { Button } from "@/components/ui/button";
+import { useUsage } from "@/context/UsageContext";
 
 export default function Home() {
   const router = useRouter();
@@ -22,6 +23,7 @@ export default function Home() {
   const [isProcessing, setIsProcessing] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const { setChatData, setFileName } = useChatData();
+  const { incrementCount } = useUsage();
   const [showFaq, setShowFaq] = React.useState(false);
   const [loadingTitle, setLoadingTitle] = React.useState("Analyzing your chat...");
   const [loadingSubtitle, setLoadingSubtitle] = React.useState("Feeling stuck? Retrying might help! 🙃");
@@ -67,6 +69,7 @@ export default function Home() {
 
   const handleFileProcessed = async (content: string, name: string) => {
     setIsProcessing(true);
+    incrementCount('uploads');
     try {
       const data = await parseChatFile(content);
       if (data.messages.length === 0) {

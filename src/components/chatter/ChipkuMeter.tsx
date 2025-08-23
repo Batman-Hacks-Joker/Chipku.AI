@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -11,6 +12,7 @@ import { analyzeRelationshipSentiment, type RelationshipSentimentOutput } from "
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { HeartBalloon } from "@/components/chatter/HeartBalloon";
+import { useUsage } from "@/context/UsageContext";
 
 interface ChipkuMeterProps {
   messages: ChatMessage[];
@@ -25,6 +27,7 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   const [buttonEnabled, setButtonEnabled] = React.useState(true);
   const [lastAnalyzedRange, setLastAnalyzedRange] = React.useState<DateRange | null>(null);
   const initialLoad = React.useRef(true);
+  const { incrementCount } = useUsage();
 
   // Helper: Compare two date ranges
   const isSameDateRange = (a?: DateRange, b?: DateRange) => {
@@ -86,6 +89,7 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   }, [dateRange, result, lastAnalyzedRange]);
 
   const handleAnalyzeClick = () => {
+    incrementCount('chipkuMeter');
     setAnalysisTriggered(true);
   };
 

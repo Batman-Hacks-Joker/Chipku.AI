@@ -21,10 +21,12 @@ import { CombinedActivityHeatmap } from "@/components/chatter/CombinedActivityHe
 import { Button } from "@/components/ui/button";
 import FireAnimation from "@/components/chatter/FireAnimation";
 import { CombinedTopEmojis } from "@/components/chatter/CombinedTopEmojis";
+import { useUsage } from "@/context/UsageContext";
 
 export default function CorrelationPage() {
   const { toast } = useToast();
   const router = useRouter();
+  const { incrementCount } = useUsage();
 
   const [isLoading, setIsLoading] = React.useState(true);
   const [chatData1, setChatData1] = React.useState<ParsedChatData | null>(null);
@@ -131,6 +133,7 @@ export default function CorrelationPage() {
   }
 
   const handleStartCorrelation = () => {
+    incrementCount('correlations');
     setIsAnimating(true);
     setShowFireAnimation(true);
   }

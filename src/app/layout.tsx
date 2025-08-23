@@ -5,6 +5,7 @@ import { ChatDataProvider } from '@/context/ChatDataContext';
 import { DarkModeProvider } from '@/context/DarkModeContext';
 import { ThemeHandler } from '@/components/ThemeHandler';
 import { AuthProvider } from '@/context/AuthContext';
+import { UsageProvider } from '@/context/UsageContext';
 
 export const metadata: Metadata = {
   title: 'Chipku AI by FanatiAK',
@@ -28,9 +29,11 @@ export default function RootLayout({
         <AuthProvider>
           <DarkModeProvider>
             <ThemeHandler>
-              <ChatDataProvider>
-                {children}
-              </ChatDataProvider>
+              <UsageProvider>
+                <ChatDataProvider>
+                  {children}
+                </ChatDataProvider>
+              </UsageProvider>
             </ThemeHandler>
           </DarkModeProvider>
         </AuthProvider>
