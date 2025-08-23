@@ -9,6 +9,8 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { LoadingPage } from '@/components/ui/LoadingPage';
 import { Button } from '@/components/ui/button';
+import { BackgroundBeams } from '@/components/ui/background-beams';
+import { useDarkModeContext } from '@/context/DarkModeContext';
 
 const TemplatesIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -25,6 +27,7 @@ const TemplatesIcon = () => (
 const DashboardPage: React.FC = () => {
     const router = useRouter();
     const { user, loading, logout } = useAuth();
+    const [isDarkMode] = useDarkModeContext();
 
     React.useEffect(() => {
         if (!loading && !user) {
@@ -42,8 +45,9 @@ const DashboardPage: React.FC = () => {
 
   return (
       <>
-    <div className="min-h-screen bg-[#F7F9F9] dark:bg-[#0D0D0D] text-[#0D0D0D] dark:text-[#F7F9F9] font-sans">
-      <div className="max-w-7xl mx-auto px-8 py-12">
+    <div className="min-h-screen bg-[#F3D5E2] dark:bg-black text-[#0D0D0D] dark:text-[#F7F9F9] font-sans relative">
+      {isDarkMode && <BackgroundBeams />}
+      <div className="max-w-7xl mx-auto px-8 py-12 relative z-10">
         
         <header className="flex justify-between items-start mb-16">
           <div>
@@ -69,7 +73,8 @@ const DashboardPage: React.FC = () => {
             {/* Card 1: Templates */}
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
-                "bg-gradient-to-br from-white via-blue-50 to-purple-100 dark:from-gray-800 dark:via-blue-900/20 dark:to-purple-900/20",
+                "bg-gradient-to-br from-white/30 via-blue-50/30 to-purple-100/30 dark:from-gray-800/50 dark:via-blue-900/30 dark:to-purple-900/30",
+                "backdrop-blur-sm",
                 "border border-gray-200/50 dark:border-white/10",
                 "shadow-lg shadow-gray-200/20 dark:shadow-black/20 text-black dark:text-white"
             )}>
@@ -86,7 +91,8 @@ const DashboardPage: React.FC = () => {
             {/* Card 2: Agents */}
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
-                "bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-gray-800 dark:via-gray-900/20 dark:to-gray-900/20",
+                "bg-gradient-to-br from-white/30 via-gray-50/30 to-gray-100/30 dark:from-gray-800/50 dark:via-gray-900/30 dark:to-gray-900/30",
+                 "backdrop-blur-sm",
                 "border border-gray-200/50 dark:border-white/10",
                 "shadow-lg shadow-gray-200/20 dark:shadow-black/20 text-black dark:text-white"
             )}>
@@ -103,7 +109,8 @@ const DashboardPage: React.FC = () => {
             {/* Card 3: Capabilities */}
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
-                "bg-gradient-to-br from-white via-green-50 to-green-100 dark:from-gray-800 dark:via-green-900/20 dark:to-green-900/20",
+                "bg-gradient-to-br from-white/30 via-green-50/30 to-green-100/30 dark:from-gray-800/50 dark:via-green-900/30 dark:to-green-900/30",
+                 "backdrop-blur-sm",
                 "border border-gray-200/50 dark:border-white/10",
                 "shadow-lg shadow-gray-200/20 dark:shadow-black/20 text-black dark:text-white"
             )}>
