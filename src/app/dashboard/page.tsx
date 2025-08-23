@@ -38,6 +38,9 @@ const DashboardPage: React.FC = () => {
     const router = useRouter();
     const { user, loading, logout } = useAuth();
     const [isDarkMode] = useDarkModeContext();
+    const [showAnalysisButtons, setShowAnalysisButtons] = React.useState(false);
+    const analysisCardRef = React.useRef<HTMLDivElement>(null);
+
 
     React.useEffect(() => {
         if (!loading && !user) {
@@ -48,6 +51,29 @@ const DashboardPage: React.FC = () => {
     const handleHomeClick = () => {
         router.push('/');
     };
+    
+    const handleAnalysisCardClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation();
+        setShowAnalysisButtons(true);
+    };
+
+    const handleNavigation = (path: string) => {
+        router.push(path);
+        setShowAnalysisButtons(false);
+    }
+    
+    React.useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (analysisCardRef.current && !analysisCardRef.current.contains(event.target as Node)) {
+                setShowAnalysisButtons(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     if (loading || !user) {
         return <LoadingPage title="Securing the dashboard..." />;
@@ -89,13 +115,13 @@ const DashboardPage: React.FC = () => {
         <main>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Card 1: Usage */}
-            <div className={cn(
-                "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden",
+             <div className={cn(
+                "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden cursor-pointer transition-shadow duration-300 hover:shadow-2xl",
                 "bg-[#e5e6e4] dark:bg-card text-card-foreground",
                 "border border-black/10 dark:border-white/10",
                 "shadow-xl shadow-gray-300/40 dark:shadow-black/30"
             )}>
-              <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/40 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out"></div>
+              <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/80 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out dark:from-white/30"></div>
               <div className="flex justify-start relative z-10">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                       <TemplatesIcon />
@@ -110,13 +136,16 @@ const DashboardPage: React.FC = () => {
             </div>
 
             {/* Card 2: Analysis */}
-            <div className={cn(
-                "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden",
+            <div 
+              ref={analysisCardRef}
+              onClick={handleAnalysisCardClick}
+              className={cn(
+                "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden cursor-pointer transition-shadow duration-300 hover:shadow-2xl",
                 "bg-[#dbcdf0] dark:bg-card text-card-foreground",
                 "border border-black/10 dark:border-white/10",
                 "shadow-xl shadow-purple-200/40 dark:shadow-black/30"
             )}>
-              <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/40 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out"></div>
+              <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/80 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out dark:from-white/30"></div>
               <div className="flex justify-start relative z-10">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                       <LayoutGrid className="text-foreground" />
@@ -128,18 +157,24 @@ const DashboardPage: React.FC = () => {
                <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out z-10">
                 😪
               </div>
+               {showAnalysisButtons && (
+                <div className="absolute inset-0 flex flex-col items-end justify-center pr-4 space-y-3 bg-black/10 backdrop-blur-sm rounded-3xl z-20">
+                    <Button onClick={() => handleNavigation('/')} className="bg-primary hover:bg-primary/80">Analysis</Button>
+                    <Button onClick={() => handleNavigation('/correlation')} className="bg-accent hover:bg-accent/80">Correlation</Button>
+                </div>
+              )}
             </div>
 
             {/* Card 3: Unlock */}
             <Dialog>
               <DialogTrigger asChild>
                 <div className={cn(
-                    "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden cursor-pointer",
-                    "bg-gradient-to-br from-green-400 to-green-600 dark:bg-none dark:bg-card",
+                    "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden cursor-pointer transition-shadow duration-300 hover:shadow-2xl",
+                    "bg-gradient-to-br from-green-400 to-green-600 dark:from-green-700 dark:to-green-900 dark:bg-none dark:bg-card",
                     "border border-black/10 dark:border-white/10",
                     "shadow-xl shadow-green-400/40 dark:shadow-black/30"
                 )}>
-                  <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/40 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out"></div>
+                  <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/80 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out dark:from-white/30"></div>
                   <div className="flex justify-start relative z-10">
                       <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                           <Star className="text-foreground" />
