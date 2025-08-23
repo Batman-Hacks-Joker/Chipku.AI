@@ -132,7 +132,7 @@ const DashboardPage: React.FC = () => {
                   </div>
               </div>
               <div className="relative z-10 mt-auto">
-                <h3 className="font-semibold text-lg text-foreground">Usage</h3>
+                <h3 className="font-headline font-semibold text-lg text-foreground">Usage</h3>
               </div>
               <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out z-10">
                 🧐
@@ -161,7 +161,7 @@ const DashboardPage: React.FC = () => {
                     </div>
                 </div>
               <div className="relative z-10 mt-auto">
-                <h3 className="font-semibold text-lg text-foreground">Analysis</h3>
+                <h3 className="font-headline font-semibold text-lg text-foreground">Analysis</h3>
               </div>
                <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out z-10">
                 😪
@@ -195,7 +195,7 @@ const DashboardPage: React.FC = () => {
                         </div>
                     </div>
                   <div className="relative z-10 mt-auto">
-                    <h3 className="font-semibold text-lg">Unlock</h3>
+                    <h3 className="font-headline font-semibold text-lg text-foreground">Unlock</h3>
                   </div>
                   <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out z-10">
                     😚
