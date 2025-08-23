@@ -159,8 +159,8 @@ const DashboardPage: React.FC = () => {
               </div>
                {showAnalysisButtons && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center space-y-4 bg-black/10 backdrop-blur-sm rounded-3xl z-20">
-                    <Button onClick={() => handleNavigation('/')} className="bg-[#FF6B6B] hover:bg-[#FF6B6B]/90 text-white">Analysis</Button>
-                    <Button onClick={() => handleNavigation('/correlation')} className="bg-[#C084FC] hover:bg-[#C084FC]/90 text-white">Correlation</Button>
+                    <Button onClick={() => handleNavigation('/')} className="bg-[#FFC0CB] hover:bg-[#FFC0CB]/90 text-black">Analysis</Button>
+                    <Button onClick={() => handleNavigation('/correlation')} className="bg-[#D8BFD8] hover:bg-[#D8BFD8]/90 text-black">Correlation</Button>
                 </div>
               )}
             </div>
@@ -170,16 +170,21 @@ const DashboardPage: React.FC = () => {
               <DialogTrigger asChild>
                 <div className={cn(
                     "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden cursor-pointer transition-shadow duration-300 hover:shadow-2xl",
-                    "bg-gradient-to-br from-green-400 to-green-600 dark:from-green-700 dark:to-green-900 dark:bg-none dark:bg-card",
+                    "bg-[#fcd5ce] dark:bg-card text-card-foreground",
                     "border border-black/10 dark:border-white/10",
-                    "shadow-xl shadow-green-400/40 dark:shadow-black/30"
+                    "shadow-xl shadow-orange-200/40 dark:shadow-black/30"
                 )}>
                   <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/80 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out dark:from-white/30"></div>
-                  <div className="flex items-start gap-4 relative z-10">
-                      <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
-                          <Star className="text-foreground" />
-                      </div>
-                  </div>
+                    <div className="flex justify-between items-start relative z-10">
+                        <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
+                            <Star className="text-foreground" />
+                        </div>
+                        <div className="text-right font-headline font-bold text-2xl text-black">
+                            <p>sooo much,</p>
+                            <p>for</p>
+                            <p>soooooo less!!</p>
+                        </div>
+                    </div>
                   <div className="relative z-10 mt-auto">
                     <h3 className="font-semibold text-lg">Unlock</h3>
                   </div>
