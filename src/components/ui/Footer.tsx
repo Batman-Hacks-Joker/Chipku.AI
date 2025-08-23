@@ -4,19 +4,18 @@ interface FooterProps {
   showEmojiCarousel?: boolean;
 }
 
-const CatIcon = () => (
-    <svg width="24" height="24" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M73.38,157.85c-11.36,0-20.58-9.22-20.58-20.58v-23.7c0-11.36,9.22-20.58,20.58-20.58h53.24c11.36,0,20.58,9.22,20.58,20.58v23.7c0,11.36-9.22,20.58-20.58,20.58H73.38Z" fill="currentColor" />
-        <path d="M79.56,92.51c-6,0-10.86-4.87-10.86-10.87V48.55c0-6,4.87-10.87,10.86-10.87h0c6,0,10.87,4.87,10.87,10.87V81.65c0,6-4.87,10.87-10.87,10.87h0Z" fill="currentColor" />
-        <path d="M120.44,92.51c6,0,10.86-4.87,10.86-10.87V48.55c0-6-4.87-10.87-10.86-10.87h0c-6,0-10.87,4.87-10.87,10.87V81.65c0,6,4.87,10.87,10.87,10.87h0Z" fill="currentColor" />
-        <path d="M99.9,157.85c-11.36,0-20.58-9.22-20.58-20.58v-23.7c0-11.36,9.22-20.58,20.58-20.58h.2c11.36,0,20.58,9.22,20.58,20.58v23.7c0,11.36-9.22,20.58-20.58,20.58h-.2Z" fill="white" />
-        <circle cx="99.5" cy="116.5" r="7.5" fill="black" />
-        <circle cx="85.5" cy="132.5" r="5.5" fill="black" />
-        <circle cx="113.5" cy="132.5" r="5.5" fill="black" />
-        <path d="M147.2,126.71s-2.48,15.65-21.73,15.65" stroke="currentColor" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M147.2,148.6s-2.48-15.65-21.73-15.65" stroke="currentColor" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
+const BunnyIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 200 200" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M136.72,83.42c0,32.33-26.17,58.5-58.5,58.5H78.22c-32.33,0-58.5-26.17-58.5-58.5V75.6C19.72,43.27,45.89,17.1,78.22,17.1h0c32.33,0,58.5,26.17,58.5,58.5V83.42Z"/>
+        <path d="M68.22,17.1c32.33,0,58.5,26.17,58.5,58.5V17.1H68.22Z" fill="#8C8C8C"/>
+        <path d="M68.22,17.1c-32.33,0-58.5,26.17-58.5,58.5V17.1H68.22Z" fill="#8C8C8C"/>
+        <circle cx="78.22" cy="79.52" r="14.62" fill="#fff"/>
+        <path d="M70.53,75.02c-4.9,0-8.88-3.98-8.88-8.88,0-4.9,3.98-8.88,8.88-8.88h0c4.9,0,8.88,3.98,8.88,8.88,0,4.9-3.98,8.88-8.88,8.88h0Z" fill="#000"/>
+        <path d="M85.91,75.02c-4.9,0-8.88-3.98-8.88-8.88,0-4.9,3.98-8.88,8.88-8.88h0c4.9,0,8.88,3.98,8.88,8.88,0,4.9-3.98,8.88-8.88,8.88h0Z" fill="#000"/>
+        <path d="M78.22,88.4c-4.9,0-8.88-3.98-8.88-8.88h17.76c0,4.9-3.98,8.88-8.88,8.88Z" fill="#000"/>
     </svg>
 );
+
 
 const Footer: React.FC<FooterProps> = ({ showEmojiCarousel = true }) => {
   const emojis = '😊🥴💋🤤😂👍😳😠🥳🔥🥺🧡😉🥱🤓😈😍🤪🥰😘😎👻😏😡💖👀😤😆✨🤭🧐😪';
@@ -33,7 +32,7 @@ const Footer: React.FC<FooterProps> = ({ showEmojiCarousel = true }) => {
             rel="noopener noreferrer"
             className="github-link"
           >
-            <CatIcon />
+            <BunnyIcon />
           </a>
           <span className="developer-credit">- by <a href="https://github.com/Batman-Hacks-Joker" target="_blank" rel="noopener noreferrer">FanatiAK</a> or (<a href="https://github.com/Batman-Hacks-Joker" target="_blank" rel="noopener noreferrer">github.com/Batman-Hacks-Joker</a>)</span>
         </div>
