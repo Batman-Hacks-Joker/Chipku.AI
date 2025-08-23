@@ -55,16 +55,16 @@ const DashboardPage: React.FC = () => {
           </div>
           <div className="flex items-center gap-4">
             {user.photoURL ? (
-              <img src={user.photoURL} alt="User" className="w-12 h-12 rounded-full" />
+              <img src={user.photoURL} alt="User" className="w-12 h-12 rounded-full shadow-lg" />
             ) : (
-              <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center shadow-lg">
                 <CircleUserRound size={24} className="text-gray-500" />
               </div>
             )}
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" onClick={logout} className="text-2xl hover:bg-destructive/20">
+                  <Button variant="ghost" size="icon" onClick={logout} className="text-2xl hover:bg-destructive/20 shadow-lg">
                     ⛔
                   </Button>
                 </TooltipTrigger>
@@ -83,7 +83,7 @@ const DashboardPage: React.FC = () => {
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden",
                 "bg-[#e5e6e4] dark:bg-card text-card-foreground",
                 "border border-black/10 dark:border-white/10",
-                "shadow-lg shadow-gray-300/40 dark:shadow-black/30"
+                "shadow-xl shadow-gray-300/40 dark:shadow-black/30"
             )}>
               <div className="flex justify-start">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
@@ -103,7 +103,7 @@ const DashboardPage: React.FC = () => {
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden",
                 "bg-[#dbcdf0] dark:bg-card text-card-foreground",
                 "border border-black/10 dark:border-white/10",
-                "shadow-lg shadow-purple-200/40 dark:shadow-black/30"
+                "shadow-xl shadow-purple-200/40 dark:shadow-black/30"
             )}>
               <div className="flex justify-start">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
@@ -123,7 +123,7 @@ const DashboardPage: React.FC = () => {
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden",
                 "bg-[#cbdfbd] dark:bg-card text-card-foreground",
                 "border border-black/10 dark:border-white/10",
-                "shadow-lg shadow-green-200/40 dark:shadow-black/30"
+                "shadow-xl shadow-green-200/40 dark:shadow-black/30"
             )}>
               <div className="flex justify-start">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
