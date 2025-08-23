@@ -175,7 +175,7 @@ const DonatePage: React.FC = () => {
                             <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> 2 trials of Correlation feature</li>
                             <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> Personally Chat with me</li>
                         </ul>
-                        <Button className={`mt-8 text-white rounded-full px-8 py-3 transition-all duration-300 bg-[#A629D3] hover:bg-[#C21E56] dark:bg-pink-500 dark:hover:bg-pink-600`}>Start for free</Button>
+                        <Button className={`mt-8 text-white rounded-full px-8 py-3 transition-all duration-300 bg-[#A629D3] hover:bg-[#C21E56] dark:bg-pink-500 dark:hover:bg-pink-600`}>Start Now</Button>
                     </div>
 
                     {/* Premium Tier */}
@@ -188,7 +188,7 @@ const DonatePage: React.FC = () => {
                             <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> Get Shoutout for being generous</li>
                             <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> 1 to 1 video call, so I could say Thankyou 😊</li>
                         </ul>
-                        <Button className={`mt-8 text-white rounded-full px-8 py-3 transition-all duration-300 bg-[#A629D3] hover:bg-[#C21E56] dark:bg-pink-500 dark:hover:bg-pink-600`}>Download the app</Button>
+                        <Button className={`mt-8 text-white rounded-full px-8 py-3 transition-all duration-300 bg-[#A629D3] hover:bg-[#C21E56] dark:bg-pink-500 dark:hover:bg-pink-600`}>Unlock Now</Button>
                     </div>
                 </div>
 

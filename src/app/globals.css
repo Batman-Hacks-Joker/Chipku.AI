@@ -1,11 +1,10 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 334 50% 92%; /* Soft Pink from donate page */
+    --background: 334 50% 86%; /* Soft, muted pink */
     --foreground: 339 71% 14%;
     --card: 334 50% 92%;
     --card-foreground: 339 71% 14%;
@@ -41,7 +40,7 @@
   }
 
   .dark {
-    --background: 284 20% 10%; /* Dark Purple from homepage */
+    --background: 284 20% 10%;
     --foreground: 334 50% 86%;
     --card: 284 20% 12%;
     --card-foreground: 334 50% 86%;
@@ -84,7 +83,7 @@
     @apply bg-background text-foreground;
   }
 }
- 
+/* hi*/ 
 @keyframes float {
   0% {
     transform: translateY(0px);

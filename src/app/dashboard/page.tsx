@@ -28,7 +28,7 @@ const TemplatesIcon = () => (
     <path d="M17 8H19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     <path d="M5 16H11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     <path d="M15 16H19" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M13 5L14.0607 7.06066L16.1213 8.12132L14.0607 9.18198L13 11.2426L11.9393 9.18198L9.87868 8.12132L11.9393 7.06066L13 5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" strokeLinejoin="round"/>
+    <path d="M13 5L14.0607 7.06066L16.1213 8.12132L14.0607 9.18198L13 11.2426L11.9393 9.18198L9.87868 8.12132L11.9393 7.06066L13 5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/>
     <path d="M15 13L16.0607 15.0607L18.1213 16.1213L16.0607 17.182L15 19.2426L13.9393 17.182L11.8787 16.1213L13.9393 15.0607L15 13Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
@@ -86,8 +86,8 @@ const DashboardPage: React.FC = () => {
         
         <header className="flex justify-between items-start mb-16">
           <div>
-            <h1 className="text-5xl font-headline font-bold text-primary">Hello {user.displayName?.split(' ')[0] || 'Abo'}!</h1>
-            <p className="text-4xl text-muted-foreground mt-2">How can I help you today?</p>
+            <h1 className="text-5xl font-headline font-bold text-primary">Namaste🙏 {user.displayName?.split(' ')[0] || 'Abo'}!</h1>
+            <p className="text-4xl text-muted-foreground mt-2"></p>
           </div>
           <div className="flex items-center gap-4">
             {user.photoURL ? (
@@ -117,7 +117,7 @@ const DashboardPage: React.FC = () => {
             {/* Card 1: Usage */}
              <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden cursor-pointer transition-shadow duration-300 hover:shadow-2xl",
-                "bg-[#e5e6e4] dark:bg-card text-card-foreground",
+                "bg-[#4ea5ff] dark:bg-card text-card-foreground",
                 "border border-black/10 dark:border-white/10",
                 "shadow-xl shadow-gray-300/40 dark:shadow-black/30"
             )}>
@@ -127,15 +127,16 @@ const DashboardPage: React.FC = () => {
                       <SlidersHorizontal className="text-foreground" />
                   </div>
                   <div className="text-right font-headline font-bold text-2xl">
-                      <p>Just Upload,</p>
-                      <p>Don't count</p>
+                      <p>just upload</p>
+                      <p>&</p>
+                      <p>don't count</p>
                   </div>
               </div>
               <div className="relative z-10 mt-auto">
                 <h3 className="font-headline font-semibold text-lg text-foreground">Usage</h3>
               </div>
               <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out z-10">
-                🧐
+                🤨
               </div>
             </div>
 
@@ -145,7 +146,7 @@ const DashboardPage: React.FC = () => {
               onClick={handleAnalysisCardClick}
               className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden cursor-pointer transition-shadow duration-300 hover:shadow-2xl",
-                "bg-[#dbcdf0] dark:bg-card text-card-foreground",
+                "bg-[#ff6978] dark:bg-card text-card-foreground",
                 "border border-black/10 dark:border-white/10",
                 "shadow-xl shadow-purple-200/40 dark:shadow-black/30"
             )}>
@@ -164,12 +165,12 @@ const DashboardPage: React.FC = () => {
                 <h3 className="font-headline font-semibold text-lg text-foreground">Analysis</h3>
               </div>
                <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out z-10">
-                😪
+                🧐
               </div>
                {showAnalysisButtons && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center space-y-4 bg-black/10 backdrop-blur-sm rounded-3xl z-20">
-                    <Button onClick={() => handleNavigation('/')} className="bg-[#FFC0CB] hover:bg-[#FFC0CB]/90 text-black">Analysis</Button>
-                    <Button onClick={() => handleNavigation('/correlation')} className="bg-[#D8BFD8] hover:bg-[#D8BFD8]/90 text-black">Correlation</Button>
+                    <Button onClick={() => handleNavigation('/')} className="bg-[#ef8b9c] hover:bg-[#d43d56]/90 text-black">Analysis</Button>
+                    <Button onClick={() => handleNavigation('/correlation')} className="bg-[#f08ff0] hover:bg-[#d647d6]/90 text-black">Correlation</Button>
                 </div>
               )}
             </div>
@@ -179,7 +180,7 @@ const DashboardPage: React.FC = () => {
               <DialogTrigger asChild>
                 <div className={cn(
                     "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden cursor-pointer transition-shadow duration-300 hover:shadow-2xl",
-                    "bg-[#fcd5ce] dark:bg-card text-card-foreground",
+                    "bg-[#ffd166] dark:bg-card text-card-foreground",
                     "border border-black/10 dark:border-white/10",
                     "shadow-xl shadow-orange-200/40 dark:shadow-black/30"
                 )}>
@@ -191,14 +192,14 @@ const DashboardPage: React.FC = () => {
                         <div className="text-right font-headline font-bold text-2xl">
                             <p>sooo much,</p>
                             <p>for</p>
-                            <p>soooooo less!!</p>
+                            <p>soooooo less!!!</p>
                         </div>
                     </div>
                   <div className="relative z-10 mt-auto">
                     <h3 className="font-headline font-semibold text-lg text-foreground">Unlock</h3>
                   </div>
                   <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out z-10">
-                    😚
+                    🤑
                   </div>
                 </div>
               </DialogTrigger>
