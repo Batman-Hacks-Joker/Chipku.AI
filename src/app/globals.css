@@ -5,7 +5,7 @@
 
 @layer base {
   :root {
-    --background: 334 50% 92%; /* Light Pink from homepage */
+    --background: 334 50% 92%; /* Soft Pink from donate page */
     --foreground: 339 71% 14%;
     --card: 334 50% 92%;
     --card-foreground: 339 71% 14%;
@@ -84,7 +84,7 @@
     @apply bg-background text-foreground;
   }
 }
-/* hi*/ 
+ 
 @keyframes float {
   0% {
     transform: translateY(0px);
@@ -111,4 +111,3 @@
 		background-position: 0% 50%;
 	}
 }
-/* hi*/
