@@ -44,7 +44,7 @@ const DashboardPage: React.FC = () => {
 
   return (
       <>
-    <div className="min-h-screen bg-background text-foreground font-sans relative">
+    <div className="min-h-screen bg-[#F3D5E2] dark:bg-gray-900 text-foreground font-sans relative">
       <div className="max-w-7xl mx-auto px-8 py-12 relative z-10">
         
         <header className="flex justify-between items-start mb-16">
@@ -73,7 +73,7 @@ const DashboardPage: React.FC = () => {
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
                 "bg-[#e5e6e4] dark:bg-card text-card-foreground",
                 "border border-gray-200/50 dark:border-white/10",
-                "shadow-lg shadow-gray-200/20 dark:shadow-black/20"
+                "shadow-lg shadow-gray-300/40 dark:shadow-black/30"
             )}>
               <div className="flex justify-start">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
@@ -90,7 +90,7 @@ const DashboardPage: React.FC = () => {
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
                 "bg-[#dbcdf0] dark:bg-card text-card-foreground",
                 "border border-gray-200/50 dark:border-white/10",
-                "shadow-lg shadow-gray-200/20 dark:shadow-black/20"
+                "shadow-lg shadow-purple-200/40 dark:shadow-black/30"
             )}>
               <div className="flex justify-start">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
@@ -107,7 +107,7 @@ const DashboardPage: React.FC = () => {
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
                 "bg-[#cbdfbd] dark:bg-card text-card-foreground",
                 "border border-gray-200/50 dark:border-white/10",
-                "shadow-lg shadow-gray-200/20 dark:shadow-black/20"
+                "shadow-lg shadow-green-200/40 dark:shadow-black/30"
             )}>
               <div className="flex justify-start">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
