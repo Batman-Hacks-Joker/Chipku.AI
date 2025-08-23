@@ -1,7 +1,7 @@
 
 "use client";
 import React from 'react';
-import { SlidersHorizontal, LayoutGrid, Star, CircleUserRound, Check, Loader2 } from 'lucide-react';
+import { SlidersHorizontal, LayoutGrid, Star, CircleUserRound, Check, Loader2, User, Trophy, BarChart3 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Footer from '@/components/ui/Footer';
 import FloatingActionButton from '@/components/ui/FloatingActionButton';
@@ -21,7 +21,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog"
 import { useUsage } from '@/context/UsageContext';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 
 const TemplatesIcon = () => (
@@ -264,25 +264,32 @@ const UsageDetails = () => {
             </div>
         );
     }
+    
+    const creationTime = user?.metadata.creationTime 
+        ? new Date(user.metadata.creationTime).toLocaleDateString('en-US', {
+            year: 'numeric', month: 'long', day: 'numeric'
+          }) 
+        : 'N/A';
 
     return (
-        <Card className="mt-8">
+        <Card className="mt-8 font-headline bg-card/50">
             <CardHeader>
-                <h2 className="text-2xl font-headline font-bold">Usage Details</h2>
+                <CardTitle className="text-3xl font-bold">Usage Details</CardTitle>
             </CardHeader>
-            <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <h3 className="font-semibold">User Info</h3>
+            <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="space-y-2">
+                        <h3 className="flex items-center gap-2 text-lg font-semibold text-muted-foreground"><User className="w-5 h-5" /> User Info</h3>
                         <p><strong>Username:</strong> {user?.displayName || 'N/A'}</p>
                         <p><strong>Email:</strong> {user?.email || 'N/A'}</p>
+                        <p><strong>Member Since:</strong> {creationTime}</p>
                     </div>
-                    <div>
-                        <h3 className="font-semibold">Status</h3>
+                    <div className="space-y-2">
+                        <h3 className="flex items-center gap-2 text-lg font-semibold text-muted-foreground"><Trophy className="w-5 h-5" /> Status</h3>
                         <p><strong>Premium User:</strong> Not Yet</p>
                     </div>
-                    <div>
-                        <h3 className="font-semibold">Feature Usage</h3>
+                    <div className="space-y-2">
+                        <h3 className="flex items-center gap-2 text-lg font-semibold text-muted-foreground"><BarChart3 className="w-5 h-5" /> Feature Usage</h3>
                         <p><strong>Uploads:</strong> {counts.uploads}</p>
                         <p><strong>Correlations:</strong> {counts.correlations}</p>
                         <p><strong>Chipku Meter:</strong> {counts.chipkuMeter}</p>
@@ -296,4 +303,5 @@ const UsageDetails = () => {
 
 
 export default DashboardPage;
-{/**hi */}
+
+    
