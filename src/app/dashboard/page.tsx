@@ -10,6 +10,8 @@ import { useAuth } from '@/context/AuthContext';
 import { LoadingPage } from '@/components/ui/LoadingPage';
 import { Button } from '@/components/ui/button';
 import { useDarkModeContext } from '@/context/DarkModeContext';
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+
 
 const TemplatesIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,9 +62,18 @@ const DashboardPage: React.FC = () => {
                 <CircleUserRound size={24} className="text-gray-500" />
               </div>
             )}
-            <Button variant="ghost" size="icon" onClick={logout} className="text-muted-foreground hover:text-destructive">
-              <LogOut size={24} />
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon" onClick={logout} className="text-2xl hover:bg-destructive/20">
+                    ⛔
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Logout</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </header>
 
