@@ -122,15 +122,15 @@ const DashboardPage: React.FC = () => {
                 "shadow-xl shadow-gray-300/40 dark:shadow-black/30"
             )}>
               <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/80 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out dark:from-white/30"></div>
-              <div className="absolute top-4 right-4 text-sm font-medium text-muted-foreground">
-                Just upload don't count
-              </div>
-              <div className="flex justify-start relative z-10">
+              <div className="flex items-start gap-4 relative z-10">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                       <TemplatesIcon />
                   </div>
+                  <div className="pt-1.5 font-medium text-muted-foreground">
+                    Just upload <br/>don't count
+                  </div>
               </div>
-              <div className="relative z-10">
+              <div className="relative z-10 mt-auto">
                 <h3 className="font-semibold text-lg text-foreground">Usage</h3>
               </div>
               <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out z-10">
@@ -149,15 +149,15 @@ const DashboardPage: React.FC = () => {
                 "shadow-xl shadow-purple-200/40 dark:shadow-black/30"
             )}>
               <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/80 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out dark:from-white/30"></div>
-              <div className="absolute top-4 right-4 text-sm font-medium text-muted-foreground">
-                it takes two for wholesome experience
-              </div>
-              <div className="flex justify-start relative z-10">
+              <div className="flex items-start gap-4 relative z-10">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                       <LayoutGrid className="text-foreground" />
                   </div>
+                   <div className="pt-1.5 font-medium text-muted-foreground">
+                    it takes two for <br/>wholesome experience
+                  </div>
               </div>
-              <div className="relative z-10">
+              <div className="relative z-10 mt-auto">
                 <h3 className="font-semibold text-lg text-foreground">Analysis</h3>
               </div>
                <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out z-10">
@@ -181,15 +181,15 @@ const DashboardPage: React.FC = () => {
                     "shadow-xl shadow-green-400/40 dark:shadow-black/30"
                 )}>
                   <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/80 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out dark:from-white/30"></div>
-                  <div className="absolute top-4 right-4 text-sm font-medium text-muted-foreground">
-                    its so much for so less
-                  </div>
-                  <div className="flex justify-start relative z-10">
+                  <div className="flex items-start gap-4 relative z-10">
                       <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                           <Star className="text-foreground" />
                       </div>
+                       <div className="pt-1.5 font-medium text-muted-foreground">
+                        its so much for <br/>so less
+                      </div>
                   </div>
-                  <div className="relative z-10">
+                  <div className="relative z-10 mt-auto">
                     <h3 className="font-semibold text-lg">Unlock</h3>
                   </div>
                   <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out z-10">
