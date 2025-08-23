@@ -44,7 +44,7 @@ const DashboardPage: React.FC = () => {
 
   return (
       <>
-    <div className="min-h-screen bg-background text-foreground font-sans relative">
+    <div className="min-h-screen bg-[#F3D5E2] dark:bg-[#111111] text-foreground font-sans relative">
       <div className="max-w-7xl mx-auto px-8 py-12 relative z-10">
         
         <header className="flex justify-between items-start mb-16">
@@ -71,13 +71,12 @@ const DashboardPage: React.FC = () => {
             {/* Card 1: Templates */}
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
-                "bg-gradient-to-br from-white/30 via-blue-50/30 to-purple-100/30 dark:from-gray-800/50 dark:via-blue-900/30 dark:to-purple-900/30",
-                "backdrop-blur-sm",
+                "bg-card text-card-foreground",
                 "border border-gray-200/50 dark:border-white/10",
-                "shadow-lg shadow-gray-200/20 dark:shadow-black/20 text-black dark:text-white"
+                "shadow-lg shadow-gray-200/20 dark:shadow-black/20"
             )}>
               <div className="flex justify-start">
-                  <div className="p-2.5 bg-white/60 dark:bg-black/20 rounded-xl shadow-sm">
+                  <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                       <TemplatesIcon />
                   </div>
               </div>
@@ -89,13 +88,12 @@ const DashboardPage: React.FC = () => {
             {/* Card 2: Agents */}
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
-                "bg-gradient-to-br from-white/30 via-gray-50/30 to-gray-100/30 dark:from-gray-800/50 dark:via-gray-900/30 dark:to-gray-900/30",
-                 "backdrop-blur-sm",
+                "bg-card text-card-foreground",
                 "border border-gray-200/50 dark:border-white/10",
-                "shadow-lg shadow-gray-200/20 dark:shadow-black/20 text-black dark:text-white"
+                "shadow-lg shadow-gray-200/20 dark:shadow-black/20"
             )}>
               <div className="flex justify-start">
-                  <div className="p-2.5 bg-white/60 dark:bg-black/20 rounded-xl shadow-sm">
+                  <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                       <LayoutGrid className="text-foreground" />
                   </div>
               </div>
@@ -107,13 +105,12 @@ const DashboardPage: React.FC = () => {
             {/* Card 3: Capabilities */}
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group",
-                "bg-gradient-to-br from-white/30 via-green-50/30 to-green-100/30 dark:from-gray-800/50 dark:via-green-900/30 dark:to-green-900/30",
-                 "backdrop-blur-sm",
+                "bg-card text-card-foreground",
                 "border border-gray-200/50 dark:border-white/10",
-                "shadow-lg shadow-gray-200/20 dark:shadow-black/20 text-black dark:text-white"
+                "shadow-lg shadow-gray-200/20 dark:shadow-black/20"
             )}>
               <div className="flex justify-start">
-                  <div className="p-2.5 bg-white/60 dark:bg-black/20 rounded-xl shadow-sm">
+                  <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                       <BookImage className="text-foreground" />
                   </div>
               </div>
