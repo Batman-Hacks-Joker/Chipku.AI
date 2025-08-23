@@ -271,6 +271,15 @@ const UsageDetails = () => {
           }) 
         : 'N/A';
 
+    const UsageStat = ({ label, value, colorClass }: { label: string, value: number, colorClass: string }) => (
+        <div className="bg-card/80 p-4 rounded-xl flex items-center justify-between">
+            <p className="font-semibold">{label}</p>
+            <div className={cn("w-16 h-12 flex items-center justify-center rounded-lg font-bold text-lg text-white", colorClass)}>
+                {value}
+            </div>
+        </div>
+    );
+
     return (
         <Card className="mt-8 font-headline bg-card/50">
             <CardHeader>
@@ -290,12 +299,14 @@ const UsageDetails = () => {
                     </div>
                 </div>
                 <div className="mt-6">
-                    <div className="space-y-2">
+                    <div className="space-y-4">
                         <h3 className="flex items-center gap-2 text-lg font-semibold text-muted-foreground"><BarChart3 className="w-5 h-5" /> Feature Usage</h3>
-                        <p><strong>Uploads:</strong> {counts.uploads}</p>
-                        <p><strong>Correlations:</strong> {counts.correlations}</p>
-                        <p><strong>Chipku Meter:</strong> {counts.chipkuMeter}</p>
-                        <p><strong>Ask AI:</strong> {counts.askAI}</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <UsageStat label="Uploads" value={counts.uploads} colorClass="bg-blue-400" />
+                            <UsageStat label="Correlations" value={counts.correlations} colorClass="bg-purple-400" />
+                            <UsageStat label="Chipku Meter" value={counts.chipkuMeter} colorClass="bg-pink-400" />
+                            <UsageStat label="Ask AI" value={counts.askAI} colorClass="bg-green-400" />
+                        </div>
                     </div>
                 </div>
             </CardContent>
