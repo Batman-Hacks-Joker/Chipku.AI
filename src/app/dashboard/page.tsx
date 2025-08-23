@@ -1,7 +1,7 @@
 
 "use client";
 import React from 'react';
-import { SlidersHorizontal, LayoutGrid, Star, CircleUserRound, Check, Loader2, User, Trophy, BarChart3 } from 'lucide-react';
+import { SlidersHorizontal, LayoutGrid, Star, CircleUserRound, Check, Loader2, User, BarChart3 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Footer from '@/components/ui/Footer';
 import FloatingActionButton from '@/components/ui/FloatingActionButton';
@@ -281,11 +281,16 @@ const UsageDetails = () => {
     );
 
     return (
-        <Card className="mt-8 font-headline bg-card/50">
+        <Card className="relative mt-8 font-headline bg-card/50 overflow-hidden">
+            {counts.isPremium && (
+                <div className="absolute top-2 right-2 text-6xl opacity-20 -z-0 animate-float">
+                    🤩
+                </div>
+            )}
             <CardHeader>
                 <CardTitle className="text-3xl font-bold">Usage Details</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-6 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                         <h3 className="flex items-center gap-2 text-lg font-semibold text-muted-foreground"><User className="w-5 h-5" /> User Info</h3>
@@ -294,7 +299,7 @@ const UsageDetails = () => {
                         <p><strong>Created on:</strong> {creationTime}</p>
                     </div>
                     <div className="space-y-2">
-                        <h3 className="flex items-center gap-2 text-lg font-semibold text-muted-foreground"><Trophy className="w-5 h-5" /> Status</h3>
+                        <h3 className="flex items-center gap-2 text-lg font-semibold text-muted-foreground"><Star className="w-5 h-5" /> Status</h3>
                         <p><strong>Premium User:</strong> {counts.isPremium ? "Yes, I am Chipku GOD 👏" : "No, I don't want to pay 😒"}</p>
                     </div>
                 </div>
