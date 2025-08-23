@@ -1,3 +1,4 @@
+
 "use client";
 import React from 'react';
 import { SlidersHorizontal, LayoutGrid, BookImage, CircleUserRound, LogOut } from 'lucide-react';
@@ -55,18 +56,18 @@ const DashboardPage: React.FC = () => {
           </div>
           <div className="flex items-center gap-4">
             {user.photoURL ? (
-              <img src={user.photoURL} alt="User" className="w-12 h-12 rounded-full shadow-lg" />
+              <img src={user.photoURL} alt="User" className="w-12 h-12 rounded-full shadow-xl" />
             ) : (
-              <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center shadow-lg">
+              <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center shadow-xl">
                 <CircleUserRound size={24} className="text-gray-500" />
               </div>
             )}
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" onClick={logout} className="text-2xl hover:bg-destructive/20 shadow-lg">
+                  <button onClick={logout} className="text-4xl transition-transform transform hover:scale-110 focus:outline-none" style={{ textShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
                     ⛔
-                  </Button>
+                  </button>
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Logout</p>
