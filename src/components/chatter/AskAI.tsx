@@ -15,6 +15,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useUsage } from "@/context/UsageContext";
+import { useAuth } from "@/context/AuthContext";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
 interface AskAIProps {
   messages: ChatMessage[];
@@ -23,12 +25,21 @@ interface AskAIProps {
 
 export function AskAI({ messages, dateRange }: AskAIProps) {
   const { toast } = useToast();
+  const { user } = useAuth();
   const { incrementCount } = useUsage();
   const [prompt, setPrompt] = React.useState("");
   const [result, setResult] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleGenerate = async () => {
+    if (!user) {
+      toast({
+        variant: "destructive",
+        title: "Authentication Required",
+        description: "Please log in to use the Ask AI feature.",
+      });
+      return;
+    }
     if (!prompt.trim()) {
       toast({
         variant: "destructive",
@@ -87,6 +98,23 @@ export function AskAI({ messages, dateRange }: AskAIProps) {
     }
   };
 
+  const generateButton = (
+    <Button 
+      onClick={handleGenerate} 
+      disabled={isLoading || !user} 
+      className="w-full bg-accent hover:bg-accent/80"
+    >
+      {isLoading ? (
+        <>
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Generating...
+        </>
+      ) : (
+        "Generate"
+      )}
+    </Button>
+  );
+
   return (
     <Card className="sticky top-6">
       <CardHeader>
@@ -105,16 +133,20 @@ export function AskAI({ messages, dateRange }: AskAIProps) {
           onChange={(e) => setPrompt(e.target.value)}
           rows={4}
         />
-        <Button onClick={handleGenerate} disabled={isLoading} className="w-full bg-accent hover:bg-accent/80">
-          {isLoading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Generating...
-            </>
-          ) : (
-            "Generate"
-          )}
-        </Button>
+        {!user ? (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="w-full">{generateButton}</div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Please log in to use Ask AI</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        ) : (
+          generateButton
+        )}
         {result && (
           <Card className="bg-background/50 p-4 max-h-60 overflow-y-auto">
             <p className="text-sm whitespace-pre-wrap">{result}</p>

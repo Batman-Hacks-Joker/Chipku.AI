@@ -22,10 +22,13 @@ import { Button } from "@/components/ui/button";
 import FireAnimation from "@/components/chatter/FireAnimation";
 import { CombinedTopEmojis } from "@/components/chatter/CombinedTopEmojis";
 import { useUsage } from "@/context/UsageContext";
+import { useAuth } from "@/context/AuthContext";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 export default function CorrelationPage() {
   const { toast } = useToast();
   const router = useRouter();
+  const { user } = useAuth();
   const { incrementCount } = useUsage();
 
   const [isLoading, setIsLoading] = React.useState(true);
@@ -133,6 +136,14 @@ export default function CorrelationPage() {
   }
 
   const handleStartCorrelation = () => {
+    if (!user) {
+      toast({
+        variant: "destructive",
+        title: "Authentication Required",
+        description: "Please log in to use the Correlation feature.",
+      });
+      return;
+    }
     incrementCount('correlations');
     setIsAnimating(true);
     setShowFireAnimation(true);
@@ -164,6 +175,16 @@ export default function CorrelationPage() {
     if (!fileName) return "";
     return fileName.replace('WhatsApp Chat with ', '').replace('.txt', '');
   };
+
+  const startCorrelationButton = (
+      <Button 
+          onClick={handleStartCorrelation} 
+          disabled={isAnimating || !user}
+          className="text-5xl bg-transparent hover:bg-transparent border-none p-4"
+      >
+          🔥
+      </Button>
+  );
 
 
   return (
@@ -412,26 +433,31 @@ export default function CorrelationPage() {
             
             {chatData1 && chatData2 && !showCorrelation && (
               <div className="flex justify-center mt-8">
-                <Button 
-                    onClick={handleStartCorrelation} 
-                    disabled={isAnimating}
-                    className="text-5xl bg-transparent hover:bg-transparent border-none p-4"
-                >
-                    🔥
-                </Button>
+                {!user ? (
+                   <TooltipProvider>
+                      <Tooltip>
+                          <TooltipTrigger asChild>
+                              <div>{startCorrelationButton}</div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                              <p>Please log in to start Correlation</p>
+                          </TooltipContent>
+                      </Tooltip>
+                   </TooltipProvider>
+                ) : (
+                    startCorrelationButton
+                )}
               </div>
             )}
           </>
         )}
       </div>
       <div className="relative z-10">
-        <Footer showEmojiCarousel={false} />
+        <Footer />
       </div>
       <FloatingActionButton onHomeClick={handleHomeClick} />
     </div>
     </>
   );
 }
-    
-
     

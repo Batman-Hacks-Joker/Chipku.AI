@@ -1,7 +1,7 @@
 
 "use client";
 import React from 'react';
-import { SlidersHorizontal, LayoutGrid, Star, CircleUserRound, Check } from 'lucide-react';
+import { SlidersHorizontal, LayoutGrid, Star, CircleUserRound, Check, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Footer from '@/components/ui/Footer';
 import FloatingActionButton from '@/components/ui/FloatingActionButton';
@@ -255,7 +255,15 @@ const DashboardPage: React.FC = () => {
 
 const UsageDetails = () => {
     const { user } = useAuth();
-    const { counts } = useUsage();
+    const { counts, isLoading } = useUsage();
+
+    if (isLoading) {
+        return (
+            <div className="mt-8 flex justify-center items-center h-48">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        );
+    }
 
     return (
         <Card className="mt-8">

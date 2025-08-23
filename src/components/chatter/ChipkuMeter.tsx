@@ -13,6 +13,8 @@ import { analyzeRelationshipSentiment, type RelationshipSentimentOutput } from "
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { HeartBalloon } from "@/components/chatter/HeartBalloon";
 import { useUsage } from "@/context/UsageContext";
+import { useAuth } from "@/context/AuthContext";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
 interface ChipkuMeterProps {
   messages: ChatMessage[];
@@ -20,6 +22,8 @@ interface ChipkuMeterProps {
 }
 
 export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
+  const { user } = useAuth();
+  const { incrementCount } = useUsage();
   const [result, setResult] = React.useState<RelationshipSentimentOutput | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -27,7 +31,7 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   const [buttonEnabled, setButtonEnabled] = React.useState(true);
   const [lastAnalyzedRange, setLastAnalyzedRange] = React.useState<DateRange | null>(null);
   const initialLoad = React.useRef(true);
-  const { incrementCount } = useUsage();
+  
 
   // Helper: Compare two date ranges
   const isSameDateRange = (a?: DateRange, b?: DateRange) => {
@@ -89,12 +93,23 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   }, [dateRange, result, lastAnalyzedRange]);
 
   const handleAnalyzeClick = () => {
+    if (!user) return; // Should be disabled, but as a safeguard
     incrementCount('chipkuMeter');
     setAnalysisTriggered(true);
   };
 
 
   const staggeredDelay = result && result.balloons > 0 ? 5 / result.balloons : 0;
+
+  const analyzeButton = (
+      <button
+        onClick={handleAnalyzeClick}
+        className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed mb-4"
+        disabled={!user || !buttonEnabled || isLoading}
+      >
+        Analyze Relationship Strength
+      </button>
+  );
 
   return (
     <Card className="overflow-hidden">
@@ -109,14 +124,20 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
       </CardHeader>
       <CardContent className="relative flex-grow flex flex-col items-center justify-center min-h-[200px] w-full p-4">
         {(!result || buttonEnabled) && (
- <button
- onClick={handleAnalyzeClick}
- className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed mb-4"
- disabled={!buttonEnabled || isLoading}
- >
- Analyze Relationship Strength
- </button>
-
+            !user ? (
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                           <div>{analyzeButton}</div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                           <p>Please log in to use the Chipku Meter</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+            ) : (
+                analyzeButton
+            )
         )}
 
         {isLoading && (
