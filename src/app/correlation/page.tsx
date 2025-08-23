@@ -29,7 +29,9 @@ export default function CorrelationPage() {
   const { toast } = useToast();
   const router = useRouter();
   const { user } = useAuth();
-  const { incrementCount } = useUsage();
+  const { incrementCount, hasReachedLimit } = useUsage();
+  const correlationLimitReached = hasReachedLimit('correlations');
+
 
   const [isLoading, setIsLoading] = React.useState(true);
   const [chatData1, setChatData1] = React.useState<ParsedChatData | null>(null);
@@ -144,6 +146,14 @@ export default function CorrelationPage() {
       });
       return;
     }
+     if (correlationLimitReached) {
+      toast({
+        variant: "destructive",
+        title: "Usage Limit Reached",
+        description: "You have reached your limit for the Correlation feature.",
+      });
+      return;
+    }
     incrementCount('correlations');
     setIsAnimating(true);
     setShowFireAnimation(true);
@@ -179,7 +189,7 @@ export default function CorrelationPage() {
   const startCorrelationButton = (
       <Button 
           onClick={handleStartCorrelation} 
-          disabled={isAnimating || !user}
+          disabled={isAnimating || !user || correlationLimitReached}
           className="text-5xl bg-transparent hover:bg-transparent border-none p-4"
       >
           🔥
@@ -384,7 +394,6 @@ export default function CorrelationPage() {
             </Card>
           </div>
         )}
-{/* hi */}
         {!showCorrelation && (
           <>
             <div className={cn(showCorrelation && "hidden")}>
@@ -441,6 +450,17 @@ export default function CorrelationPage() {
                           </TooltipTrigger>
                           <TooltipContent>
                               <p>Please log in to start Correlation</p>
+                          </TooltipContent>
+                      </Tooltip>
+                   </TooltipProvider>
+                ) : correlationLimitReached ? (
+                   <TooltipProvider>
+                      <Tooltip>
+                          <TooltipTrigger asChild>
+                              <div>{startCorrelationButton}</div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                              <p>Correlation limit reached</p>
                           </TooltipContent>
                       </Tooltip>
                    </TooltipProvider>

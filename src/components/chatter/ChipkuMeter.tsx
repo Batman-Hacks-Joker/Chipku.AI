@@ -15,6 +15,7 @@ import { HeartBalloon } from "@/components/chatter/HeartBalloon";
 import { useUsage } from "@/context/UsageContext";
 import { useAuth } from "@/context/AuthContext";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import { useToast } from "@/hooks/use-toast";
 
 interface ChipkuMeterProps {
   messages: ChatMessage[];
@@ -23,7 +24,9 @@ interface ChipkuMeterProps {
 
 export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   const { user } = useAuth();
-  const { incrementCount } = useUsage();
+  const { toast } = useToast();
+  const { incrementCount, hasReachedLimit } = useUsage();
+  const chipkuMeterLimitReached = hasReachedLimit('chipkuMeter');
   const [result, setResult] = React.useState<RelationshipSentimentOutput | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -93,7 +96,15 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   }, [dateRange, result, lastAnalyzedRange]);
 
   const handleAnalyzeClick = () => {
-    if (!user) return; // Should be disabled, but as a safeguard
+    if (!user) return;
+    if (chipkuMeterLimitReached) {
+      toast({
+        variant: "destructive",
+        title: "Usage Limit Reached",
+        description: "You have reached your limit for the Chipku Meter feature.",
+      });
+      return;
+    }
     incrementCount('chipkuMeter');
     setAnalysisTriggered(true);
   };
@@ -105,7 +116,7 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
       <button
         onClick={handleAnalyzeClick}
         className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed mb-4"
-        disabled={!user || !buttonEnabled || isLoading}
+        disabled={!user || !buttonEnabled || isLoading || chipkuMeterLimitReached}
       >
         Analyze Relationship Strength
       </button>
@@ -132,6 +143,17 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
                         </TooltipTrigger>
                         <TooltipContent>
                            <p>Please log in to use the Chipku Meter</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+            ) : chipkuMeterLimitReached ? (
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                           <div>{analyzeButton}</div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                           <p>Chipku Meter limit reached</p>
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>
@@ -195,4 +217,3 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
     </Card>
   );
 }
-{/*hi */}

@@ -26,7 +26,8 @@ interface AskAIProps {
 export function AskAI({ messages, dateRange }: AskAIProps) {
   const { toast } = useToast();
   const { user } = useAuth();
-  const { incrementCount } = useUsage();
+  const { incrementCount, hasReachedLimit } = useUsage();
+  const askAILimitReached = hasReachedLimit('askAI');
   const [prompt, setPrompt] = React.useState("");
   const [result, setResult] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
@@ -37,6 +38,14 @@ export function AskAI({ messages, dateRange }: AskAIProps) {
         variant: "destructive",
         title: "Authentication Required",
         description: "Please log in to use the Ask AI feature.",
+      });
+      return;
+    }
+     if (askAILimitReached) {
+      toast({
+        variant: "destructive",
+        title: "Usage Limit Reached",
+        description: "You have reached your limit for the Ask AI feature.",
       });
       return;
     }
@@ -101,7 +110,7 @@ export function AskAI({ messages, dateRange }: AskAIProps) {
   const generateButton = (
     <Button 
       onClick={handleGenerate} 
-      disabled={isLoading || !user} 
+      disabled={isLoading || !user || askAILimitReached} 
       className="w-full bg-accent hover:bg-accent/80"
     >
       {isLoading ? (
@@ -144,6 +153,17 @@ export function AskAI({ messages, dateRange }: AskAIProps) {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
+        ) : askAILimitReached ? (
+           <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="w-full">{generateButton}</div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Ask AI limit reached</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         ) : (
           generateButton
         )}
@@ -156,4 +176,3 @@ export function AskAI({ messages, dateRange }: AskAIProps) {
     </Card>
   );
 }
-{/**hi */}

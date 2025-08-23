@@ -1,7 +1,7 @@
 
 "use client";
 import React from 'react';
-import { SlidersHorizontal, LayoutGrid, Star, CircleUserRound, Check, Loader2, User, BarChart3 } from 'lucide-react';
+import { SlidersHorizontal, LayoutGrid, Star, CircleUserRound, Check, Loader2, User, BarChart3, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Footer from '@/components/ui/Footer';
 import FloatingActionButton from '@/components/ui/FloatingActionButton';
@@ -20,7 +20,7 @@ import {
   DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog"
-import { useUsage } from '@/context/UsageContext';
+import { useUsage, USAGE_LIMITS } from '@/context/UsageContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 
@@ -255,7 +255,7 @@ const DashboardPage: React.FC = () => {
 
 const UsageDetails = () => {
     const { user } = useAuth();
-    const { counts, isLoading } = useUsage();
+    const { counts, isLoading, hasReachedLimit } = useUsage();
 
     if (isLoading) {
         return (
@@ -271,14 +271,40 @@ const UsageDetails = () => {
           }) 
         : 'N/A';
 
-    const UsageStat = ({ label, value, colorClass }: { label: string, value: number, colorClass: string }) => (
-        <div className="bg-card/80 dark:bg-card/50 p-4 rounded-xl flex items-center justify-between">
-            <p className="font-semibold text-foreground">{label}</p>
-            <div className={cn("w-16 h-12 flex items-center justify-center rounded-lg font-bold text-lg text-white dark:bg-black", colorClass)}>
-                {value}
+    const UsageStat = ({ label, value, limit }: { label: string; value: number; limit?: number }) => {
+        const isLimited = limit !== undefined;
+        const reachedLimit = isLimited && value >= limit;
+
+        return (
+            <div className="bg-card/80 dark:bg-card/50 p-4 rounded-xl flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                    {reachedLimit && (
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <AlertCircle className="w-5 h-5 text-destructive" />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Usage limit reached</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    )}
+                    <p className="font-semibold text-foreground">{label}</p>
+                </div>
+                <div className={cn("w-20 h-12 flex items-center justify-center rounded-lg font-bold text-lg text-white dark:bg-black", 
+                    label === "Uploads" ? "bg-blue-400" :
+                    label === "Correlations" ? "bg-purple-400" :
+                    label === "Chipku Meter" ? "bg-pink-400" :
+                    "bg-green-400"
+                    )}>
+                   {isLimited ? `${value}/${limit}` : value}
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
+
+    const limits = counts.isPremium ? USAGE_LIMITS.premium : USAGE_LIMITS.nonPremium;
 
     return (
         <Card className="relative mt-8 font-headline bg-card/50 overflow-hidden">
@@ -307,10 +333,10 @@ const UsageDetails = () => {
                     <div className="space-y-4">
                         <h3 className="flex items-center gap-2 text-lg font-semibold text-muted-foreground"><BarChart3 className="w-5 h-5" /> Feature Usage</h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <UsageStat label="Uploads" value={counts.uploads} colorClass="bg-blue-400" />
-                            <UsageStat label="Correlations" value={counts.correlations} colorClass="bg-purple-400" />
-                            <UsageStat label="Chipku Meter" value={counts.chipkuMeter} colorClass="bg-pink-400" />
-                            <UsageStat label="Ask AI" value={counts.askAI} colorClass="bg-green-400" />
+                            <UsageStat label="Uploads" value={counts.uploads} />
+                            <UsageStat label="Correlations" value={counts.correlations} limit={limits.correlations} />
+                            <UsageStat label="Chipku Meter" value={counts.chipkuMeter} limit={limits.chipkuMeter} />
+                            <UsageStat label="Ask AI" value={counts.askAI} limit={limits.askAI} />
                         </div>
                     </div>
                 </div>
