@@ -122,19 +122,20 @@ const DashboardPage: React.FC = () => {
             {/* Card 3: Unlock */}
             <div className={cn(
                 "relative p-6 rounded-3xl flex flex-col justify-between h-56 group overflow-hidden",
-                "bg-[#cbdfbd] dark:bg-card text-card-foreground",
+                "bg-gradient-to-br from-green-400 to-green-600",
                 "border border-black/10 dark:border-white/10",
-                "shadow-xl shadow-green-200/40 dark:shadow-black/30"
+                "shadow-xl shadow-green-400/40 dark:shadow-black/30"
             )}>
-              <div className="flex justify-start">
+               <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/30 to-transparent transform -rotate-45 scale-150 origin-bottom-left"></div>
+              <div className="flex justify-start relative z-10">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                       <BookImage className="text-foreground" />
                   </div>
               </div>
-              <div>
-                <h3 className="font-semibold text-lg text-foreground">Unlock</h3>
+              <div className="relative z-10">
+                <h3 className="font-semibold text-lg text-white">Unlock</h3>
               </div>
-              <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out">
+              <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out z-10">
                 😚
               </div>
             </div>
