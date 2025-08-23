@@ -11,6 +11,11 @@ const firebaseConfig = {
   measurementId: "",
   messagingSenderId: "705505813131"
 };
+
+// When running locally, override authDomain to use localhost
+if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+    firebaseConfig.authDomain = 'localhost';
+}
 {/**hi */}
 
 // Initialize Firebase
