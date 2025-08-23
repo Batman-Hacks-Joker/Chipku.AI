@@ -122,6 +122,9 @@ const DashboardPage: React.FC = () => {
                 "shadow-xl shadow-gray-300/40 dark:shadow-black/30"
             )}>
               <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/80 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out dark:from-white/30"></div>
+              <div className="absolute top-4 right-4 text-right text-xs font-medium text-muted-foreground">
+                Just upload don't count
+              </div>
               <div className="flex justify-start relative z-10">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                       <TemplatesIcon />
@@ -146,6 +149,9 @@ const DashboardPage: React.FC = () => {
                 "shadow-xl shadow-purple-200/40 dark:shadow-black/30"
             )}>
               <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/80 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out dark:from-white/30"></div>
+              <div className="absolute top-4 right-4 text-right text-xs font-medium text-muted-foreground">
+                it takes two for wholesome experience
+              </div>
               <div className="flex justify-start relative z-10">
                   <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                       <LayoutGrid className="text-foreground" />
@@ -159,8 +165,8 @@ const DashboardPage: React.FC = () => {
               </div>
                {showAnalysisButtons && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center space-y-4 bg-black/10 backdrop-blur-sm rounded-3xl z-20">
-                    <Button onClick={() => handleNavigation('/')} className="bg-[#C21E56] hover:bg-[#C21E56]/90 text-white">Analysis</Button>
-                    <Button onClick={() => handleNavigation('/correlation')} className="bg-[#A629D3] hover:bg-[#A629D3]/90 text-white">Correlation</Button>
+                    <Button onClick={() => handleNavigation('/')} className="bg-[#FF6B6B] hover:bg-[#FF6B6B]/90 text-white">Analysis</Button>
+                    <Button onClick={() => handleNavigation('/correlation')} className="bg-[#C084FC] hover:bg-[#C084FC]/90 text-white">Correlation</Button>
                 </div>
               )}
             </div>
@@ -175,13 +181,16 @@ const DashboardPage: React.FC = () => {
                     "shadow-xl shadow-green-400/40 dark:shadow-black/30"
                 )}>
                   <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/80 to-transparent transform -rotate-45 scale-150 origin-bottom-left opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out dark:from-white/30"></div>
+                  <div className="absolute top-4 right-4 text-right text-xs font-medium text-muted-foreground">
+                    its so much for so less
+                  </div>
                   <div className="flex justify-start relative z-10">
                       <div className="p-2.5 bg-white/80 dark:bg-black/30 rounded-xl shadow-md">
                           <Star className="text-foreground" />
                       </div>
                   </div>
                   <div className="relative z-10">
-                    <h3 className="font-semibold text-lg text-foreground">Unlock</h3>
+                    <h3 className="font-semibold text-lg">Unlock</h3>
                   </div>
                   <div className="absolute bottom-4 right-4 text-5xl opacity-0 translate-x-12 group-hover:opacity-100 group-hover:translate-x-0 group-hover:rotate-[-360deg] transition-all duration-500 ease-in-out z-10">
                     😚
