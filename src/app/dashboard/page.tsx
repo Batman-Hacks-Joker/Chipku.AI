@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { LoadingPage } from '@/components/ui/LoadingPage';
 import { Button } from '@/components/ui/button';
-import { BackgroundBeams } from '@/components/ui/background-beams';
 import { useDarkModeContext } from '@/context/DarkModeContext';
 
 const TemplatesIcon = () => (
@@ -45,8 +44,7 @@ const DashboardPage: React.FC = () => {
 
   return (
       <>
-    <div className="min-h-screen bg-[#F3D5E2] dark:bg-black text-[#0D0D0D] dark:text-[#F7F9F9] font-sans relative">
-      {isDarkMode && <BackgroundBeams />}
+    <div className="min-h-screen bg-[#F3D5E2] dark:bg-[#141118] text-[#0D0D0D] dark:text-[#F7F9F9] font-sans relative">
       <div className="max-w-7xl mx-auto px-8 py-12 relative z-10">
         
         <header className="flex justify-between items-start mb-16">
