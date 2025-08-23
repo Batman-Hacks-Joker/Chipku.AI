@@ -44,13 +44,13 @@ const DashboardPage: React.FC = () => {
 
   return (
       <>
-    <div className="min-h-screen bg-[#F3D5E2] dark:bg-[#141118] text-[#0D0D0D] dark:text-[#F7F9F9] font-sans relative">
+    <div className="min-h-screen bg-background text-foreground font-sans relative">
       <div className="max-w-7xl mx-auto px-8 py-12 relative z-10">
         
         <header className="flex justify-between items-start mb-16">
           <div>
-            <h1 className="text-5xl font-bold text-[#0A2E29] dark:text-[#E0F2F1]">Hello {user.displayName?.split(' ')[0] || 'Abo'}!</h1>
-            <p className="text-4xl text-[#6B8280] dark:text-[#9CBDBA] mt-2">How can I help you today?</p>
+            <h1 className="text-5xl font-bold text-foreground">Hello {user.displayName?.split(' ')[0] || 'Abo'}!</h1>
+            <p className="text-4xl text-muted-foreground mt-2">How can I help you today?</p>
           </div>
           <div className="flex items-center gap-4">
             {user.photoURL ? (
@@ -82,7 +82,7 @@ const DashboardPage: React.FC = () => {
                   </div>
               </div>
               <div>
-                <h3 className="font-semibold text-lg text-[#0A2E29] dark:text-[#E0F2F1]">Templates</h3>
+                <h3 className="font-semibold text-lg text-foreground">Templates</h3>
               </div>
             </div>
 
@@ -96,11 +96,11 @@ const DashboardPage: React.FC = () => {
             )}>
               <div className="flex justify-start">
                   <div className="p-2.5 bg-white/60 dark:bg-black/20 rounded-xl shadow-sm">
-                      <LayoutGrid className="text-[#0D0D0D] dark:text-[#F7F9F9]" />
+                      <LayoutGrid className="text-foreground" />
                   </div>
               </div>
               <div>
-                <h3 className="font-semibold text-lg text-[#0A2E29] dark:text-[#E0F2F1]">Agents</h3>
+                <h3 className="font-semibold text-lg text-foreground">Agents</h3>
               </div>
             </div>
 
@@ -114,11 +114,11 @@ const DashboardPage: React.FC = () => {
             )}>
               <div className="flex justify-start">
                   <div className="p-2.5 bg-white/60 dark:bg-black/20 rounded-xl shadow-sm">
-                      <BookImage className="text-[#0D0D0D] dark:text-[#F7F9F9]" />
+                      <BookImage className="text-foreground" />
                   </div>
               </div>
               <div>
-                <h3 className="font-semibold text-lg text-[#0A2E29] dark:text-[#E0F2F1]">Capabilities</h3>
+                <h3 className="font-semibold text-lg text-foreground">Capabilities</h3>
               </div>
             </div>
           </div>
