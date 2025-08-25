@@ -3,7 +3,9 @@ import { rtdb } from '@/lib/firebase';
 import { ref, get, set, update, increment } from 'firebase/database';
 import type { UsageCounts } from '@/context/UsageContext';
 
-const initialCounts: Omit<UsageCounts, 'uploads'> = {
+type StoredUsageCounts = Omit<UsageCounts, 'uploads'>;
+
+const initialCounts: StoredUsageCounts = {
   correlations: 0,
   chipkuMeter: 0,
   askAI: 0,
@@ -11,14 +13,15 @@ const initialCounts: Omit<UsageCounts, 'uploads'> = {
 };
 
 // Gets usage counts for a user from Realtime Database
-export const getUsageCounts = async (userId: string): Promise<Omit<UsageCounts, 'uploads'>> => {
+export const getUsageCounts = async (userId: string): Promise<StoredUsageCounts> => {
   const userRef = ref(rtdb, `userUsage/${userId}`);
   const snapshot = await get(userRef);
 
   if (snapshot.exists()) {
     // Ensure all fields from initialCounts are present
     const data = snapshot.val();
-    return { ...initialCounts, ...data };
+    const { uploads, ...rest } = data; // explicitly remove uploads
+    return { ...initialCounts, ...rest };
   } else {
     // If no data exists, create it with initial counts
     await set(userRef, initialCounts);
@@ -27,7 +30,7 @@ export const getUsageCounts = async (userId: string): Promise<Omit<UsageCounts, 
 };
 
 // Increments a specific feature count for a user in Realtime Database
-export const incrementUsageCount = async (userId: string, feature: keyof Omit<UsageCounts, 'uploads' | 'isPremium'>) => {
+export const incrementUsageCount = async (userId: string, feature: keyof Omit<StoredUsageCounts, 'isPremium'>) => {
   const userRef = ref(rtdb, `userUsage/${userId}`);
   
   try {
@@ -45,4 +48,3 @@ export const incrementUsageCount = async (userId: string, feature: keyof Omit<Us
     console.error(`Failed to increment ${feature} count for user ${userId}:`, error);
   }
 };
-{/**hi */}

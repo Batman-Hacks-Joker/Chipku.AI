@@ -29,7 +29,7 @@ export const USAGE_LIMITS = {
 
 interface UsageContextType {
   counts: UsageCounts;
-  incrementCount: (feature: keyof Omit<UsageCounts, 'isPremium' | 'uploads'>) => void;
+  incrementCount: (feature: keyof Omit<UsageCounts, 'isPremium' | 'uploads'> | 'uploads') => void;
   isLoading: boolean;
   hasReachedLimit: (feature: keyof Omit<UsageCounts, 'isPremium' | 'uploads'>) => boolean;
 }
@@ -56,16 +56,18 @@ export const UsageProvider = ({ children }: { children: ReactNode }) => {
             setCounts(prevCounts => ({
                 ...prevCounts, 
                 ...firestoreCounts,
+                uploads: prevCounts.uploads, // Keep local uploads count
             }));
             setIsLoading(false);
         } else {
-            setCounts({
-                uploads: 0,
+            // Reset all but local uploads
+            setCounts(prevCounts => ({
+                uploads: prevCounts.uploads,
                 correlations: 0,
                 chipkuMeter: 0,
                 askAI: 0,
                 isPremium: false,
-            });
+            }));
             setIsLoading(false);
         }
     };
@@ -73,16 +75,34 @@ export const UsageProvider = ({ children }: { children: ReactNode }) => {
   }, [user]);
 
   const hasReachedLimit = (feature: keyof Omit<UsageCounts, 'isPremium' | 'uploads'>) => {
+    if (!user) return false; // Don't block for non-logged-in users, let the button show login toast
     const limit = counts.isPremium ? USAGE_LIMITS.premium[feature] : USAGE_LIMITS.nonPremium[feature];
     return counts[feature] >= limit;
   }
 
-  const incrementCount = useCallback((feature: keyof Omit<UsageCounts, 'isPremium' | 'uploads'>) => {
-    if (user && hasReachedLimit(feature)) {
+  const incrementCount = useCallback((feature: keyof Omit<UsageCounts, 'isPremium'>) => {
+    if (feature === 'uploads') {
+       setCounts(prevCounts => ({
+          ...prevCounts,
+          uploads: prevCounts.uploads + 1,
+      }));
+      return;
+    }
+
+    if (!user) {
+       toast({
+        variant: "destructive",
+        title: "Authentication Required",
+        description: "Please log in to use this feature.",
+      });
+      return;
+    }
+    
+    if (hasReachedLimit(feature)) {
       toast({
         variant: "destructive",
         title: "Usage limit reached",
-        description: `You've reached the limit for the ${feature} feature. Please upgrade to premium for more usage.`,
+        description: `You've reached the limit for the ${feature} feature.`,
       });
       return;
     }
@@ -92,35 +112,20 @@ export const UsageProvider = ({ children }: { children: ReactNode }) => {
         [feature]: prevCounts[feature] + 1,
     }));
     
-    if (user) {
-        incrementUsageCount(user.uid, feature);
-    }
+    incrementUsageCount(user.uid, feature);
+
   }, [user, counts, hasReachedLimit, toast]);
   
-  const incrementUploadCount = useCallback(() => {
-     setCounts(prevCounts => ({
-        ...prevCounts,
-        uploads: prevCounts.uploads + 1,
-    }));
-  },[])
-
 
   const value = {
     counts,
-    incrementCount: user ? incrementCount : () => {
-       toast({
-        variant: "destructive",
-        title: "Authentication Required",
-        description: "Please log in to use this feature.",
-      });
-    },
-    incrementUploadCount,
+    incrementCount,
     isLoading,
     hasReachedLimit,
   }
 
   return (
-    <UsageContext.Provider value={{ counts, incrementCount, isLoading, hasReachedLimit }}>
+    <UsageContext.Provider value={value}>
       {children}
     </UsageContext.Provider>
   );
@@ -133,4 +138,3 @@ export const useUsage = () => {
   }
   return context;
 };
-{/** hiii */}
