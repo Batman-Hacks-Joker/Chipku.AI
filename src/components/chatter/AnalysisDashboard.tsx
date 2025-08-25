@@ -89,7 +89,7 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
     if (parsedData && date) {
       // If only a 'from' date is selected, treat it as a single-day range.
       const rangeToFilter = date.from && !date.to ? { from: date.from, to: date.from } : date;
-      filterMessages(parsedData.messages, rangeToFilter);
+      filterMessages(parsedData.messages, rangeToFilter as DateRange);
       toast({
         title: "Date Range Updated",
         description: `Analysis updated for the new date range.`,
@@ -271,7 +271,7 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
                     selected={date}
                     onSelect={setDate}
                     numberOfMonths={2}
-                    disabled={(day) => day < parsedData.startDate! || day > parsedData.endDate!}
+                    disabled={(day) => day < startOfDay(parsedData.startDate!) || day > endOfDay(parsedData.endDate!)}
                   />
                 </PopoverContent>
               </Popover>
