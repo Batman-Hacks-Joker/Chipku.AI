@@ -17,7 +17,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useUsage } from "@/context/UsageContext";
 import { useAuth } from "@/context/AuthContext";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
-import { cn } from "@/lib/utils";
 
 interface AskAIProps {
   messages: ChatMessage[];

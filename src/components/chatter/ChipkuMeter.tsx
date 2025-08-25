@@ -16,7 +16,6 @@ import { useUsage } from "@/context/UsageContext";
 import { useAuth } from "@/context/AuthContext";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
 
 interface ChipkuMeterProps {
   messages: ChatMessage[];
@@ -124,7 +123,7 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   const analyzeButton = (
       <button
         onClick={handleAnalyzeClick}
-        className={cn("px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed mb-4 w-full max-w-sm")}
+        className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed mb-4"
         disabled={!user || !buttonEnabled || isLoading || chipkuMeterLimitReached}
       >
         {getButtonContent()}
