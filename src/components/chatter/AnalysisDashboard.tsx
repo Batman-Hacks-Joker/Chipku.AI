@@ -1,8 +1,9 @@
+
 "use client";
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { addDays, startOfDay, format } from "date-fns";
+import { addDays, startOfDay, format, isSameDay } from "date-fns";
 import { DateRange } from "react-day-picker";
 import { Calendar as CalendarIcon, Loader2 } from "lucide-react";
 import { Clock } from "lucide-react";
@@ -61,6 +62,13 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
     setDate(defaultDateRange);
     filterMessages(parsedData.messages, defaultDateRange);
   }, [parsedData, defaultDateRange]);
+
+  React.useEffect(() => {
+    if (date?.from && date?.to && parsedData.startDate && parsedData.endDate) {
+      const isDateRangeFull = isSameDay(date.from, parsedData.startDate) && isSameDay(date.to, parsedData.endDate);
+      setIsFullTimeline(isDateRangeFull);
+    }
+  }, [date, parsedData.startDate, parsedData.endDate]);
 
   const filterMessages = (messages: ChatMessage[], dateRange: DateRange) => {
     if (!dateRange.from || !dateRange.to) {
@@ -305,5 +313,3 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
     </div>
   );
 };
-
-    
