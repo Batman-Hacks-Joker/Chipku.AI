@@ -109,8 +109,16 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
     setAnalysisTriggered(true);
   };
 
+  const getButtonContent = () => {
+    if (!user) {
+      return <span className="button-marquee-wrapper"><span className="marquee">🚫 Please login to use Analyze relationship strength</span></span>;
+    }
+    if (chipkuMeterLimitReached) {
+      return <span className="button-marquee-wrapper"><span className="marquee">🚫 Limit reached can't use Analyze relationship strength</span></span>;
+    }
+    return "Analyze Relationship Strength";
+  };
 
-  const staggeredDelay = result && result.balloons > 0 ? 5 / result.balloons : 0;
 
   const analyzeButton = (
       <button
@@ -118,7 +126,7 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
         className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed mb-4"
         disabled={!user || !buttonEnabled || isLoading || chipkuMeterLimitReached}
       >
-        Analyze Relationship Strength
+        {getButtonContent()}
       </button>
   );
 
@@ -185,7 +193,7 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
                     opacity: 1,
                     y: 0,
                     scale: 1.5,
-                    transition: { delay: i * staggeredDelay, duration: 0.5, ease: "easeOut" },
+                    transition: { delay: i * (5 / result.balloons), duration: 0.5, ease: "easeOut" },
                   }}
                   exit={{ opacity: 0, scale: 0.5 }}
                 >

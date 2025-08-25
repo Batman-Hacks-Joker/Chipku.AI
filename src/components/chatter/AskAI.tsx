@@ -107,20 +107,26 @@ export function AskAI({ messages, dateRange }: AskAIProps) {
     }
   };
 
+  const getButtonContent = () => {
+    if (isLoading) {
+      return <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generating...</>;
+    }
+    if (!user) {
+      return <span className="button-marquee-wrapper"><span className="marquee">🚫 Please login to Generate</span></span>;
+    }
+    if (askAILimitReached) {
+      return <span className="button-marquee-wrapper"><span className="marquee">🚫 Limit reached can't Generate</span></span>;
+    }
+    return "Generate";
+  };
+  
   const generateButton = (
     <Button 
       onClick={handleGenerate} 
       disabled={isLoading || !user || askAILimitReached} 
       className="w-full bg-accent hover:bg-accent/80"
     >
-      {isLoading ? (
-        <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Generating...
-        </>
-      ) : (
-        "Generate"
-      )}
+      {getButtonContent()}
     </Button>
   );
 
