@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { addDays, startOfDay, format, isSameDay } from "date-fns";
+import { addDays, startOfDay, format, isSameDay, endOfDay } from "date-fns";
 import { DateRange } from "react-day-picker";
 import { Calendar as CalendarIcon, Loader2 } from "lucide-react";
 import { Clock } from "lucide-react";
@@ -75,9 +75,12 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
       setFilteredMessages(messages);
       return;
     }
+    const from = startOfDay(dateRange.from);
+    const to = endOfDay(dateRange.to);
+
     const filtered = messages.filter((msg) => {
       const msgDate = new Date(msg.timestamp);
-      return msgDate >= dateRange.from! && msgDate <= dateRange.to!;
+      return msgDate >= from && msgDate <= to;
     });
     setFilteredMessages(filtered);
   };
