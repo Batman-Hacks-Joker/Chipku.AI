@@ -16,6 +16,7 @@ import { useUsage } from "@/context/UsageContext";
 import { useAuth } from "@/context/AuthContext";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ChipkuMeterProps {
   messages: ChatMessage[];
@@ -34,6 +35,7 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   const [buttonEnabled, setButtonEnabled] = React.useState(true);
   const [lastAnalyzedRange, setLastAnalyzedRange] = React.useState<DateRange | null>(null);
   const initialLoad = React.useRef(true);
+  const isMobile = useIsMobile();
   
 
   // Helper: Compare two date ranges
@@ -96,13 +98,24 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   }, [dateRange, result, lastAnalyzedRange]);
 
   const handleAnalyzeClick = () => {
-    if (!user) return;
+    if (!user) {
+      if (isMobile) {
+        toast({
+          variant: "destructive",
+          title: "Authentication Required",
+          description: "Please log in to use the Chipku Meter.",
+        });
+      }
+      return;
+    }
     if (chipkuMeterLimitReached) {
-      toast({
-        variant: "destructive",
-        title: "Usage Limit Reached",
-        description: "You have reached your limit for the Chipku Meter feature.",
-      });
+      if (isMobile) {
+        toast({
+          variant: "destructive",
+          title: "Usage Limit Reached",
+          description: "You have reached your limit for the Chipku Meter feature.",
+        });
+      }
       return;
     }
     incrementCount('chipkuMeter');
@@ -122,6 +135,14 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
       </button>
   );
 
+  const getTooltipContent = () => {
+    if (!user) return "Please log in to use the Chipku Meter";
+    if (chipkuMeterLimitReached) return "Chipku Meter limit reached";
+    return null;
+  };
+
+  const tooltipContent = getTooltipContent();
+
   return (
     <Card className="overflow-hidden">
       <CardHeader>
@@ -135,28 +156,17 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
       </CardHeader>
       <CardContent className="relative flex-grow flex flex-col items-center justify-center min-h-[200px] w-full p-4">
         {(!result || buttonEnabled) && (
-            !user ? (
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                           <div>{analyzeButton}</div>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                           <p>Please log in to use the Chipku Meter</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-            ) : chipkuMeterLimitReached ? (
-                <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                           <div>{analyzeButton}</div>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                           <p>Chipku Meter limit reached</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
+            tooltipContent && !isMobile ? (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div>{analyzeButton}</div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{tooltipContent}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             ) : (
                 analyzeButton
             )
@@ -217,4 +227,3 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
     </Card>
   );
 }
-{/**hi */}
