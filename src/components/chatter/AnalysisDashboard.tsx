@@ -87,8 +87,10 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
 
   const handleApplyClick = () => {
     if (parsedData && date) {
-      filterMessages(parsedData.messages, date);
-       toast({
+      // If only a 'from' date is selected, treat it as a single-day range.
+      const rangeToFilter = date.from && !date.to ? { from: date.from, to: date.from } : date;
+      filterMessages(parsedData.messages, rangeToFilter);
+      toast({
         title: "Date Range Updated",
         description: `Analysis updated for the new date range.`,
       });
