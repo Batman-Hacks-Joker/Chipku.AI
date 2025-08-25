@@ -17,7 +17,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useUsage } from "@/context/UsageContext";
 import { useAuth } from "@/context/AuthContext";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 interface AskAIProps {
   messages: ChatMessage[];
@@ -32,27 +31,22 @@ export function AskAI({ messages, dateRange }: AskAIProps) {
   const [prompt, setPrompt] = React.useState("");
   const [result, setResult] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
-  const isMobile = useIsMobile();
 
   const handleGenerate = async () => {
     if (!user) {
-      if (isMobile) {
-        toast({
-          variant: "destructive",
-          title: "Authentication Required",
-          description: "Please log in to use the Ask AI feature.",
-        });
-      }
+      toast({
+        variant: "destructive",
+        title: "Authentication Required",
+        description: "Please log in to use the Ask AI feature.",
+      });
       return;
     }
      if (askAILimitReached) {
-      if (isMobile) {
-        toast({
-          variant: "destructive",
-          title: "Usage Limit Reached",
-          description: "You have reached your limit for the Ask AI feature.",
-        });
-      }
+      toast({
+        variant: "destructive",
+        title: "Usage Limit Reached",
+        description: "You have reached your limit for the Ask AI feature.",
+      });
       return;
     }
     if (!prompt.trim()) {
@@ -129,14 +123,6 @@ export function AskAI({ messages, dateRange }: AskAIProps) {
       )}
     </Button>
   );
-  
-  const getTooltipContent = () => {
-    if (!user) return "Please log in to use Ask AI";
-    if (askAILimitReached) return "Ask AI limit reached";
-    return null;
-  };
-
-  const tooltipContent = getTooltipContent();
 
   return (
     <Card className="sticky top-6">
@@ -156,14 +142,25 @@ export function AskAI({ messages, dateRange }: AskAIProps) {
           onChange={(e) => setPrompt(e.target.value)}
           rows={4}
         />
-        {tooltipContent && !isMobile ? (
+        {!user ? (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="w-full">{generateButton}</div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Please log in to use Ask AI</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        ) : askAILimitReached ? (
            <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="w-full">{generateButton}</div>
               </TooltipTrigger>
               <TooltipContent>
-                <p>{tooltipContent}</p>
+                <p>Ask AI limit reached</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
