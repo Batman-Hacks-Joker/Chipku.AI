@@ -39,13 +39,13 @@ export default function Home() {
   React.useEffect(() => {
     let timer: NodeJS.Timeout;
     if (isProcessing) {
-      setLoadingTitle("Analyzing your chat...");
-      setLoadingSubtitle("Don't worry your data is safe, processing depends on your browser");
+      setLoadingTitle("Analyzing your chat.... NO AI involved");
+      setLoadingSubtitle("processing is done inside your browser itself");
       
       timer = setTimeout(() => {
-        setLoadingTitle("Its your first time, preparing cookies for you 🤤🍪");
-        setLoadingSubtitle("Yeah almost done!!!");
-      }, 5000);
+        setLoadingTitle("Heyyyy!!! your first time, preparing cookies for you 🤤🍪");
+        setLoadingSubtitle("its looking so delicious....Yeah almost done!!!");
+      }, 7000);
     }
     
     return () => clearTimeout(timer);
@@ -134,13 +134,14 @@ export default function Home() {
               Chipku AI💕
             </h1>
             <p className="text-muted-foreground mt-2 max-w-xl mx-auto">
-              Upload your .txt WhatsApp chat to uncover fascinating insights, analyze your chat's sentiment, and even ask our AI questions about your conversations💯
+              Upload your WhatsApp chat to find out who is more interested?????
+              Analyze your relationship strength using Chipku meter and don't get flabbergasted by breathtaking vizualisations to uncover deep mysteries
             </p>
           </div>
           <div ref={fileUploadRef}>
             <FileUpload onFileProcessed={handleFileProcessed} />
           </div>
-          <p className="text-xs text-muted-foreground mt-4">Your data is processed on your device and never stored on our servers✌🏻</p>
+          <p className="text-xs text-muted-foreground mt-4 ">🙏 We genuinely respect your Privacy, we dont save your chat files & no AI involved ❌</p>
         </main>
       )}
       
@@ -160,4 +161,3 @@ export default function Home() {
     </div>
   );
 }
-{/**hiii */}

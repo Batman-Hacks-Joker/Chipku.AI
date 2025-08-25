@@ -73,7 +73,7 @@ const DraggableBurger: React.FC<DraggableBurgerProps> = ({ fileUploadRef, onDrop
                         <TooltipContent side="top" className="bg-black/70 text-white border-none">
                            <div className="flex items-center gap-1">
                              <Info size={14} />
-                             <p>Eat me to analyse for free</p>
+                             <p>Drag me for free upload</p>
                            </div>
                         </TooltipContent>
                     </Tooltip>
@@ -84,4 +84,3 @@ const DraggableBurger: React.FC<DraggableBurgerProps> = ({ fileUploadRef, onDrop
 };
 
 export default DraggableBurger;
-{/**hi */}

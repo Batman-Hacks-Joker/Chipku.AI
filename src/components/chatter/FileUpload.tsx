@@ -74,10 +74,12 @@ export function FileUpload({ onFileProcessed }: FileUploadProps) {
       <CardContent className="p-10 flex flex-col items-center justify-center text-center">
         <Upload className="w-12 h-12 text-primary mb-4" />
         <h3 className="text-xl font-semibold font-headline text-foreground">
-          Drag & Drop or Click to Upload
+          <p>Click to Upload</p>
+          <p>or</p>
+          <p>Drag & Drop '🍔'</p>
         </h3>
         <p className="text-muted-foreground mt-1">
-          Upload your exported WhatsApp chat .txt file
+          Upload your WhatsApp chat .txt file 
         </p>
         <Input
           type="file"
@@ -90,5 +92,3 @@ export function FileUpload({ onFileProcessed }: FileUploadProps) {
     </Card>
   );
 }
-
-    
