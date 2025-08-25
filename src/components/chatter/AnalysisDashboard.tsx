@@ -297,7 +297,7 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
             <StatCard title="Total Messages 💬 " value={stats.totalMessages.toLocaleString()} />
             <StatCard title="Total Words ✍️ " value={stats.totalWords.toLocaleString()} />
             <StatCard title="Active Users 🙋‍♂️ " value={parsedData.users.length} />
-             <StatCard title="Days Analyzed 🧐 " value={date?.from && date?.to ? (Math.round((date.to.getTime() - date.from.getTime()) / (1000 * 3600 * 24)) + 1) : 0} />
+             <StatCard title="Days Analyzed 🧐 " value={date?.from && date?.to ? (Math.ceil((endOfDay(date.to).getTime() - startOfDay(date.from).getTime()) / (1000 * 3600 * 24))) : date?.from ? 1: 0} />
           </div>
 
           <ChipkuMeter messages={filteredMessages} dateRange={date} />
