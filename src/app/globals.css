@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+  ::selection {
+    background-color: hsl(var(--destructive));
+    color: hsl(var(--destructive-foreground));
+  }
+  
   :root {
     --background: 334 50% 86%; /* Soft, muted pink */
     --foreground: 339 71% 14%;
