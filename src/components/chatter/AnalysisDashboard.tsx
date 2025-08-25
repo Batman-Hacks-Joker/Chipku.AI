@@ -53,20 +53,27 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
   const [isExportDialogOpen, setIsExportDialogOpen] = React.useState(false);
   const [selectedComponents, setSelectedComponents] = React.useState<string[]>([]);
 
-  const defaultDateRange = React.useMemo(() => ({
-    from: startOfDay(parsedData.startDate!),
-    to: addDays(startOfDay(parsedData.startDate!), 1),
-  }),[parsedData.startDate]);
+  const defaultDateRange = React.useMemo(() => {
+    if (!parsedData.startDate) return undefined;
+    return {
+      from: startOfDay(parsedData.startDate),
+      to: addDays(startOfDay(parsedData.startDate), 1),
+    }
+  },[parsedData.startDate]);
 
   React.useEffect(() => {
     setDate(defaultDateRange);
-    filterMessages(parsedData.messages, defaultDateRange);
+    if(parsedData.messages && defaultDateRange) {
+        filterMessages(parsedData.messages, defaultDateRange);
+    }
   }, [parsedData, defaultDateRange]);
 
   React.useEffect(() => {
     if (date?.from && date?.to && parsedData.startDate && parsedData.endDate) {
       const isDateRangeFull = isSameDay(date.from, parsedData.startDate) && isSameDay(date.to, parsedData.endDate);
       setIsFullTimeline(isDateRangeFull);
+    } else {
+      setIsFullTimeline(false);
     }
   }, [date, parsedData.startDate, parsedData.endDate]);
 
@@ -87,7 +94,6 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
 
   const handleApplyClick = () => {
     if (parsedData && date) {
-      // If only a 'from' date is selected, treat it as a single-day range.
       const rangeToFilter = date.from && !date.to ? { from: date.from, to: date.from } : date;
       filterMessages(parsedData.messages, rangeToFilter as DateRange);
       toast({
@@ -271,7 +277,10 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
                     selected={date}
                     onSelect={setDate}
                     numberOfMonths={2}
-                    disabled={(day) => day < startOfDay(parsedData.startDate!) || day > endOfDay(parsedData.endDate!)}
+                    disabled={(day) => {
+                      if (!parsedData.startDate || !parsedData.endDate) return true;
+                      return day < startOfDay(parsedData.startDate) || day > endOfDay(parsedData.endDate)
+                    }}
                   />
                 </PopoverContent>
               </Popover>
@@ -286,8 +295,8 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
             </div>
             <Button onClick={handleApplyClick} className="w-full bg-accent hover:bg-accent/90">Apply Changes</Button>
             <div className="text-xs text-muted-foreground space-y-1 pt-2">
-                <p><strong>First Message:</strong> {format(new Date(parsedData.startDate!), "PPP")}</p>
-                <p><strong>Last Message:</strong> {format(new Date(parsedData.endDate!), "PPP")}</p>
+              {parsedData.startDate && <p><strong>First Message:</strong> {format(new Date(parsedData.startDate), "PPP")}</p>}
+              {parsedData.endDate && <p><strong>Last Message:</strong> {format(new Date(parsedData.endDate), "PPP")}</p>}
             </div>
           </Card>
           {showAskAI && <AskAI messages={filteredMessages} dateRange={date} />}
