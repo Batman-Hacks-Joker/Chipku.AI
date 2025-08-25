@@ -1,4 +1,3 @@
-
 "use client";
 
 import * as React from "react";
@@ -62,11 +61,15 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
   },[parsedData.startDate]);
 
   React.useEffect(() => {
-    setDate(defaultDateRange);
-    if(parsedData.messages && defaultDateRange) {
-        filterMessages(parsedData.messages, defaultDateRange);
+    // Set default date range on initial load
+    if (parsedData.startDate && parsedData.endDate) {
+      const defaultRange = { from: parsedData.startDate, to: parsedData.endDate };
+      setDate(defaultRange);
+      filterMessages(parsedData.messages, defaultRange);
+      setIsFullTimeline(true);
     }
-  }, [parsedData, defaultDateRange]);
+  }, [parsedData]);
+
 
   React.useEffect(() => {
     if (date?.from && date?.to && parsedData.startDate && parsedData.endDate) {
