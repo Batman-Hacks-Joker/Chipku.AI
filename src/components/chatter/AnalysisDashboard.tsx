@@ -5,7 +5,7 @@ import * as React from "react";
 import { useRouter } from "next/navigation";
 import { addDays, startOfDay, format, isSameDay, endOfDay } from "date-fns";
 import { DateRange } from "react-day-picker";
-import { Calendar as CalendarIcon, Loader2 } from "lucide-react";
+import { Calendar as CalendarIcon, Loader2, RotateCcw } from "lucide-react";
 import { Clock } from "lucide-react";
 import type { ParsedChatData, ChatMessage } from "@/lib/types";
 import html2canvas from 'html2canvas';
@@ -70,7 +70,7 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
 
   React.useEffect(() => {
     if (date?.from && date?.to && parsedData.startDate && parsedData.endDate) {
-      const isDateRangeFull = isSameDay(date.from, parsedData.startDate) && isSameDay(date.to, parsedData.endDate);
+      const isDateRangeFull = isSameDay(startOfDay(date.from), startOfDay(parsedData.startDate)) && isSameDay(endOfDay(date.to), endOfDay(parsedData.endDate));
       setIsFullTimeline(isDateRangeFull);
     } else {
       setIsFullTimeline(false);
@@ -102,6 +102,14 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
       });
     }
   };
+
+  const handleResetClick = () => {
+    setDate(defaultDateRange);
+    toast({
+        title: "Date Range Reset",
+        description: "Date range has been reset to default.",
+    });
+  }
 
   const handleFullTimelineToggle = (checked: boolean) => {
     setIsFullTimeline(checked);
@@ -284,13 +292,18 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
                   />
                 </PopoverContent>
               </Popover>
-              <div className="flex items-center space-x-2 pt-2">
-                <Switch 
-                  id="full-timeline-toggle" 
-                  checked={isFullTimeline}
-                  onCheckedChange={handleFullTimelineToggle}
-                />
-                <Label htmlFor="full-timeline-toggle">Full Timeline</Label>
+              <div className="flex items-center justify-between pt-2">
+                <div className="flex items-center space-x-2">
+                  <Switch 
+                    id="full-timeline-toggle" 
+                    checked={isFullTimeline}
+                    onCheckedChange={handleFullTimelineToggle}
+                  />
+                  <Label htmlFor="full-timeline-toggle">Full Timeline</Label>
+                </div>
+                <Button variant="ghost" size="icon" onClick={handleResetClick} className="h-8 w-8">
+                    <RotateCcw className="w-4 h-4" />
+                </Button>
               </div>
             </div>
             <Button onClick={handleApplyClick} className="w-full bg-accent hover:bg-accent/90">Apply Changes</Button>
