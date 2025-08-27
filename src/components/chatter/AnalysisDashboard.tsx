@@ -286,7 +286,7 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
                     onSelect={setDate}
                     numberOfMonths={2}
                     disabled={(day) => {
-                      if (!parsedData.startDate || !parsedData.endDate) return true;
+                      if (!parsedData?.startDate || !parsedData?.endDate) return true;
                       return day < startOfDay(parsedData.startDate) || day > endOfDay(parsedData.endDate)
                     }}
                   />
@@ -322,7 +322,7 @@ export const AnalysisDashboard: React.FC<AnalysisDashboardProps> = ({ parsedData
              <StatCard title="Days Analyzed 🧐 " value={date?.from && date?.to ? (Math.ceil((endOfDay(date.to).getTime() - startOfDay(date.from).getTime()) / (1000 * 3600 * 24))) : date?.from ? 1: 0} />
           </div>
 
-          <ChipkuMeter messages={filteredMessages} dateRange={date} />
+          <ChipkuMeter messages={filteredMessages} dateRange={date} users={parsedData.users} />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div id="messages-per-user" className="rounded-lg border bg-card text-card-foreground shadow-sm p-4"><MessagesPerUserChart messages={filteredMessages} users={parsedData.users} /></div>

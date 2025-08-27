@@ -16,13 +16,15 @@ import { useUsage } from "@/context/UsageContext";
 import { useAuth } from "@/context/AuthContext";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 interface ChipkuMeterProps {
   messages: ChatMessage[];
   dateRange?: DateRange;
+  users: string[];
 }
 
-export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
+export function ChipkuMeter({ messages, dateRange, users }: ChipkuMeterProps) {
   const { user } = useAuth();
   const { toast } = useToast();
   const { incrementCount, hasReachedLimit } = useUsage();
@@ -35,6 +37,7 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   const [lastAnalyzedRange, setLastAnalyzedRange] = React.useState<DateRange | null>(null);
   const initialLoad = React.useRef(true);
   
+  const isTwoUsers = users.length === 2;
 
   // Helper: Compare two date ranges
   const isSameDateRange = (a?: DateRange, b?: DateRange) => {
@@ -110,11 +113,14 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   };
 
   const getButtonContent = () => {
+    if (!isTwoUsers) {
+        return <span className="button-marquee-wrapper"><span className="marquee">🚫 Only available for 2-person chats</span></span>;
+    }
     if (!user) {
-      return <span className="button-marquee-wrapper"><span className="marquee">🚫 Please login to use Analyze relationship strength</span></span>;
+      return <span className="button-marquee-wrapper"><span className="marquee">🚫 Please login to use Chipku Meter</span></span>;
     }
     if (chipkuMeterLimitReached) {
-      return <span className="button-marquee-wrapper"><span className="marquee">🚫 Limit reached can't use Analyze relationship strength</span></span>;
+      return <span className="button-marquee-wrapper"><span className="marquee">🚫 Limit reached can't use Chipku Meter</span></span>;
     }
     return "Analyze Relationship Strength";
   };
@@ -123,8 +129,11 @@ export function ChipkuMeter({ messages, dateRange }: ChipkuMeterProps) {
   const analyzeButton = (
       <button
         onClick={handleAnalyzeClick}
-        className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed mb-4"
-        disabled={!user || !buttonEnabled || isLoading || chipkuMeterLimitReached}
+        className={cn(
+            "px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed mb-4",
+            "w-full max-w-sm"
+        )}
+        disabled={!isTwoUsers || !user || !buttonEnabled || isLoading || chipkuMeterLimitReached}
       >
         {getButtonContent()}
       </button>
