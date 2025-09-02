@@ -229,10 +229,10 @@ const DashboardPage: React.FC = () => {
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                     <ul className="space-y-3 text-muted-foreground">
-                        <li className="flex items-start"><Check className="w-5 h-5 mr-3 text-primary flex-shrink-0" /> Ask AI, Chipku Meter, Correlation, Everything Free Forever</li>
-                        <li className="flex items-start"><Check className="w-5 h-5 mr-3 text-primary flex-shrink-0" /> Get free access to future products before anyone else</li>
-                        <li className="flex items-start"><Check className="w-5 h-5 mr-3 text-primary flex-shrink-0" /> Get Shoutout for being generous</li>
-                        <li className="flex items-start"><Check className="w-5 h-5 mr-3 text-primary flex-shrink-0" /> 1 to 1 video call, so I could say Thankyou 😊</li>
+                        <li className="flex items-start"><Check className="w-5 h-5 mr-3 text-primary flex-shrink-0" /> upto 100 Chipku Meter generations for free</li>
+                        <li className="flex items-start"><Check className="w-5 h-5 mr-3 text-primary flex-shrink-0" /> upto 100 Ask AI prompt for free</li>
+                        <li className="flex items-start"><Check className="w-5 h-5 mr-3 text-primary flex-shrink-0" /> upto 150 Correlation features for free</li>
+                        <li className="flex items-start"><Check className="w-5 h-5 mr-3 text-primary flex-shrink-0" /> Enjoy early access to future updates and products before anyone else</li>
                     </ul>
                 </div>
                 <DialogFooter>
@@ -309,7 +309,7 @@ const UsageDetails = () => {
     return (
         <Card className="relative mt-8 font-headline bg-card/50 overflow-hidden">
             {counts.isPremium && (
-                <div className="absolute top-2 right-2 text-6xl opacity-20 -z-0 animate-float">
+                <div className="absolute top-2 right-2 text-9xl opacity-20 -z-0 animate-float">
                     🤩
                 </div>
             )}
@@ -347,4 +347,3 @@ const UsageDetails = () => {
 
 
 export default DashboardPage;
-{/**hiiii */}

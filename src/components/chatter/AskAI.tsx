@@ -138,12 +138,12 @@ export function AskAI({ messages, dateRange }: AskAIProps) {
           <CardTitle className="font-headline">Ask AI</CardTitle>
         </div>
         <CardDescription>
-          Ask questions or get summaries about the chat in the selected date range.
+          Ask questions anything related to facts, personality, emotions, or get summaries about the chat in the selected date range.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <Textarea
-          placeholder="e.g., 'Summarize the main topics of conversation' or 'Who mentioned pizza the most?'"
+          placeholder="e.g., 'Summarize why did she blocked me on Thursday' or 'Who mentioned Love you the most?'"
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           rows={4}

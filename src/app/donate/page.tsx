@@ -186,7 +186,7 @@ const DonatePage: React.FC = () => {
                             <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> upto 100 Chipku Meter generations for free </li>
                             <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> upto 100 Ask AI prompt for free</li>
                             <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> upto 150 Correlation features for free</li>
-                            <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> Get free access to future products before anyone else</li>
+                            <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> Enjoy early access to future updates and products before anyone else</li>
 
                         </ul>
                         <Button className={`mt-8 text-white rounded-full px-8 py-3 transition-all duration-300 bg-[#A629D3] hover:bg-[#C21E56] dark:bg-pink-500 dark:hover:bg-pink-600`}>Unlock Now</Button>

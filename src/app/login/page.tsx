@@ -129,6 +129,7 @@ const LoginPage: React.FC = () => {
             animation: emoji-rotation 8s steps(1, end) infinite;
           }
         `}</style>
+{/**hi */}
         <div className="relative w-full max-w-md">
           {/* WRAPPER */}
           <div className="running-emoji-wrapper">
@@ -144,10 +145,10 @@ const LoginPage: React.FC = () => {
             </div>
 
             <h1 className="text-3xl font-bold text-center mb-2 font-headline text-gray-800 dark:text-white">
-              Sign in with email
+              Login in with email
             </h1>
             <p className="text-center text-gray-600 dark:text-gray-300 mb-8">
-              Instantly unlock 1 Correlation, AI related features get a chance for coupon
+              Instantly unlock 3 Correlation, 2 Ask AI and 2 Chipku Meter features for free
             </p>
 
             <form className="space-y-6">
@@ -220,5 +221,3 @@ const LoginPage: React.FC = () => {
 };
 
 export default LoginPage;
-
-    
