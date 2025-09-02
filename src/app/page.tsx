@@ -43,9 +43,9 @@ export default function Home() {
       setLoadingSubtitle("processing is done inside your browser itself");
       
       timer = setTimeout(() => {
-        setLoadingTitle("Heyyyy!!! your first time, preparing cookies for you 🤤🍪");
-        setLoadingSubtitle("its looking so delicious....Yeah almost done!!!");
-      }, 7000);
+        setLoadingTitle("Heyyyy!!! its Your first time here , preparing cookies for you 🤤🍪");
+        setLoadingSubtitle("It's looking so delicious....Yeah, almost done!!!");
+      }, 10000);
     }
     
     return () => clearTimeout(timer);

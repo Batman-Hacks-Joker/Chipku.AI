@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import useDarkMode from '@/hooks/use-dark-mode';
 import { useAuth } from '@/context/AuthContext';
+import { cn } from '@/lib/utils';
 
 interface FloatingActionButtonProps {
   onHomeClick?: () => void;
@@ -102,14 +103,16 @@ const FloatingActionButton: React.FC<FloatingActionButtonProps> = ({ onHomeClick
           return (
             <button
               key={`${labelText}-${index}`}
-              className={`
+              className={cn(`
                 px-4 py-3 text-sm md:text-lg flex items-center space-x-2
-                ${isSpecial ? 'bg-blue-500' : 'bg-red-500'}
                 text-white font-bold rounded-full shadow-lg transform transition-all
                 duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]
-                ${isOpen ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-8 scale-90 pointer-events-none'}
-                hover:bg-red-600 dark:hover:bg-red-400
-              `}
+                `,
+                isOpen ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-8 scale-90 pointer-events-none',
+                isSpecial 
+                  ? 'bg-blue-500 hover:bg-blue-600 dark:hover:bg-blue-400' 
+                  : 'bg-red-500 hover:bg-red-600 dark:hover:bg-red-400'
+              )}
               style={{ transitionDelay: `${index * 100}ms` }}
               onClick={() => handleButtonClick(btn)}
               title={hoverText}

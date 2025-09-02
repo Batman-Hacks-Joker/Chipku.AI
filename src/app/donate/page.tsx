@@ -166,13 +166,13 @@ const DonatePage: React.FC = () => {
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 items-stretch">
                     {/* Free Tier */}
                     <div className={`lg:col-span-2 p-8 rounded-3xl border w-full flex flex-col bg-[#FFEBEE] border-black dark:bg-black dark:border-gray-700`}>
-                        <h2 className={`text-3xl font-headline font-bold text-[#C21E56] dark:text-pink-500`}>Starts at:</h2>
-                        <p className={`mt-4 text-5xl font-headline font-bold blur-text text-[#C21E56] dark:text-pink-500`}>₹19 only (✿❛֊❛„)</p>
+                        <h2 className={`text-3xl font-headline font-bold text-[#C21E56] dark:text-pink-500`}>Just for fun:</h2>
+                        <p className={`mt-4 text-5xl font-headline font-bold blur-text text-[#C21E56] dark:text-pink-500`}>₹9 only (✿❛֊❛„)</p>
                         <ul className={`mt-6 space-y-4 text-left flex-grow text-gray-700 dark:text-gray-300`}>
-                            <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> upto 150 chat uploads for free</li>
-                            <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> upto 150 Chipku Meter generations for free</li>
-                            <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> upto 150 Ask AI prompt for free</li>
-                            <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> 2 trials of Correlation feature</li>
+                            {/*<li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> upto 150 chat uploads for free</li> */}
+                            <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> upto 20 Chipku Meter generations for free</li>
+                            <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> upto 20 Ask AI prompt for free</li>
+                            <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> upto 30 Correlation features for free</li>
                             <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> Personally Chat with me</li>
                         </ul>
                         <Button className={`mt-8 text-white rounded-full px-8 py-3 transition-all duration-300 bg-[#A629D3] hover:bg-[#C21E56] dark:bg-pink-500 dark:hover:bg-pink-600`}>Start Now</Button>
@@ -181,12 +181,13 @@ const DonatePage: React.FC = () => {
                     {/* Premium Tier */}
                     <div className={`lg:col-span-3 p-8 rounded-3xl border shadow-2xl w-full flex flex-col bg-[#FFD1D7] border-black dark:bg-black dark:border-gray-700`}>
                         <h2 className={`text-3xl font-headline font-bold text-[#C21E56] dark:text-pink-500`}>🎀 Unlock Everything 🎀</h2>
-                        <p className={`mt-4 text-5xl font-headline font-bold blur-text text-[#C21E56] dark:text-pink-500`}>₹19 plus (❀◠ᴗ◠)❤︎</p>
+                        <p className={`mt-4 text-5xl font-headline font-bold blur-text text-[#C21E56] dark:text-pink-500`}>₹49 (❀◠ᴗ◠)❤︎</p>
                         <ul className={`mt-6 space-y-4 text-left text-xl flex-grow text-black-700 dark:text-gray-300`}>
-                            <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> Ask AI, Chipku Meter, Correlation, Everything Free Forever</li>
+                            <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> upto 100 Chipku Meter generations for free </li>
+                            <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> upto 100 Ask AI prompt for free</li>
+                            <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> upto 150 Correlation features for free</li>
                             <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> Get free access to future products before anyone else</li>
-                            <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> Get Shoutout for being generous</li>
-                            <li className="flex items-center"><Check className={`w-5 h-5 mr-3 text-[#A629D3] dark:text-pink-400`} /> 1 to 1 video call, so I could say Thankyou 😊</li>
+
                         </ul>
                         <Button className={`mt-8 text-white rounded-full px-8 py-3 transition-all duration-300 bg-[#A629D3] hover:bg-[#C21E56] dark:bg-pink-500 dark:hover:bg-pink-600`}>Unlock Now</Button>
                     </div>
