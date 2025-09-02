@@ -35,9 +35,11 @@ const ChipkuLoversCounter: React.FC = () => {
     };
 
     return (
-        <Card className="w-fit">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <Card className="w-fit p-2">
+            <CardHeader className="flex flex-row items-center justify-center space-y-0 pb-1 pt-0">
                 <CardTitle className="text-sm font-medium">Chipku Lovers</CardTitle>
+            </CardHeader>
+            <CardContent className="p-0 flex items-center justify-center space-x-1">
                 <button onClick={handleClick} disabled={isClicked} className="disabled:cursor-not-allowed">
                     <Heart className={cn(
                         "h-5 w-5 text-primary transition-all",
@@ -45,12 +47,10 @@ const ChipkuLoversCounter: React.FC = () => {
                         !isClicked && "hover:fill-primary/50"
                     )} />
                 </button>
-            </CardHeader>
-            <CardContent>
                 {isLoading ? (
-                    <div className="h-7 w-24 bg-muted animate-pulse rounded-md" />
+                    <div className="h-6 w-12 bg-muted animate-pulse rounded-md" />
                 ) : (
-                    <div className="text-2xl font-bold">
+                    <div className="text-xl font-bold">
                         {count !== null ? count.toLocaleString() : '...'}
                     </div>
                 )}
