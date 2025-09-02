@@ -11,12 +11,12 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-interface DraggableBurgerProps {
+interface DraggablePeachProps {
     fileUploadRef: React.RefObject<HTMLDivElement>;
     onDrop: () => void;
 }
 
-const DraggableBurger: React.FC<DraggableBurgerProps> = ({ fileUploadRef, onDrop }) => {
+const DraggablePeach: React.FC<DraggablePeachProps> = ({ fileUploadRef, onDrop }) => {
     const controls = useDragControls();
     const constraintsRef = useRef<HTMLDivElement>(null);
     const [isDragging, setIsDragging] = useState(false);
@@ -25,13 +25,13 @@ const DraggableBurger: React.FC<DraggableBurgerProps> = ({ fileUploadRef, onDrop
         setIsDragging(false);
         if (fileUploadRef.current) {
             const dropZone = fileUploadRef.current.getBoundingClientRect();
-            const burgerRect = (event.target as HTMLElement).getBoundingClientRect();
+            const PeachRect = (event.target as HTMLElement).getBoundingClientRect();
 
             const isOverlapping = !(
-                burgerRect.right < dropZone.left ||
-                burgerRect.left > dropZone.right ||
-                burgerRect.bottom < dropZone.top ||
-                burgerRect.top > dropZone.bottom
+                PeachRect.right < dropZone.left ||
+                PeachRect.left > dropZone.right ||
+                PeachRect.bottom < dropZone.top ||
+                PeachRect.top > dropZone.bottom
             );
 
             if (isOverlapping) {
@@ -67,7 +67,7 @@ const DraggableBurger: React.FC<DraggableBurgerProps> = ({ fileUploadRef, onDrop
                     <Tooltip open={!isDragging}>
                         <TooltipTrigger asChild>
                             <div className="text-7xl relative" style={{ textShadow: '2px 2px 8px rgba(0,0,0,0.3)' }}>
-                                🍔
+                                🍑
                             </div>
                         </TooltipTrigger>
                         <TooltipContent side="top" className="bg-black/70 text-white border-none">
@@ -83,4 +83,5 @@ const DraggableBurger: React.FC<DraggableBurgerProps> = ({ fileUploadRef, onDrop
     );
 };
 
-export default DraggableBurger;
+export default DraggablePeach;
+{/**hi */}

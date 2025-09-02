@@ -15,7 +15,7 @@ import { LoadingPage } from "@/components/ui/LoadingPage";
 import FAQ from "@/components/chatter/FAQ";
 import InteractiveEmojis from "@/components/chatter/InteractiveEmojis";
 import { useUsage } from "@/context/UsageContext";
-import DraggableBurger from "@/components/chatter/DraggableBurger";
+import DraggablePeach from "@/components/chatter/DraggablePeach";
 import ChipkuLoversCounter from "@/components/chatter/ChipkuLoversCounter";
 
 export default function Home() {
@@ -97,11 +97,11 @@ export default function Home() {
     }
   };
   
-  const handleBurgerDrop = async () => {
+  const handlePeachDrop = async () => {
     try {
         const response = await fetch('/dummyFile.txt');
         const content = await response.text();
-        handleFileProcessed(content, "Burger's Secret Chat.txt");
+        handleFileProcessed(content, "Peach's Secret Chat.txt");
     } catch (error) {
         console.error("Failed to fetch dummy file:", error);
         toast({
@@ -121,7 +121,7 @@ export default function Home() {
       <div className="absolute inset-0 w-full h-full z-0">
         <InteractiveEmojis />
       </div>
-      {!isProcessing && <DraggableBurger fileUploadRef={fileUploadRef} onDrop={handleBurgerDrop} />}
+      {!isProcessing && <DraggablePeach fileUploadRef={fileUploadRef} onDrop={handlePeachDrop} />}
       {isProcessing ? (
         <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
           <Loader2 className="h-16 w-16 animate-spin text-primary mb-4" />

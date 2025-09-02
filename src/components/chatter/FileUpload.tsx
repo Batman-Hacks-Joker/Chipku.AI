@@ -79,7 +79,7 @@ export function FileUpload({ onFileProcessed, showDragDropText = true }: FileUpl
           {showDragDropText && (
             <>
               <p>or</p>
-              <p>Drag & Drop '🍔'</p>
+              <p>Drag & Drop '🍑'</p>
             </>
           )}
         </h3>
