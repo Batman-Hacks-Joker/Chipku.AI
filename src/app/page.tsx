@@ -130,7 +130,7 @@ export default function Home() {
         </div>
       ) : (
         <main className="min-h-screen flex flex-col items-center justify-center p-4 relative z-10 mb-16">
-          <div className="absolute top-4 left-4">
+           <div className="absolute top-4 inset-x-0 flex justify-center">
             <ChipkuLoversCounter />
           </div>
           <div className="text-center mb-8">
