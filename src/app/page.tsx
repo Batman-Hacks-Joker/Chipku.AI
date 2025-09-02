@@ -141,7 +141,7 @@ export default function Home() {
           <div ref={fileUploadRef}>
             <FileUpload onFileProcessed={handleFileProcessed} />
           </div>
-          <p className="text-xs text-muted-foreground mt-4 ">🙏 We genuinely respect your Privacy, we dont save your chat files & no AI involved ❌</p>
+          <p className="text-xs text-muted-foreground mt-4 p-2 rounded-md bg-red-200/20 dark:bg-gray-700/50">🙏 We genuinely respect your Privacy, we dont save your chat files & no AI involved ❌</p>
         </main>
       )}
       
