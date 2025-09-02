@@ -8,9 +8,10 @@ import { Input } from "@/components/ui/input"
 
 interface FileUploadProps {
   onFileProcessed: (content: string, name: string) => void;
+  showDragDropText?: boolean;
 }
 
-export function FileUpload({ onFileProcessed }: FileUploadProps) {
+export function FileUpload({ onFileProcessed, showDragDropText = true }: FileUploadProps) {
   const { toast } = useToast()
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -75,8 +76,12 @@ export function FileUpload({ onFileProcessed }: FileUploadProps) {
         <Upload className="w-12 h-12 text-primary mb-4" />
         <h3 className="text-xl font-semibold font-headline text-foreground">
           <p>Click to Upload WhatsApp chat file</p>
-          <p>or</p>
-          <p>Drag & Drop '🍔'</p>
+          {showDragDropText && (
+            <>
+              <p>or</p>
+              <p>Drag & Drop '🍔'</p>
+            </>
+          )}
         </h3>
         <p className="text-muted-foreground mt-1">
           Your WhatsApp chat must be .txt file (no zip file)

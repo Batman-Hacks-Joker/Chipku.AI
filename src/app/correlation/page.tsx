@@ -416,7 +416,7 @@ export default function CorrelationPage() {
                   </div>
                 ) : (
                     <div className="flex-grow flex items-center justify-center w-full">
-                        <FileUpload onFileProcessed={handleFile1Processed} />
+                        <FileUpload onFileProcessed={handleFile1Processed} showDragDropText={false} />
                     </div>
                 )}
               </div>
@@ -434,7 +434,7 @@ export default function CorrelationPage() {
                   </div>
                 ) : (
                     <div className="flex-grow flex items-center justify-center w-full">
-                        <FileUpload onFileProcessed={handleFile2Processed} />
+                        <FileUpload onFileProcessed={handleFile2Processed} showDragDropText={false} />
                     </div>
                 )}
               </div>
