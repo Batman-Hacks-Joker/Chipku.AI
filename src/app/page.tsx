@@ -16,6 +16,7 @@ import FAQ from "@/components/chatter/FAQ";
 import InteractiveEmojis from "@/components/chatter/InteractiveEmojis";
 import { useUsage } from "@/context/UsageContext";
 import DraggableBurger from "@/components/chatter/DraggableBurger";
+import ChipkuLoversCounter from "@/components/chatter/ChipkuLoversCounter";
 
 export default function Home() {
   const router = useRouter();
@@ -129,6 +130,9 @@ export default function Home() {
         </div>
       ) : (
         <main className="min-h-screen flex flex-col items-center justify-center p-4 relative z-10 mb-16">
+          <div className="absolute top-4 left-4">
+            <ChipkuLoversCounter />
+          </div>
           <div className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-headline font-bold text-primary">
               Chipku AI💕
@@ -141,7 +145,7 @@ export default function Home() {
           <div ref={fileUploadRef}>
             <FileUpload onFileProcessed={handleFileProcessed} />
           </div>
-          <p className="text-xs text-muted-foreground mt-4 p-2 rounded-md bg-red-500/20 dark:bg-gray-700/50">🙏 We genuinely respect your Privacy, we dont save your chat files & no AI involved ❌</p>
+          <p className="text-xs text-muted-foreground mt-4 p-2 rounded-md bg-red-500/20 dark:bg-gray-800/50">🙏 We genuinely respect your Privacy, we dont save your chat files & no AI involved ❌</p>
         </main>
       )}
       
