@@ -36,7 +36,7 @@ const ChipkuLoversCounter: React.FC = () => {
 
     return (
         <Card className="w-fit p-2">
-            <CardHeader className="flex flex-row items-center justify-center space-y-0 pb-1 pt-0">
+            <CardHeader className="flex flex-row items-center justify-center p-0 pb-1">
                 <CardTitle className="text-sm font-medium">Chipku Lovers</CardTitle>
             </CardHeader>
             <CardContent className="p-0 flex items-center justify-center space-x-1">
